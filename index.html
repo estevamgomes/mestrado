@@ -1,0 +1,1186 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>Remote Spatialized Communication by E. Quintino</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="apple-touch-icon" href="apple-touch-icon.png">
+	<!-- Place favicon.ico in the root directory -->
+
+	<link rel="stylesheet" href="css/main.css">
+	<script src="js/vendor/modernizr-2.8.3.min.js"></script>
+	<script src="js/vendor/highlight.pack.js"></script>
+</head>
+
+<body>
+
+<!--[if lt IE 8]>
+	<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<header id="main-title">
+	<h1>Interação remota espacializada</h1>
+	<h2>Estevam Quintino</h2>
+	<!--
+	<p>www.estevamgomes.com.br</p>
+	<p>estevamgomes@gmail.com</p>
+	<p>Escola de Arquitetura</p>
+	<p>Universidade Federal de Minas Gerais</p>
+	-->
+</header>
+
+<nav id="nav-main" class="section">
+	<a class="toggle" href="#nav-main">Menu</a>
+	<div class="nav-content col span_4_of_12 push_7_of_12">
+		<ul>
+			<li><a href="#introducao">Introdução</a></li>
+			<li><a href="#categorias">Categorias</a></li>
+			<li><a href="#matriz">Matriz de interações</a></li>
+		</ul>
+	</div>
+</nav>
+
+<section id="main">
+
+	<article id="introducao">
+		<div class="text">
+			<h1>Introdução</h1>
+		</div>
+	</article>
+
+	<article>
+		<div class="text">
+			<h1>Conexão simples (1 input - 1 output) e relação linear</h1>
+		</div>
+
+		<div class="diagram table" id="servo">
+			<div class="table-cell input">
+				<h2>Input</h2>
+				<div id="servo-slider-wrapper"><div id="servo-slider"></div></div>
+				<div id="servo-slider-counter" class="counter"></div>
+			</div>
+
+			<div class="table-cell output">
+				<h2>Output</h2>
+				<div id="servo-animation"><div class="servo-horn"></div></div>
+				<div id="servo-animation-counter" class="counter"></div>
+			</div>
+		</div>
+	</article>
+
+	<article>
+		<div class="text">
+			<h1>Continuar pesquisa</h1>
+			<ul>
+				<li><a href="http://www.dailytouslesjours.com/work/">http://www.dailytouslesjours.com/work/</a></li>
+				<li><a href="https://www.google.com/search?q=zimoun&safe=off&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiWq5bE0vXSAhUJjJAKHTtwC_kQ_AUICCgB&biw=1280&bih=628#imgrc=YSDfykS-AYL61M:">Zimoun</a></li>
+				<li><a href="https://www.kickstarter.com/projects/396691740/hold-hands-online-when-you-miss-someone/updates">Frebble: Projeto de interação háptica à distância</a></li>
+				<li><a href="http://iasl.uni-muenchen.de/links/GCA-VI.1e.html">History of Computer Art</a></li>
+				<li><a href="http://www.trossenrobotics.com/c/arduino-sensors.aspx?ps=192">Ícones e categorias de sensores</a></li>
+				<li><a href="https://apostilalagear.wordpress.com/">Amplificar atuadores e sensores</a></li>
+				<li><a href="https://www.dezeen.com/2013/06/24/synthetechecology-by-chang-yeob-lee/">Projeto para ver</a></li>
+				<li><a href="http://archive.turbulence.org/blog/2010/05/17/artificial-analog-neural-network-by-phillip-stearns/">Outro projeto</a></li>
+				<li><a href="http://easings.net/pt">http://easings.net/pt</a></li>
+			</ul>
+		</div>
+	</article>
+
+	<article id="categorias">
+		<div class="text">
+			<h1>Categorias</h1>
+			
+			<h2>Digital ou binário X Analógico, contínuo ou intensidade</h2>
+
+			<p>Os sensores e atuadores podem ser divididos em duas categorias: digitais e analógicos.</p>
+			<p>Os sensores e atuadores digitais são aqueles que só tem dois estados: ligado ou desligado.</p>
+			<p>Os sensores e atuadores analógicos são aqueles que podem variar a intensidade dentro de uma extensão.</p>
+		</div>
+	</article>
+
+	<article id="categorias">
+		<div class="text">
+			<h1>Feedback</h1>
+			<h2>Positive feedback</h2>
+			<h2>Negative feedback</h2>
+
+			<h2>Ross Ashby</h2>
+			<p>The ability of the brain to look after itself by correcting all deviations from a central, optimal state, and particularly its ability to do so by a variety of methods, being flexible about the route but unchanging in its aim, was usually regarded as quite beyond the powers of any machine, but it has been known since 1940<sup><a id="cite-ref-1" href="#cite-note-1">1</a>,<a id="cite-ref-2" href="#cite-note-2">2</a></sup> that machines of the more dynamic type can do this quite easily. All that is needed for this goal-seeking flexibility is that the system should have negative feedback. When there is no feedback, as when a door-bell button is pressed and the bell rings, there is neither sense nor nonsense—it does just what its present state of repair or disrepair enforces. But when a radar-controlled anti-aircraft gun receives impulses both from the target plane and from its own shells, and is affected by the distance between the two so that it tends to make the distance between the two zero, then such a system has negative feed-back and is "goal-seeking." The important point here is that <em>the property of being "goal-seeking" is not that of 'life or mind but of negative feedback,</em> and any machine, however inanimate, which has negative feedback will show this feature.</p>
+
+			<h3>Self-organizing machines</h3>
+
+			<p>But this does not complete the requirements. Thus, if the gun-radarplane system had <i>positive</i> feedback it would tend to make the distance between shell and plane a maximum and would therefore seem to be trying to get its shells as far away from the plane as possible. Clearly, the introduction into a system of feedback in general does not solve the problem; for if without feedback the gun will aim anywhere, yet even with the feedback it may either seek the target or it may positively avoid it. What is to ensure that the feedback has the correct sign?</p>
+
+			<p>In the gun-radar-plane system the problem is easily settled: the designer carefully arranged the construction so that the feedback was negative. In the brain of an insect, all variations born with wrong feedbacks were eliminated by natural selection ages ago. But in the higher animals the position is different. Large numbers of the feedbacks are left at first undecided, since it is experience and not the inborn (genetic) characters which are to determine the feedbacks . Thus, a cat may have to learn to go towards red meat (negative feedback), but to go away from red embers (positive feedback).</p>
+
+			<p>That a kitten's initial feedbacks are rather chaotic is shown by the way in which it may shrink away from a saucer of milk and then run towards a red-hot fire. Yet we know from experience that day by day the kitten's feedbacks change, always improving, and tending to those values, positive and negative, which ensure the animal's survival. The problem of the mamalian brain, then, is that as a machine <em>it has to, work out an essential part of its own wiring.</em></p>
+
+			<h2>Wikipedia</h2>
+
+			<p><a href="https://en.wikipedia.org/wiki/Negative_feedback">https://en.wikipedia.org/wiki/Negative_feedback</a></p>
+			<p><a href="https://en.wikipedia.org/wiki/Negative_feedback">http://www.gaudisite.nl/FeedbackPaper.pdf</a></p>
+
+			<p>Negative feedback occurs when some function of the output of a system, process, or mechanism is fed back in a manner that tends to reduce the fluctuations in the output, whether caused by changes in the input or by other disturbances.</p>
+
+			<p>Whereas positive feedback tends to lead to instability via exponential growth, oscillation or chaotic behavior, negative feedback generally promotes stability. Negative feedback tends to promote a settling to equilibrium, and reduces the effects of perturbations. Negative feedback loops in which just the right amount of correction is applied with optimum timing can be very stable, accurate, and responsive.</p>
+
+			<p>Negative feedback is widely used in mechanical and electronic engineering, but it also occurs naturally within living organisms,[1][2] and can be seen in many other fields from chemistry and economics to physical systems such as the climate. General negative feedback systems are studied in control systems engineering.</p>
+		</div>
+	</article>
+
+	<article>
+		<div class="text">
+			<h1>Sensores, receptores ou input</h1>
+			<h2>Off-the-shelf</h2>
+			<p>Sensores ou receptores são componentes capazes de traduzir estímulos em variações elétricas fazendo a interface entre computador e ambiente/pessoas.</p>
+		</div>
+
+		<ul class="sidebyside-list">
+			<li><a class="ajax" href="content/i_ldr.html">		<img src="img/icones_ldr.png" alt="LDR">			<span class="name">Luz</span></a></li>
+			<li><a class="ajax" href="content/i_pot.html">		<img src="img/icones_pot.png" alt="Potenciômetro">	<span class="name">Giro</span></a></li>
+			<li><a class="ajax" href="content/i_pressao.html">	<img src="img/icones_pressao.png" alt="Pressão">	<span class="name">Pressão<br>[intensidade]</span></a></li>
+			<li><a class="ajax" href="content/i_push.html">		<img src="img/icones_push.png" alt="Push-button">	<span class="name">Pressão</span></a></li>
+			<li><a class="ajax" href="content/i_chave.html">	<img src="img/icones_chave.png" alt="Chave óptica">	<span class="name">Interrupção</span></a></li>
+			<li><a class="ajax" href="content/i_reed.html">		<img src="img/icones_reed.png" alt="Reed Switch">	<span class="name">Magnético</span></a></li>
+			<li><a class="ajax" href="content/i_mic.html">		<img src="img/icones_mic.png" alt="Microfone">		<span class="name">Som</span></a></li>
+			<li><a class="ajax" href="content/i_temp.html">		<img src="img/icones_temp.png" alt="Temperatura">	<span class="name">Temperatura</span></a></li>
+			<li><a class="ajax" href="content/i_cap.html">		<img src="img/icones_cap.png" alt="Capacitivo">		<span class="name">Toque</span></a></li>
+			<li><a class="ajax" href="content/i_sonar.html">	<img src="img/icones_sonar.png" alt="Sonar">		<span class="name">Distância<br>[proximidade]</span></a></li>
+			<li><a class="ajax" href="content/i_bussola.html">	<img src="img/icones_bussola.png" alt="Bússola">	<span class="name">Direção</span></a></li>
+			<li><a class="ajax" href="content/i_presenca.html">	<img src="img/icones_presenca.png" alt="Presença">	<span class="name">Presença</span></a></li>
+			<li><a class="ajax" href="content/i_ace.html">		<img src="img/icones_ace.png" alt="Aceleração">		<span class="name">Movimento</span></a></li>
+			<li><a class="ajax" href="content/i_potlinear.html"><img src="img/icones_potlinear.png" alt="Potenciômetro linear"><span class="name">Movimento linear</span></a></li>
+			<li><a class="ajax" href="content/i_hall.html">		<img src="img/icones_hall.png" alt="Efeito Hall">	<span class="name">Pólo Magnético</span></a></li>
+			<li><a class="ajax" href="content/i_flex.html">		<img src="img/icones_flex.png" alt="Flexão">		<span class="name">Flexão</span></a></li>
+		</ul>
+	</article>
+
+	<article>
+		<div class="text">
+			<h1>Atuadores / Emissores / Output</h1>
+			<h2>Off-the-shelf</h2>
+			<p>Os atuadores ou emissores são componentes capazes de traduzir variações elétricas em estímulos físicos fazendo a interface entre computador e ambiente/pessoas.</p>			
+		</div>
+
+		<ul class="sidebyside-list">
+			<li><a class="ajax" href="content/o_led.html">		<img src="img/icones_led.png" alt="LED">				<span class="name">Luz</span>		</a></li>
+			<li><a class="ajax" href="content/o_vent.html">		<img src="img/icones_ventoinha.png" alt="Ventoinha">	<span class="name">Vento</span>		</a></li>
+			<li><a class="ajax" href="content/o_dc.html">		<img src="img/icones_motordc.png" alt="Motor DC">		<span class="name">Rotação</span>	</a></li>
+			<li><a class="ajax" href="content/o_vib.html">		<img src="img/icones_vibrador.png" alt="Vibrador">		<span class="name">Vibração</span>	</a></li>
+			<li><a class="ajax" href="content/o_servo.html">	<img src="img/icones_servo.png" alt="Servo">			<span class="name">Rotação</span>	</a></li>
+			<li><a class="ajax" href="content/o_spk.html">		<img src="img/icones_speaker.png" alt="Auto-falante">	<span class="name">Som</span>		</a></li>
+			<li><a class="ajax" href="content/o_linear.html">	<img src="img/icones_linear.png" alt="Linear">			<span class="name">Linear</span>	</a></li>
+			<li><a class="ajax" href="content/o_rele.html">		<img src="img/icones_rele.png" alt="Relé">				<span class="name">Clique</span>	</a></li>
+		</ul>
+	</article>
+
+	<article>
+		<div class="text">
+			<h1>Lógica e tipos de conexão</h1>
+			<p>Utilizei um arduino como interface entre sensores e atuadores.</p>
+
+			<h2>Conexão direta</h2>
+		</div>
+
+		<table id="matriz">
+
+			<tr>
+				<th></th>
+				<th><a class="ajax" href="content/o_led.html">		<img src="img/icones_led.png" alt="LED"></a></th>
+				<th><a class="ajax" href="content/o_vent.html">		<img src="img/icones_ventoinha.png" alt="Ventoinha"></a></th>
+				<th><a class="ajax" href="content/o_dc.html">		<img src="img/icones_motordc.png" alt="Motor DC"></a></th>
+				<th><a class="ajax" href="content/o_vib.html">		<img src="img/icones_vibrador.png" alt="Vibrador"></a></th>
+				<th><a class="ajax" href="content/o_servo.html">	<img src="img/icones_servo.png" alt="Servo"></a></th>
+				<th><a class="ajax" href="content/o_spk.html">		<img src="img/icones_speaker.png" alt="Servo"></a></th>
+				<th><a class="ajax" href="content/o_linear.html">	<img src="img/icones_linear.png" alt="Servo"></a></th>
+				<th><a class="ajax" href="content/o_rele.html">		<img src="img/icones_rele.png" alt="Servo"></a></th>
+			</tr>
+
+			<!-- LDR -->
+			<tr>
+				<th><a class="ajax" href="content/i_ldr.html"><img src="img/icones_ldr.png" alt="LDR"></a></th>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_ldr_o_led.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_ldr_o_led.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_ldr_o_vent.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_ldr_o_vent.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_ldr_o_dc_2.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_ldr_o_dc.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_ldr_o_vib.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_ldr_o_vib.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_ldr_o_servo.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_ldr_o_servo.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Potenciômetro -->
+			<tr>
+				<th><a class="ajax" href="content/i_pot.html"><img src="img/icones_pot.png" alt="Potenciômetro"></a></th>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_pot_o_led.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_pot_o_led.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_pot_o_vent.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_pot_o_vent.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_pot_o_dc.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_pot_o_dc.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_pot_o_vib.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_pot_o_vib.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_pot_o_servo.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_pot_o_servo.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Pressão -->
+			<tr>
+				<th><a class="ajax" href="content/i_pressao.html"><img src="img/icones_pressao.png" alt="Pressão"></a></th>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_pressao_o_led.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_pressao_o_led.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_pressao_o_vent.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_pressao_o_vent.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_pressao_o_dc.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_pressao_o_dc.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_pressao_o_vib.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_pressao_o_vib.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_pressao_o_servo.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_pressao_o_servo.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Botão -->
+			<tr>
+				<th><a class="ajax" href="content/i_botao.html"><img src="img/icones_push.png" alt="Push-button"></a></th>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_botao_o_led.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_botao_o_led.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_botao_o_vent.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_botao_o_vent.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_botao_o_dc.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_botao_o_dc.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_botao_o_vib.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_botao_o_vib.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_botao_o_servo.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_botao_o_servo.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Chave óptica -->
+			<tr>
+				<th><a class="ajax" href="content/i_chave.html"><img src="img/icones_chave.png" alt="Chave óptica"></a></th>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_chave_o_led.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_chave_o_led.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_chave_o_vent.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_chave_o_vent.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_chave_o_dc.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_chave_o_dc.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_chave_o_vib.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_chave_o_vib.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_chave_o_servo.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_chave_o_servo.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Reed Switch -->
+			<tr>
+				<th><a class="ajax" href="content/i_reed.html"><img src="img/icones_reed.png" alt="Reed Switch"></a></th>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_reed_o_led.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_reed_o_led.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_reed_o_vent.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_reed_o_vent.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_reed_o_dc.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_reed_o_dc.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_reed_o_vib.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_reed_o_vib.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_reed_o_servo.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_reed_o_servo.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Microfone -->
+			<tr>
+				<th><a class="ajax" href="content/i_mic.html"><img src="img/icones_mic.png" alt="Microfone"></a></th>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_mic_o_led.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_mic_o_led.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_mic_o_vent.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_mic_o_vent.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_mic_o_dc.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_mic_o_dc.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_mic_o_vib.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_mic_o_vib.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_mic_o_servo.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_mic_o_servo.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop width="192px" height="108px">
+						<source src="img/videos/i_mic_o_spk_2.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_mic_o_spk.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Temperatura -->
+			<tr>
+				<th><a class="ajax" href=""><img src="img/icones_temp.png" alt="Temperatura"></a></th>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_temp_o_led.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_temp_o_led.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_temp_o_vent.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_temp_o_vent.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_temp_o_dc.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_temp_o_dc.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_temp_o_vib.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_temp_o_vib.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop muted width="192px" height="108px">
+						<source src="img/videos/i_temp_o_servo.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_temp_o_servo.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td>
+					<video loop width="192px" height="108px">
+						<source src="img/videos/i_temp_o_spk_2.mp4" type="video/mp4" />
+					</video>
+					<a class="ajax" href="content/i_temp_o_spk.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+				</td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Capacitivo -->
+			<tr>
+				<th><a class="ajax" href=""><img src="img/icones_cap.png" alt="Capacitivo"></a></th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Sonar -->
+			<tr>
+				<th><a class="ajax" href=""><img src="img/icones_sonar.png" alt="Sonar"></a></th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Bússola -->
+			<tr>
+				<th><a class="ajax" href=""><img src="img/icones_bussola.png" alt="Bússola"></a></th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Presença -->
+			<tr>
+				<th><a class="ajax" href=""><img src="img/icones_presenca.png" alt="Presença"></a></th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Aceleração -->
+			<tr>
+				<th><a class="ajax" href=""><img src="img/icones_ace.png" alt="Aceleração"></a></th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Linear Pot -->
+			<tr>
+				<th><a class="ajax" href=""><img src="img/icones_potlinear.png" alt="Potenciômetro Linear"></a></th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Hall -->
+			<tr>
+				<th><a class="ajax" href=""><img src="img/icones_hall.png" alt="Efeito hall"></a></th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Flexão -->
+			<tr>
+				<th><a class="ajax" href=""><img src="img/icones_flex.png" alt="Flexão"></a></th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+		</table>
+	</article>
+
+	<article>
+		<div class="text">
+			<h1>Tabela de softwares</h1>
+
+			<h2>Suavização (Smoothing)</h2>
+
+			<p><a href="https://www.arduino.cc/en/tutorial/smoothing">https://www.arduino.cc/en/tutorial/smoothing</a></p>
+
+			<p>This sketch reads repeatedly from an analog input, calculating a running average and printing it to the computer. This example is useful for smoothing out the values from jumpy or erratic sensors, and also demonstrates the use of arrays to store data.</p>
+
+			<h2>Calibragem</h2>
+
+			<p><a href="https://www.arduino.cc/en/Tutorial/Calibration">https://www.arduino.cc/en/Tutorial/Calibration</a></p>
+			
+			<p>This example demonstrates one techinque for calibrating sensor input. The board takes sensor readings for five seconds during the startup, and tracks the highest and lowest values it gets. These sensor readings during the first five seconds of the sketch execution define the minimum and maximum of expected values for the readings taken during the loop.</p>
+		</div>
+
+		<table class="table" id="software">
+			<tr>
+				<th></th>
+				<th><a class="ajax" href="content/o_led.html">		<img src="img/icones_led.png" alt="LED"></a></th>
+				<th><a class="ajax" href="content/o_vent.html">		<img src="img/icones_ventoinha.png" alt="Ventoinha"></a></th>
+				<th><a class="ajax" href="content/o_dc.html">		<img src="img/icones_motordc.png" alt="Motor DC"></a></th>
+				<th><a class="ajax" href="content/o_vib.html">		<img src="img/icones_vibrador.png" alt="Vibrador"></a></th>
+				<th><a class="ajax" href="content/o_servo.html">	<img src="img/icones_servo.png" alt="Servo"></a></th>
+				<th><a class="ajax" href="content/o_spk.html">		<img src="img/icones_speaker.png" alt="Servo"></a></th>
+				<th><a class="ajax" href="content/o_linear.html">	<img src="img/icones_linear.png" alt="Servo"></a></th>
+				<th><a class="ajax" href="content/o_rele.html">		<img src="img/icones_rele.png" alt="Servo"></a></th>
+			</tr>
+
+			<!-- LDR -->
+			<tr>
+				<th><a class="ajax" href="content/i_ldr.html"><img src="img/icones_ldr.png" alt="LDR"></a></th>
+				<td>
+					<h1>i_ana_o_ana.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 5000;</li>
+						<li>cal_weight = 0.1;</li>
+					</ul>
+					<h2>Smoothing</h2>
+					<ul>
+						<li>smo_numReadings = 5;</li>
+					</ul>
+				</td>
+				<td>
+					<h1>i_ana_o_ana.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 5000;</li>
+						<li>cal_weight = 0.1;</li>
+					</ul>
+					<h2>Smoothing</h2>
+					<ul>
+						<li>smo_numReadings = 5;</li>
+					</ul>
+				</td>
+				<td>
+					<h1>i_ana_o_ana.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 5000;</li>
+						<li>cal_weight = 0.1;</li>
+					</ul>
+					<h2>Smoothing</h2>
+					<ul>
+						<li>smo_numReadings = 5;</li>
+					</ul>
+				</td>
+				<td>
+					<h1>i_ana_o_ana.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 5000;</li>
+						<li>cal_weight = 0.1;</li>
+					</ul>
+					<h2>Smoothing</h2>
+					<ul>
+						<li>smo_numReadings = 5;</li>
+					</ul>
+				</td>
+				<td>
+					<h1>i_ana_o_servo.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 5000;</li>
+						<li>cal_weight = 0.1;</li>
+					</ul>
+					<h2>Smoothing</h2>
+					<ul>
+						<li>smo_numReadings = 5;</li>
+					</ul>
+					<h2>Reduce oscillation</h2>
+					<ul>
+						<li>servoMinChange = 5;</li>
+					</ul>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Potenciômetro -->
+			<tr>
+				<th><a class="ajax" href="content/i_pot.html"><img src="img/icones_pot.png" alt="Potenciômetro"></a></th>
+				<td>
+					<h1>i_ana_o_ana_ns_nc.ino</h1>
+				</td>
+				<td>
+					<h1>i_ana_o_ana_ns_nc.ino</h1>
+				</td>
+				<td>
+					<h1>i_ana_o_ana_ns_nc.ino</h1>
+				</td>
+				<td>
+					<h1>i_ana_o_ana_ns_nc.ino</h1>
+				</td>
+				<td>
+					<h1>i_ana_o_servo_ns_nc.ino</h1>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Pressão -->
+			<tr>
+				<th><a class="ajax" href="content/i_pressao.html"><img src="img/icones_pressao.png" alt="Pressão"></a></th>
+				<td>
+					<h1>i_ana_o_ana.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 5000;</li>
+						<li>cal_weight = 0.1;</li>
+					</ul>
+					<h2>Smoothing</h2>
+					<ul>
+						<li>smo_numReadings = 15;</li>
+					</ul>
+				</td>
+				<td>
+					<h1>i_ana_o_ana.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 5000;</li>
+						<li>cal_weight = 0.1;</li>
+					</ul>
+					<h2>Smoothing</h2>
+					<ul>
+						<li>smo_numReadings = 15;</li>
+					</ul>
+				</td>
+				<td>
+					<h1>i_ana_o_ana.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 5000;</li>
+						<li>cal_weight = 0.1;</li>
+					</ul>
+					<h2>Smoothing</h2>
+					<ul>
+						<li>smo_numReadings = 15;</li>
+					</ul>
+				</td>
+				<td>
+					<h1>i_ana_o_ana.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 5000;</li>
+						<li>cal_weight = 0.1;</li>
+					</ul>
+					<h2>Smoothing</h2>
+					<ul>
+						<li>smo_numReadings = 15;</li>
+					</ul>
+				</td>
+				<td>
+					<h1>i_ana_o_servo.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 5000;</li>
+						<li>cal_weight = 0.1;</li>
+					</ul>
+					<h2>Smoothing</h2>
+					<ul>
+						<li>smo_numReadings = 15;</li>
+					</ul>
+					<h2>Reduce oscillation</h2>
+					<ul>
+						<li>servoMinChange = 15;</li>
+					</ul>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Botão -->
+			<tr>
+				<th><a class="ajax" href="content/i_botao.html"><img src="img/icones_push.png" alt="Push-button"></a></th>
+				<td><h1>i_dig_o_dig.ino</h1></td>
+				<td><h1>i_dig_o_dig.ino</h1></td>
+				<td><h1>i_dig_o_dig.ino</h1></td>
+				<td><h1>i_dig_o_dig.ino</h1></td>
+				<td><h1>i_dig_o_servo.ino</h1></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Chave óptica -->
+			<tr>
+				<th><a class="ajax" href="content/i_chave.html"><img src="img/icones_chave.png" alt="Chave óptica"></a></th>
+				<td><h1>i_dig_o_dig.ino</h1></td>
+				<td><h1>i_dig_o_dig.ino</h1></td>
+				<td><h1>i_dig_o_dig.ino</h1></td>
+				<td><h1>i_dig_o_dig.ino</h1></td>
+				<td><h1>i_dig_o_servo.ino</h1></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Reed Switch -->
+			<tr>
+				<th><a class="ajax" href="content/i_reed.html"><img src="img/icones_reed.png" alt="Reed Switch"></a></th>
+				<td><h1>i_dig_o_dig.ino</h1></td>
+				<td><h1>i_dig_o_dig.ino</h1></td>
+				<td><h1>i_dig_o_dig.ino</h1></td>
+				<td><h1>i_dig_o_dig.ino</h1></td>
+				<td><h1>i_dig_o_servo.ino</h1></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Microfone -->
+			<tr>
+				<th><a class="ajax" href="content/i_mic.html"><img src="img/icones_mic.png" alt="Microfone"></a></th>
+				<td>
+					<h1>i_mic_o_ana.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 8000;</li>
+						<li>cal_weight = 0.1;</li>
+					</ul>
+					<h2>Microphone</h2>
+					<ul>
+						<li>record_duration = 100;</li>
+					</ul>
+				</td>
+				<td>
+					<h1>i_mic_o_ana.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 8000;</li>
+						<li>cal_weight = 0.1;</li>
+					</ul>
+					<h2>Microphone</h2>
+					<ul>
+						<li>record_duration = 100;</li>
+					</ul>
+				</td>
+				<td>
+					<h1>i_mic_o_ana.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 8000;</li>
+						<li>cal_weight = 0.1;</li>
+					</ul>
+					<h2>Microphone</h2>
+					<ul>
+						<li>record_duration = 100;</li>
+					</ul>
+				</td>
+				<td>
+					<h1>i_mic_o_ana.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 8000;</li>
+						<li>cal_weight = 0.1;</li>
+					</ul>
+					<h2>Microphone</h2>
+					<ul>
+						<li>record_duration = 100;</li>
+					</ul>
+				</td>
+				<td>
+					<h1>i_mic_o_servo.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 8000;</li>
+						<li>cal_weight = 0.1;</li>
+					</ul>
+					<h2>Microphone</h2>
+					<ul>
+						<li>record_duration = 100;</li>
+					</ul>
+				</td>
+				<td>
+					<h1>i_mic_o_sound.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 8000;</li>
+						<li>cal_weight = 0.1;</li>
+					</ul>
+					<h2>Microphone</h2>
+					<ul>
+						<li>record_duration = 100;</li>
+					</ul>
+				</td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Temperatura -->
+			<tr>
+				<th><a class="ajax" href=""><img src="img/icones_temp.png" alt="Temperatura"></a></th>
+				<td>
+					<h1>i_temp_o_ana.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 15000;</li>
+						<li>cal_weight = 0.2;</li>
+					</ul>
+					<h2>Smoothing</h2>
+					<ul>
+						<li>smo_numReadings = 30;</li>
+					</ul>
+				</td>
+				<td>
+					<h1>i_temp_o_ana.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 15000;</li>
+						<li>cal_weight = 0.2;</li>
+					</ul>
+					<h2>Smoothing</h2>
+					<ul>
+						<li>smo_numReadings = 30;</li>
+					</ul>
+				</td>
+				<td>
+					<h1>i_temp_o_ana.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 15000;</li>
+						<li>cal_weight = 0.2;</li>
+					</ul>
+					<h2>Smoothing</h2>
+					<ul>
+						<li>smo_numReadings = 30;</li>
+					</ul>
+				</td>
+				<td>
+					<h1>i_temp_o_ana.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 15000;</li>
+						<li>cal_weight = 0.2;</li>
+					</ul>
+					<h2>Smoothing</h2>
+					<ul>
+						<li>smo_numReadings = 30;</li>
+					</ul>
+				</td>
+				<td>
+					<h1>i_temp_o_servo.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 15000;</li>
+						<li>cal_weight = 0.2;</li>
+					</ul>
+					<h2>Smoothing</h2>
+					<ul>
+						<li>smo_numReadings = 30;</li>
+					</ul>
+					<h2>Servo</h2>
+					<ul>
+						<li>servoUpdateInterval = 200;</li>
+					</ul>
+				</td>
+				<td>
+					<h1>i_temp_o_sound.ino</h1>
+					<h2>Calibration</h2>
+					<ul>
+						<li>cal_duration = 15000;</li>
+						<li>cal_weight = 0.2;</li>
+					</ul>
+					<h2>Smoothing</h2>
+					<ul>
+						<li>smo_numReadings = 30;</li>
+					</ul>
+				</td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Capacitivo -->
+			<tr>
+				<th><a class="ajax" href=""><img src="img/icones_cap.png" alt="Capacitivo"></a></th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Sonar -->
+			<tr>
+				<th><a class="ajax" href=""><img src="img/icones_sonar.png" alt="Sonar"></a></th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Bússola -->
+			<tr>
+				<th><a class="ajax" href=""><img src="img/icones_bussola.png" alt="Bússola"></a></th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Presença -->
+			<tr>
+				<th><a class="ajax" href=""><img src="img/icones_presenca.png" alt="Presença"></a></th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Aceleração -->
+			<tr>
+				<th><a class="ajax" href=""><img src="img/icones_ace.png" alt="Aceleração"></a></th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Linear Pot -->
+			<tr>
+				<th><a class="ajax" href=""><img src="img/icones_potlinear.png" alt="Potenciômetro Linear"></a></th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Hall -->
+			<tr>
+				<th><a class="ajax" href=""><img src="img/icones_hall.png" alt="Efeito hall"></a></th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<!-- Flexão -->
+			<tr>
+				<th><a class="ajax" href=""><img src="img/icones_flex.png" alt="Flexão"></a></th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+		</table>
+	</article>
+
+</section>
+
+<footer id="main-footer">
+	<h2>Interação remota espacializada</h2>
+	<p>Estevam Quintino</p>
+	<p>2017</p>
+	<p>Escola de Arquitetura</p>
+	<p>Universidade Federal de Minas Gerais</p>
+</footer>
+
+
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
+<script src="js/plugins.js"></script>
+<script src="js/main.js"></script>
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script>
+	(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+	function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+	e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+	e.src='https://www.google-analytics.com/analytics.js';
+	r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+	ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+</script>
+
+</body>
+
+</html>

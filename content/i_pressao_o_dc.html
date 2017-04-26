@@ -1,0 +1,103 @@
+<h1>Input: Pressão <img src="img/in_out-01.png"> Output: Rotação</h1>
+
+<video autoplay controls>
+  <source src="../img/videos_hi/i_pressao_o_dc.mp4" type="video/mp4" />
+</video>
+
+<pre><code class="arduino">
+/*
+ * Input Analog [+calibration][+smoothing] > Output Analog
+ * 
+ * Description: Calibrate Reads an analog sensor that controls an analog output 
+ * 
+ * Recommended inputs: LDR, Pressão (Flexiforce)
+ * Recommended outputs: LED, Fan, DC Motor, Vibration Motor
+ * 
+ * Created 2017
+ * By E. Quintino &lt;www.estevamgomes.com.br&gt;
+ */
+
+const int analogInPin  = A0;  // the number of the analog input pin
+const int analogOutPin = 9;   // the number of the pwm output pin
+
+int sensorValue = 0;          // store the value read from analog input
+int outputValue = 0;          // store the value to output to the PWM (analog output)
+
+// CALIBRATION
+// based on http://www.arduino.cc/en/Tutorial/Calibration
+int cal_sensorMin      = 1023; // minimum sensor value
+int cal_sensorMax      = 0;    // maximum sensor value
+const int cal_duration = 5000; // duration of calibration period
+const int cal_weight   = 0.1;  // 
+
+// SMOOTHING
+// based on http://www.arduino.cc/en/Tutorial/Smoothing
+// Define the number of samples to keep track of
+// Higher number = smoother readings and slower output's response 
+const int smo_numReadings = 15;
+
+int smo_readings[smo_numReadings];    // the readings from the analog input
+int smo_readIndex = 0;                // the index of the current reading
+int smo_total     = 0;                // the running total
+int smo_average   = 0;                // the average
+
+void setup() {
+
+  // SMOOTHING
+  // initialize all the readings to 0
+  for (int i = 0; i < smo_numReadings; i++) {
+    smo_readings[i] = 0;
+  }
+
+  // CALIBRATION
+  pinMode(13, OUTPUT);      // define pin 13 as output
+  digitalWrite(13, HIGH);   // turn on LED to signal the start of the calibration
+
+  int cal_start = millis();
+  while (millis() - cal_start < cal_duration) {
+    // reads the sensor and stores into a variable
+    sensorValue = analogRead(analogInPin);
+
+    // update the maximum sensor value
+    if (sensorValue > cal_sensorMax) {
+      cal_sensorMax = sensorValue;
+    }
+    
+    // update the minimum sensor value
+    if (sensorValue < cal_sensorMin) {
+      cal_sensorMin = sensorValue;
+    }
+  }
+
+  // to get better results I suggest to reduce a bit the maximum and increase a bit the minimum
+  int cal_range = cal_sensorMax - cal_sensorMin;
+  cal_sensorMax = cal_sensorMax - cal_range * cal_weight;
+  cal_sensorMin = cal_sensorMin + cal_range * cal_weight;
+  
+  digitalWrite(13, LOW); // turn off LED to signal the end of the calibration
+}
+
+
+void loop() {
+  
+  // SMOOTHING
+  smo_total = smo_total - smo_readings[smo_readIndex];   // subtract the last reading from the total
+  smo_readings[smo_readIndex] = analogRead(analogInPin); // read from the sensor
+  smo_total = smo_total + smo_readings[smo_readIndex];   // add the current reading to the total
+  smo_readIndex++;  // advance to the next position in the array
+
+  if (smo_readIndex >= smo_numReadings) { // if we reach the end of the array
+    smo_readIndex = 0;                    // start from 0
+  }
+
+  smo_average = smo_total / smo_numReadings; // calculate the average
+  
+  // CALIBRATION
+  // map the sensor reading from the calibration range to the output range (0-255)
+  outputValue = map(smo_average, cal_sensorMin, cal_sensorMax, 0, 255);
+  outputValue = constrain(outputValue, 0, 255); // in case the sensor value is outside the range seen during calibration
+  analogWrite(analogOutPin, outputValue);       // change the analog output value
+
+  delay(2); // wait 2 milliseconds before the next loop for the analog-to-digital converter to settle
+}
+</code></pre>

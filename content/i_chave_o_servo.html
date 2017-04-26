@@ -1,0 +1,47 @@
+<h1>Input: Interrupção <img src="img/in_out-01.png"> Output: Rotação</h1>
+
+<video autoplay controls>
+  <source src="../img/videos_hi/i_chave_o_servo.mp4" type="video/mp4" />
+</video>
+
+<pre><code class="arduino">
+/*
+ * Input Digital > Output Servo
+ * 
+ * Description: Changes the servo position when switching a digital input
+ * 
+ * Recommended inputs: Push-button, Reed Switch, Photo Interrupter (Slotted Optical Switch)
+ * Recommended outputs: Servo Motor
+ * 
+ * Created 2017
+ * By E. Quintino &lt;www.estevamgomes.com.br&gt;
+ */
+
+#include &lt;Servo.h&gt;  // include the servo library
+Servo myservo;      // create servo object to control a servo
+
+const int inputPin  = 2; // the number of the input pin
+const int outputPin = 8; // the number of the output pin
+
+int inputState      = 0; // store the current input state 
+int lastInputState  = 0; // store the last input state
+
+void setup() {
+  pinMode(inputPin, INPUT);  // initialize the pinput pin  
+  myservo.attach(outputPin); // attaches the servo on pin 9 to the servo object
+}
+
+void loop() {
+  inputState = digitalRead(inputPin); // read the state of the input
+  
+  if(inputState != lastInputState) {  // if the state changes
+    if (inputState == HIGH) {         // if input is on
+      myservo.write(180);             // sets the servo position to 180
+    } else {                          // if input is off
+      myservo.write(0);               // sets the servo position to 0
+    }
+  }
+    
+  lastInputState = inputState;        // update the lastInputState
+}
+</code></pre>

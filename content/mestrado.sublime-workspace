@@ -1,0 +1,600 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"fon",
+				"font-family"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"co",
+				"code\tTag"
+			],
+			[
+				"mar",
+				"margin-left"
+			],
+			[
+				"tex",
+				"text-transform"
+			],
+			[
+				"di",
+				"div\tTag"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "i_mic_o_dc.html",
+			"settings":
+			{
+				"buffer_size": 4024,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "i_mic_o_spk.html",
+			"settings":
+			{
+				"buffer_size": 4211,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "i_temp_o_servo.html",
+			"settings":
+			{
+				"buffer_size": 4819,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/LAGEAR_9/Desktop/estevam/mestrado/index.html",
+			"settings":
+			{
+				"buffer_size": 40765,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "i_temp_o_spk.html",
+			"settings":
+			{
+				"buffer_size": 4822,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "i_temp_o_dc.html",
+			"settings":
+			{
+				"buffer_size": 4516,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "c",
+		"selected_items":
+		[
+			[
+				"c",
+				"Set Syntax: C++"
+			],
+			[
+				"tab",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"c+",
+				"Set Syntax: C++"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"colo",
+				"Color Picker"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"color",
+				"Color Picker: Insert Color"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"color picke",
+				"Color Picker: Insert Color"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Preferences: Browse Packages"
+			],
+			[
+				"pa",
+				"Package Control: Disable Package"
+			],
+			[
+				"less",
+				"Set Syntax: LESS"
+			],
+			[
+				"ta",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"un",
+				"Package Control: List Unmanaged Packages"
+			],
+			[
+				"",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 485.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado - catalogo",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado - catalogo/i_temp_o_servo",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado - catalogo/i_temp_o_sound"
+	],
+	"file_history":
+	[
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_mic_o_led.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_mic_o_spk.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_mic_o_vent.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_mic_o_vib.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_mic_o_servo.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_pressao_o_servo.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_temp_o_dc.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_temp_o_led.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_temp_o_vent.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_temp_o_vib.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_temp_o_spk.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_temp_o_servo.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/index.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_ldr_o_servo.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_pressao_o_vib.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_pressao_o_vent.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_pot_o_servo.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_pressao_o_dc.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_pressao_o_led.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_ldr_o_led.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_ldr_o_vent.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_ldr_o_vib.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_ldr_o_dc.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_pot_o_vent.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_pot_o_vib.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_reed_o_dc.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_reed_o_led.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_reed_o_servo.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_reed_o_vent.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_reed_o_vib.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_botao_o_dc.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_botao_o_led.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_botao_o_servo.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_botao_o_vent.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_botao_o_vib.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_chave_o_dc.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_chave_o_led.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_chave_o_servo.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_chave_o_vent.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_chave_o_vib.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_pot_o_dc.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/content/i_pot_o_led.html",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/css/highlight.less",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/css/main.css",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado - catalogo 3/in_button_out_dig/in_button_out_dig.ino",
+		"/Users/LAGEAR_9/Desktop/estevam/mestrado/css/main.less",
+		"/Users/LAGEAR_9/Desktop/estevam/bitlashsocketio/package.json",
+		"/Users/LAGEAR_9/Desktop/estevam/bitlashsocketio/index.js",
+		"/Users/LAGEAR_9/Desktop/estevam/bitlashsocketio/bitlashsocketio.ino",
+		"/Users/LAGEAR_9/Desktop/estevam/socket/index.html",
+		"/Users/LAGEAR_9/Desktop/estevam/socket/index.js",
+		"/Users/LAGEAR_9/Desktop/estevam/socket/package.json"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"/Users/LAGEAR_9/Desktop/estevam/mestrado/content"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"REDUCE OSCILLATION",
+			"SMOOTHING",
+			"MICROPHONE",
+			"CALIBRATION",
+			"<www.estevamgomes.com.br>",
+			"<Servo.h>",
+			"<www.estevamgomes.com.br>",
+			"<http://www.arduino.cc/en/Tutorial/Calibration>",
+			"<www.estevamgomes.com.br>",
+			"// based on <http://www.arduino.cc/en/Tutorial/Calibration>",
+			"#include <Servo.h>",
+			"/*\n * Input Analog [+calibration][+smoothing] > Output Analog\n * \n * Description: Calibrate Reads an analog sensor that controls an analog output \n * \n * Recommended inputs: LDR\n * Recommended outputs: LED, Fan, DC Motor, Vibration Motor\n * \n * Created 2017\n * By E. Quintino <www.estevamgomes.com.br>\n */\n\nconst int analogInPin  = A0;  // the number of the analog input pin\nconst int analogOutPin = 9;   // the number of the pwm output pin\n\nint sensorValue = 0;          // store the value read from analog input\nint outputValue = 0;          // store the value to output to the PWM (analog output)\n\n// CALIBRATION\n// based on <http://www.arduino.cc/en/Tutorial/Calibration>\nint cal_sensorMin      = 1023; // minimum sensor value\nint cal_sensorMax      = 0;    // maximum sensor value\nconst int cal_duration = 5000; // duration of calibration period\nconst int cal_weight   = 0.1;  // \n\n// SMOOTHING\n// based on http://www.arduino.cc/en/Tutorial/Smoothing\n// Define the number of samples to keep track of\n// Higher number = smoother readings and slower output's response \nconst int smo_numReadings = 5;\n\nint smo_readings[smo_numReadings];    // the readings from the analog input\nint smo_readIndex = 0;                // the index of the current reading\nint smo_total     = 0;                // the running total\nint smo_average   = 0;                // the average\n\nvoid setup() {\n\n  // SMOOTHING\n  // initialize all the readings to 0\n  for (int i = 0; i < smo_numReadings; i++) {\n    smo_readings[i] = 0;\n  }\n\n  // CALIBRATION\n  pinMode(13, OUTPUT);      // define pin 13 as output\n  digitalWrite(13, HIGH);   // turn on LED to signal the start of the calibration\n\n  int cal_start = millis();\n  while (millis() - cal_start < cal_duration) {\n    // reads the sensor and stores into a variable\n    sensorValue = analogRead(analogInPin);\n\n    // update the maximum sensor value\n    if (sensorValue > cal_sensorMax) {\n      cal_sensorMax = sensorValue;\n    }\n    \n    // update the minimum sensor value\n    if (sensorValue < cal_sensorMin) {\n      cal_sensorMin = sensorValue;\n    }\n  }\n\n  // to get better results I suggest to reduce a bit the maximum and increase a bit the minimum\n  int cal_range = cal_sensorMax - cal_sensorMin;\n  cal_sensorMax = cal_sensorMax - cal_range * cal_weight;\n  cal_sensorMin = cal_sensorMin + cal_range * cal_weight;\n  \n  digitalWrite(13, LOW); // turn off LED to signal the end of the calibration\n}\n\n\nvoid loop() {\n  \n  // SMOOTHING\n  smo_total = smo_total - smo_readings[smo_readIndex];   // subtract the last reading from the total\n  smo_readings[smo_readIndex] = analogRead(analogInPin); // read from the sensor\n  smo_total = smo_total + smo_readings[smo_readIndex];   // add the current reading to the total\n  smo_readIndex++;  // advance to the next position in the array\n\n  if (smo_readIndex >= smo_numReadings) { // if we reach the end of the array\n    smo_readIndex = 0;                    // start from 0\n  }\n\n  smo_average = smo_total / smo_numReadings; // calculate the average\n  \n  // CALIBRATION\n  // map the sensor reading from the calibration range to the output range (0-255)\n  outputValue = map(smo_average, cal_sensorMin, cal_sensorMax, 0, 255);\n  outputValue = constrain(outputValue, 0, 255); // in case the sensor value is outside the range seen during calibration\n  analogWrite(analogOutPin, outputValue);       // change the analog output value\n\n  delay(2); // wait 2 milliseconds before the next loop for the analog-to-digital converter to settle\n}",
+			")</",
+			"// change the analog out value",
+			"// read the analog in value",
+			"myservo.attach(outPin);    // attaches the servo on pin 9 to the servo object",
+			"// map it from the input range (0-255) to the output range (0-1023)",
+			"/*\n * Input Digital > Output Servo\n * \n * Description: Changes the servo position when switching a digital input\n * \n * Created 2017\n * By E. Quintino <www.estevamgomes.com.br>\n */",
+			"/*\n * Input Digital > Output Servo\n * \n * Description: Changes the servo position when switching a digital input\n * \n * Recommended inputs: Push-button, Reed Switch, Photo Interrupter (Slotted Optical Switch)\n * Recommended outputs: Servo Motor\n * \n * Created 2017\n * By E. Quintino <www.estevamgomes.com.br>\n */",
+			"/*\n * Input Digital > Output Digital\n * \n * Description: Turn on and off a digital output when switching a digital input\n * \n * Created 2017\n * By E. Quintino <www.estevamgomes.com.br>\n */",
+			"/*\n * Input Digital > Output Servo\n * \n * Description: Change servo position when switching a digital input\n * \n * Created 2017\n * By E. Quintino <www.estevamgomes.com.br>\n */",
+			"/*\n * Input Digital > Output Digital\n * Description: Turn on and off a digital output when switching a digital input\n * www.estevamgomes.com.br\n */",
+			"video loop",
+			"\n\t<article>\n\t\t<div class=\"text\">\n\t\t\t<h1>Lógica e tipos de conexão</h1>\n\t\t\t<p>Utilizei um arduino como interface entre sensores e atuadores.</p>\n\n\t\t\t<h2>Conexão direta</h2>\n\t\t</div>\n\n\t\t<table id=\"interaction_matrix\">\n\n\t\t\t<tr>\n\t\t\t\t<th></th>\n\t\t\t\t<th><a class=\"ajax\" href=\"content/o_led.html\">\t\t<img src=\"img/icones_led.png\" alt=\"LED\"></a></th>\n\t\t\t\t<th><a class=\"ajax\" href=\"content/o_vent.html\">\t\t<img src=\"img/icones_ventoinha.png\" alt=\"Ventoinha\"></a></th>\n\t\t\t\t<th><a class=\"ajax\" href=\"content/o_dc.html\">\t\t<img src=\"img/icones_motordc.png\" alt=\"Motor DC\"></a></th>\n\t\t\t\t<th><a class=\"ajax\" href=\"content/o_vib.html\">\t\t<img src=\"img/icones_vibrador.png\" alt=\"Vibrador\"></a></th>\n\t\t\t\t<th><a class=\"ajax\" href=\"content/o_servo.html\">\t<img src=\"img/icones_servo.png\" alt=\"Servo\"></a></th>\n\t\t\t\t<th><a class=\"ajax\" href=\"content/o_spk.html\">\t\t<img src=\"img/icones_speaker.png\" alt=\"Servo\"></a></th>\n\t\t\t\t<th><a class=\"ajax\" href=\"content/o_linear.html\">\t<img src=\"img/icones_linear.png\" alt=\"Servo\"></a></th>\n\t\t\t\t<th><a class=\"ajax\" href=\"content/o_rele.html\">\t\t<img src=\"img/icones_rele.png\" alt=\"Servo\"></a></th>\n\t\t\t</tr>\n\n\t\t\t<!-- LDR -->\n\t\t\t<tr>\n\t\t\t\t<th><a class=\"ajax\" href=\"content/i_ldr.html\"><img src=\"img/icones_ldr.png\" alt=\"LDR\"></a></th>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_ldr_o_led.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_ldr_o_led.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_ldr_o_vent.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_ldr_o_vent.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_ldr_o_dc_2.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_ldr_o_dc.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_ldr_o_vib.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_ldr_o_vib.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_ldr_o_servo.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_ldr_o_servo.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t</tr>\n\n\n\t\t\t<!-- Potenciômetro -->\n\t\t\t<tr>\n\t\t\t\t<th><a class=\"ajax\" href=\"content/i_pot.html\"><img src=\"img/icones_pot.png\" alt=\"Potenciômetro\"></a></th>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_pot_o_led.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_pot_o_led.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_pot_o_vent.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_pot_o_vent.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_pot_o_dc.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_pot_o_dc.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_pot_o_vib.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_pot_o_vib.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_pot_o_servo.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_pot_o_servo.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t</tr>\n\n\n\t\t\t<!-- Pressão -->\n\t\t\t<tr>\n\t\t\t\t<th><a class=\"ajax\" href=\"content/i_pressao.html\"><img src=\"img/icones_pressao.png\" alt=\"Pressão\"></a></th>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_pressao_o_led.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_pressao_o_led.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_pressao_o_vent.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_pressao_o_vent.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_pressao_o_dc.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_pressao_o_dc.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_pressao_o_vib.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_pressao_o_vib.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_pressao_o_servo.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_pressao_o_servo.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t</tr>\n\n\n\t\t\t<!-- Botão -->\n\t\t\t<tr>\n\t\t\t\t<th><a class=\"ajax\" href=\"content/i_botao.html\"><img src=\"img/icones_push.png\" alt=\"Push-button\"></a></th>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_botao_o_led.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_botao_o_led.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_botao_o_vent.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_botao_o_vent.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_botao_o_dc.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_botao_o_dc.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_botao_o_vib.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_botao_o_vib.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_botao_o_servo.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_botao_o_servo.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t</tr>\n\n\n\t\t\t<!-- Chave óptica -->\n\t\t\t<tr>\n\t\t\t\t<th><a class=\"ajax\" href=\"content/i_chave.html\"><img src=\"img/icones_chave.png\" alt=\"Chave óptica\"></a></th>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_chave_o_led.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_chave_o_led.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_chave_o_vent.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_chave_o_vent.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_chave_o_dc.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_chave_o_dc.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_chave_o_vib.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_chave_o_vib.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_chave_o_servo.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_chave_o_servo.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t</tr>\n\n\n\t\t\t<!-- Reed Switch -->\n\t\t\t<tr>\n\t\t\t\t<th><a class=\"ajax\" href=\"content/i_reed.html\"><img src=\"img/icones_reed.png\" alt=\"Reed Switch\"></a></th>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_reed_o_led.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_reed_o_led.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_reed_o_vent.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_reed_o_vent.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_reed_o_dc.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_reed_o_dc.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_reed_o_vib.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_reed_o_vib.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_reed_o_servo.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_reed_o_servo.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t</tr>\n\n\n\t\t\t<!-- Microfone -->\n\t\t\t<tr>\n\t\t\t\t<th><a class=\"ajax\" href=\"content/i_mic.html\"><img src=\"img/icones_mic.png\" alt=\"Microfone\"></a></th>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_mic_o_led.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_mic_o_led.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_mic_o_vent.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_mic_o_vent.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_mic_o_dc.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_mic_o_dc.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_mic_o_vib.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_mic_o_vib.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_mic_o_servo.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_mic_o_servo.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_mic_o_spk_2.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_mic_o_spk.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t</tr>\n\n\n\t\t\t<!-- Temperatura -->\n\t\t\t<tr>\n\t\t\t\t<th><a class=\"ajax\" href=\"\"><img src=\"img/icones_temp.png\" alt=\"Temperatura\"></a></th>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_temp_o_led.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_temp_o_led.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_temp_o_vent.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_temp_o_ventk.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_temp_o_dc.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_temp_o_dc.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_temp_o_vib.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_temp_o_vib.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop muted width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_temp_o_servo.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_temp_o_servo.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<video loop width=\"192px\" height=\"108px\">\n\t\t\t\t\t\t<source src=\"img/videos/i_temp_o_spk_2.mp4\" type=\"video/mp4\" />\n\t\t\t\t\t</video>\n\t\t\t\t\t<a class=\"ajax\" href=\"content/i_temp_o_spk.html\"><i class=\"fa fa-expand\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t</tr>\n\n\n\t\t\t<!-- Capacitivo -->\n\t\t\t<tr>\n\t\t\t\t<th><a class=\"ajax\" href=\"\"><img src=\"img/icones_cap.png\" alt=\"Capacitivo\"></a></th>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t</tr>\n\n\n\t\t\t<!-- Sonar -->\n\t\t\t<tr>\n\t\t\t\t<th><a class=\"ajax\" href=\"\"><img src=\"img/icones_sonar.png\" alt=\"Sonar\"></a></th>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t</tr>\n\n\n\t\t\t<!-- Bússola -->\n\t\t\t<tr>\n\t\t\t\t<th><a class=\"ajax\" href=\"\"><img src=\"img/icones_bussola.png\" alt=\"Bússola\"></a></th>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t</tr>\n\n\n\t\t\t<!-- Presença -->\n\t\t\t<tr>\n\t\t\t\t<th><a class=\"ajax\" href=\"\"><img src=\"img/icones_presenca.png\" alt=\"Presença\"></a></th>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t</tr>\n\n\n\t\t\t<!-- Aceleração -->\n\t\t\t<tr>\n\t\t\t\t<th><a class=\"ajax\" href=\"\"><img src=\"img/icones_ace.png\" alt=\"Aceleração\"></a></th>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t</tr>\n\n\n\t\t\t<!-- Linear Pot -->\n\t\t\t<tr>\n\t\t\t\t<th><a class=\"ajax\" href=\"\"><img src=\"img/icones_potlinear.png\" alt=\"Potenciômetro Linear\"></a></th>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t</tr>\n\n\n\t\t\t<!-- Hall -->\n\t\t\t<tr>\n\t\t\t\t<th><a class=\"ajax\" href=\"\"><img src=\"img/icones_hall.png\" alt=\"Efeito hall\"></a></th>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t</tr>\n\n\n\t\t\t<!-- Flexão -->\n\t\t\t<tr>\n\t\t\t\t<th><a class=\"ajax\" href=\"\"><img src=\"img/icones_flex.png\" alt=\"Flexão\"></a></th>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t\t<td></td>\n\t\t\t</tr>\n\n\t\t</table>\n\t</article>\n",
+			">\n",
+			"\t</",
+			"nopadding",
+			"articl",
+			"proxi",
+			"pre",
+			"<i class=\"fa fa-expand\" aria-hidden=\"true\"></i>",
+			"</i>",
+			"<i class=\"fa fa-expand\" aria-hidden=\"true\"></i>",
+			"autoplay=",
+			"autoplay",
+			"loop=\"loop\"",
+			"<video"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"&lt;www.estevamgomes.com.br&gt;",
+			"&lt;Servo.h&gt;",
+			"&lt;www.estevamgomes.com.br&gt;",
+			"http://www.arduino.cc/en/Tutorial/Calibration",
+			"&lt;www.estevamgomes.com.br&gt;",
+			"// based on http://www.arduino.cc/en/Tutorial/Calibration",
+			"#include &lt;Servo.h&gt;",
+			"#include <Servo.h>",
+			"/*\n * Input Analog [+calibration][+smoothing] > Output Analog\n * \n * Description: Calibrate and smooth the readings of an analog sensor that controls an analog output \n * \n * Recommended inputs: LDR\n * Recommended outputs: LED, Fan, DC Motor, Vibration Motor\n * \n * Created 2017\n * By E. Quintino <www.estevamgomes.com.br>\n */\n\nconst int analogInPin  = A0;  // the number of the analog input pin\nconst int analogOutPin = 9;   // the number of the pwm output pin\n\nint sensorValue = 0;          // store the value read from analog input\nint outputValue = 0;          // store the value to output to the PWM (analog output)\n\n// CALIBRATION\n// based on <http://www.arduino.cc/en/Tutorial/Calibration>\nint cal_sensorMin      = 1023; // minimum sensor value\nint cal_sensorMax      = 0;    // maximum sensor value\nconst int cal_duration = 5000; // duration of calibration period\nconst int cal_weight   = 0.1;  // \n\n// SMOOTHING\n// based on http://www.arduino.cc/en/Tutorial/Smoothing\n// Define the number of samples to keep track of\n// Higher number = smoother readings and slower output's response \nconst int smo_numReadings = 5;\n\nint smo_readings[smo_numReadings];    // the readings from the analog input\nint smo_readIndex = 0;                // the index of the current reading\nint smo_total     = 0;                // the running total\nint smo_average   = 0;                // the average\n\nvoid setup() {\n\n  // SMOOTHING\n  // initialize all the readings to 0\n  for (int i = 0; i < smo_numReadings; i++) {\n    smo_readings[i] = 0;\n  }\n\n  // CALIBRATION\n  pinMode(13, OUTPUT);      // define pin 13 as output\n  digitalWrite(13, HIGH);   // turn on LED to signal the start of the calibration\n\n  int cal_start = millis();\n  while (millis() - cal_start < cal_duration) {\n    // reads the sensor and stores into a variable\n    sensorValue = analogRead(analogInPin);\n\n    // update the maximum sensor value\n    if (sensorValue > cal_sensorMax) {\n      cal_sensorMax = sensorValue;\n    }\n    \n    // update the minimum sensor value\n    if (sensorValue < cal_sensorMin) {\n      cal_sensorMin = sensorValue;\n    }\n  }\n\n  // to get better results I suggest to reduce a bit the maximum and increase a bit the minimum\n  int cal_range = cal_sensorMax - cal_sensorMin;\n  cal_sensorMax = cal_sensorMax - cal_range * cal_weight;\n  cal_sensorMin = cal_sensorMin + cal_range * cal_weight;\n  \n  digitalWrite(13, LOW); // turn off LED to signal the end of the calibration\n}\n\n\nvoid loop() {\n  \n  // SMOOTHING\n  smo_total = smo_total - smo_readings[smo_readIndex];   // subtract the last reading from the total\n  smo_readings[smo_readIndex] = analogRead(analogInPin); // read from the sensor\n  smo_total = smo_total + smo_readings[smo_readIndex];   // add the current reading to the total\n  smo_readIndex++;  // advance to the next position in the array\n\n  if (smo_readIndex >= smo_numReadings) { // if we reach the end of the array\n    smo_readIndex = 0;                    // start from 0\n  }\n\n  smo_average = smo_total / smo_numReadings; // calculate the average\n  \n  // CALIBRATION\n  // map the sensor reading from the calibration range to the output range (0-255)\n  outputValue = map(smo_average, cal_sensorMin, cal_sensorMax, 0, 255);\n  outputValue = constrain(outputValue, 0, 255); // in case the sensor value is outside the range seen during calibration\n  \n  // UPDATE OUTPUT\n  analogWrite(analogOutPin, outputValue);       // change the analog output value\n\n  delay(2); // wait 2 milliseconds before the next loop for the analog-to-digital converter to settle\n}\n\n#include &lt;Servo.h&gt;",
+			"/*\n * Input Analog [+calibration][+smoothing] > Output Analog\n * \n * Description: Calibrate and smooth the readings of an analog sensor that controls an analog output \n * \n * Recommended inputs: LDR\n * Recommended outputs: LED, Fan, DC Motor, Vibration Motor\n * \n * Created 2017\n * By E. Quintino <www.estevamgomes.com.br>\n */\n\nconst int analogInPin  = A0;  // the number of the analog input pin\nconst int analogOutPin = 9;   // the number of the pwm output pin\n\nint sensorValue = 0;          // store the value read from analog input\nint outputValue = 0;          // store the value to output to the PWM (analog output)\n\n// CALIBRATION\n// based on <http://www.arduino.cc/en/Tutorial/Calibration>\nint cal_sensorMin      = 1023; // minimum sensor value\nint cal_sensorMax      = 0;    // maximum sensor value\nconst int cal_duration = 5000; // duration of calibration period\nconst int cal_weight   = 0.1;  // \n\n// SMOOTHING\n// based on http://www.arduino.cc/en/Tutorial/Smoothing\n// Define the number of samples to keep track of\n// Higher number = smoother readings and slower output's response \nconst int smo_numReadings = 5;\n\nint smo_readings[smo_numReadings];    // the readings from the analog input\nint smo_readIndex = 0;                // the index of the current reading\nint smo_total     = 0;                // the running total\nint smo_average   = 0;                // the average\n\nvoid setup() {\n\n  // SMOOTHING\n  // initialize all the readings to 0\n  for (int i = 0; i < smo_numReadings; i++) {\n    smo_readings[i] = 0;\n  }\n\n  // CALIBRATION\n  pinMode(13, OUTPUT);      // define pin 13 as output\n  digitalWrite(13, HIGH);   // turn on LED to signal the start of the calibration\n\n  int cal_start = millis();\n  while (millis() - cal_start < cal_duration) {\n    // reads the sensor and stores into a variable\n    sensorValue = analogRead(analogInPin);\n\n    // update the maximum sensor value\n    if (sensorValue > cal_sensorMax) {\n      cal_sensorMax = sensorValue;\n    }\n    \n    // update the minimum sensor value\n    if (sensorValue < cal_sensorMin) {\n      cal_sensorMin = sensorValue;\n    }\n  }\n\n  // to get better results I suggest to reduce a bit the maximum and increase a bit the minimum\n  int cal_range = cal_sensorMax - cal_sensorMin;\n  cal_sensorMax = cal_sensorMax - cal_range * cal_weight;\n  cal_sensorMin = cal_sensorMin + cal_range * cal_weight;\n  \n  digitalWrite(13, LOW); // turn off LED to signal the end of the calibration\n}\n\n\nvoid loop() {\n  \n  // SMOOTHING\n  smo_total = smo_total - smo_readings[smo_readIndex];   // subtract the last reading from the total\n  smo_readings[smo_readIndex] = analogRead(analogInPin); // read from the sensor\n  smo_total = smo_total + smo_readings[smo_readIndex];   // add the current reading to the total\n  smo_readIndex++;  // advance to the next position in the array\n\n  if (smo_readIndex >= smo_numReadings) { // if we reach the end of the array\n    smo_readIndex = 0;                    // start from 0\n  }\n\n  smo_average = smo_total / smo_numReadings; // calculate the average\n  \n  // CALIBRATION\n  // map the sensor reading from the calibration range to the output range (0-255)\n  outputValue = map(smo_average, cal_sensorMin, cal_sensorMax, 0, 255);\n  outputValue = constrain(outputValue, 0, 255); // in case the sensor value is outside the range seen during calibration\n  \n  // UPDATE OUTPUT\n  analogWrite(analogOutPin, outputValue);       // change the analog output value\n\n  delay(2); // wait 2 milliseconds before the next loop for the analog-to-digital converter to settle\n}\n\n",
+			"// change the analog output value",
+			"// read the analog input value",
+			"myservo.attach(outputPin); // attaches the servo on pin 9 to the servo object",
+			"// map it from the input range (0-1023) to the output range (0-255)",
+			"/*\n * Input Digital > Output Servo\n * \n * Description: Changes the servo position when switching a digital input\n * \n * Recommended inputs: Push-button, Reed Switch, Photo Interrupter (Slotted Optical Switch)\n * Recommended outputs: Servo Motor\n * \n * Created 2017\n * By E. Quintino <www.estevamgomes.com.br>\n */",
+			"/*\n * Input Digital > Output Digital\n * \n * Description: Turn on and off a digital output when switching a digital input\n * \n * Recommended inputs: Push-button, Reed Switch, Photo Interrupter (Slotted Optical Switch)\n * Recommended outputs: LED, Fan, DC Motor, Vibration Motor\n * \n * Created 2017\n * By E. Quintino <www.estevamgomes.com.br>\n */\n",
+			"/*\n * Input Digital > Output Servo\n * \n * Description: Changes the servo position when switching a digital input\n * \n * Recommended inputs: Push-button, Reed Switch, Photo Interrupter (Slotted Optical Switch)\n * Recommended outputs: Servo Motor\n * \n * Created 2017\n * By E. Quintino <www.estevamgomes.com.br>\n */",
+			"/*\n * Input Digital > Output Servo\n * \n * Description: Changes the servo position when switching a digital input\n * \n * Created 2017\n * By E. Quintino <www.estevamgomes.com.br>\n */",
+			"/*\n * Input Digital > Output Digital\n * \n * Description: Turn on and off a digital output when switching a digital input\n * \n * Created 2017\n * By E. Quintino <www.estevamgomes.com.br>\n */"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "i_mic_o_dc.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4024,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								170,
+								170
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "i_mic_o_spk.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4211,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								166,
+								166
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 33.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "i_temp_o_servo.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4819,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1689,
+								1689
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 357.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/Users/LAGEAR_9/Desktop/estevam/mestrado/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 40765,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1130,
+								1130
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 110.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "i_temp_o_spk.html",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 4822,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "i_temp_o_dc.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4516,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								927,
+								927
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 93.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "mestrado.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 232.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

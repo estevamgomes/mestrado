@@ -1,0 +1,40 @@
+<h1>Input: Pressão <img src="img/in_out-01.png"> Output: Luz</h1>
+
+<video autoplay controls>
+  <source src="../img/videos_hi/i_botao_o_led.mp4" type="video/mp4" />
+</video>
+
+<pre><code class="arduino">
+/*
+ * Input Digital > Output Digital
+ * 
+ * Description: Turn on and off a digital output when switching a digital input
+ * 
+ * Recommended inputs: Push-button, Reed Switch, Photo Interrupter (Slotted Optical Switch)
+ * Recommended outputs: LED, Fan, DC Motor, Vibration Motor
+ * 
+ * Created 2017
+ * By E. Quintino &lt;www.estevamgomes.com.br&gt;
+ */
+
+
+const int inputPin  = 2; // the number of the input pin
+const int outputPin = 8; // the number of the output pin
+
+int inputState = 0;      // store the input state 
+
+void setup() {
+  pinMode(inputPin, INPUT);    // initialize the pinput pin
+  pinMode(outputPin, OUTPUT);  // initialize the output pin
+}
+
+void loop() {
+  inputState = digitalRead(inputPin); // read the state of the input
+
+  if (inputState == HIGH) {           // if input is on
+    digitalWrite(outputPin, HIGH);    // turn on output pin
+  } else {                            // if input is off
+    digitalWrite(outputPin, LOW);     // turn off output pin
+  }
+}
+</code></pre>
