@@ -28,7 +28,7 @@ int outputValue = 0;          // store the value to output to the PWM (analog ou
 int cal_sensorMin      = 1023; // minimum sensor value
 int cal_sensorMax      = 0;    // maximum sensor value
 const int cal_duration = 8000; // duration of calibration period
-const int cal_weight   = 0.1;  // 
+float cal_weight       = 0.1;  // 
 
 // MICROPHONE
 // based on https://learn.sparkfun.com/tutorials/electret-mic-breakout-board-hookup-guide
@@ -44,27 +44,11 @@ void setup() {
   pinMode(13, OUTPUT);      // define pin 13 as output
   digitalWrite(13, HIGH);   // turn on LED to signal the start of the calibration
 
-  int cal_start = millis();
+  unsigned long cal_start = millis();
   while (millis() - cal_start < cal_duration) {
     
-    int record_start = millis();  // Start of sample window
-    int record_max = 0;
-    int record_min = 1024;
-    
-    // collect data for record_duration miliseconds
-    while (millis() - record_start < record_duration) {
-      // reads the sensor and stores into a variable
-      int sensorReading = analogRead(0);
-      
-      if (sensorReading > record_max) {
-        record_max = sensorReading;  // save just the max levels
-      } else if (sensorReading < record_min) {
-        record_min = sensorReading;  // save just the min levels
-      }
-    }
-    
-    int peakToPeak = record_max - record_min;  // peak-peak amplitude
-    sensorValue = constrain(peakToPeak, 0, 1023);
+    int peakToPeakValue = peakToPeak(analogInPin, record_duration);
+    sensorValue = constrain(peakToPeakValue, 0, 1023);
 
     // record the maximum sensor value
     if (sensorValue > cal_sensorMax) {
@@ -86,24 +70,7 @@ void setup() {
 }
 
 void loop() {
-  int record_start = millis();  // Start of sample window
-  int record_max = 0;
-  int record_min = 1024;
-  
-  // collect data for record_duration miliseconds
-  while (millis() - record_start < record_duration) {
-    // reads the sensor and stores into a variable
-    int sensorReading = analogRead(0);
-    
-    if (sensorReading > record_max) {
-      record_max = sensorReading;  // save just the max levels
-    } else if (sensorReading < record_min) {
-      record_min = sensorReading;  // save just the min levels
-    }
-  }
-
-  int peakToPeak = record_max - record_min; // peak-peak amplitude
-  sensorValue = peakToPeak;
+  sensorValue = peakToPeak(analogInPin, record_duration);
 
   // CALIBRATION
   sensorValue = constrain(sensorValue, cal_sensorMin, cal_sensorMax); // in case the sensor value is outside the range seen during calibration
@@ -118,5 +85,31 @@ void loop() {
   }
   
   delay(2); // wait 2 milliseconds before the next loop for the analog-to-digital converter to settle
+}
+
+
+/*
+ * name: peakToPeak([integer] pin used for the mic, [integer] duration of the measure);
+ * description: measure the microphone's value based on a serie of measures
+ * return: [integer] value read from microphone pin
+ */
+int peakToPeak(int pin, int duration) {
+  unsigned long record_start = millis();  // Start of sample window
+  int record_max = 0;
+  int record_min = 1024;
+  
+  // collect data for record_duration miliseconds
+  while (millis() - record_start < duration) {
+    // reads the sensor and stores into a variable
+    int sensorReading = analogRead(pin);
+    
+    if (sensorReading > record_max) {
+      record_max = sensorReading;  // save just the max levels
+    } else if (sensorReading < record_min) {
+      record_min = sensorReading;  // save just the min levels
+    }
+  }
+
+  return record_max - record_min;  // peak-peak amplitude
 }
 </code></pre>

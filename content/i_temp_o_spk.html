@@ -30,7 +30,7 @@ unsigned long lastReading = millis();
 int cal_sensorMin      = 1023;  // minimum sensor value
 int cal_sensorMax      = 0;     // maximum sensor value
 const int cal_duration = 15000; // duration of calibration period
-const int cal_weight   = 0.2;   //
+float cal_weight       = 0.2;   //
 
 // SMOOTHING
 // based on http://www.arduino.cc/en/Tutorial/Smoothing
@@ -59,7 +59,7 @@ void setup() {
   pinMode(13, OUTPUT);      // define pin 13 as output
   digitalWrite(13, HIGH);   // turn on LED to signal the start of the calibration
 
-  int cal_start = millis();
+  unsigned long cal_start = millis();
   while (millis() - cal_start < cal_duration) {
     // reads the sensor and stores into a variable
     sensorValue = analogRead(analogInPin);

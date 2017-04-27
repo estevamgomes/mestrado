@@ -57,16 +57,6 @@ $(document).ready(function(){
 	//// MENU TOGGLE ////
 	/////////////////////
 
-	$(document).scroll(function() {
-		var scrollTop = $(document).scrollTop();
-		var scrollTopMin = $('#nav-main').offset().top + $('#nav-main').height();
-		if(scrollTop > scrollTopMin) {
-			$('#nav-main .toggle').addClass('show');
-		} else {
-			$('#nav-main .toggle').removeClass('show');
-		}
-	});
-
 
 	//////////////////////
 	//// SERVO SLIDER ////

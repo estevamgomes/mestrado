@@ -234,8 +234,6 @@ h3 { font-size: 1.3rem; }
 
 header#main-title {
 	padding: 5%;
-	padding-bottom: 20%;
-	background: @branco;
 	h1 {
 		letter-spacing: .05em;
 		display: inline-block;
@@ -251,45 +249,51 @@ nav#nav-main {
 	background: @branco;
 
 	.toggle {
-		z-index: -1;
+		z-index: 999;
 		text-decoration: none;
 		font-family: @font-header;
 		text-transform: uppercase;
 		font-size: 1.4rem;
 		letter-spacing: .1em;
-		color: @branco;
+		color: @preto;
 
 		position: fixed;
 		top: 0;
 		right: 0;
 
-		background: @azul;
 		padding: 1em 1.2em;
 
-		&.show {
-			z-index: 999;
-		}
 		&:hover, &:active, &:focus {
 			background: @vermelho;
 		}
 	}
 
 	div.nav-content {
-		padding-bottom: 20%;
+		position: fixed;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		background: @preto;
+		overflow-y: auto;
+		overflow-x: hidden;
+		width: 10px;
+		z-index: 1000;
+		transition: width ease .5s;
 		ul {
+			padding: 4em;
 			margin: 0;
-			padding: 0;
 			list-style: none;
 			li {
 				margin-bottom: .3em;
+				white-space: nowrap;
 				a {
 					text-decoration: none;
-					font-size: 1.3rem;
-					color: @preto;
+					font-size: 1.4rem;
+					color: @branco;
 					font-family: @font-header;
 					position: relative;
 					&:hover, &:focus, &:active {
-						color: @vermelho;
+						color: @azul;
 						&:after {
 							content: '';
 							position: absolute;
@@ -297,12 +301,18 @@ nav#nav-main {
 							right: -10px;
 							width: 10px;
 							height: 4px;
-							background: @vermelho;
+							background: @azul;
 							animation: blink 1s linear infinite;
 						}
 					}
 				}
 			}
+		}
+	}
+
+	&:hover {
+		div.nav-content {
+			width: 30rem;
 		}
 	}
 }
