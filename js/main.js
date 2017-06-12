@@ -56,6 +56,11 @@ $(document).ready(function(){
 	/////////////////////
 	//// MENU TOGGLE ////
 	/////////////////////
+	$('#nav-main .nav-content').hide();
+	$('#nav-main .toggle').click(function(event){
+		event.preventDefault();
+		$('#nav-main .nav-content').animate({width:'toggle'}, 350);
+	});
 
 
 	//////////////////////

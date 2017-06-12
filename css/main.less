@@ -246,22 +246,22 @@ header#main-title {
 }
 
 nav#nav-main {
-	background: @branco;
 
 	.toggle {
 		z-index: 999;
-		text-decoration: none;
 		font-family: @font-header;
 		text-transform: uppercase;
 		font-size: 1.4rem;
+		line-height: 4rem;
 		letter-spacing: .1em;
-		color: @preto;
+		color: @branco;
+		background: @azul;
 
 		position: fixed;
 		top: 0;
-		right: 0;
+		left: 0;
 
-		padding: 1em 1.2em;
+		padding: 0 .8em;
 
 		&:hover, &:active, &:focus {
 			background: @vermelho;
@@ -271,17 +271,16 @@ nav#nav-main {
 	div.nav-content {
 		position: fixed;
 		top: 0;
-		right: 0;
+		left: 0;
 		bottom: 0;
 		background: @preto;
 		overflow-y: auto;
 		overflow-x: hidden;
-		width: 10px;
-		z-index: 1000;
-		transition: width ease .5s;
+		z-index: 998;
 		ul {
-			padding: 4em;
+			padding: 3rem 4rem 3rem 2.5rem;
 			margin: 0;
+			border-top: 4rem solid @azul;
 			list-style: none;
 			li {
 				margin-bottom: .3em;
@@ -307,12 +306,6 @@ nav#nav-main {
 					}
 				}
 			}
-		}
-	}
-
-	&:hover {
-		div.nav-content {
-			width: 30rem;
 		}
 	}
 }
@@ -367,15 +360,25 @@ section#main, section#ajax {
 		}
 
 		.diagram {
+			background: mix(@branco, @preto, 96%);
 			&#servo {
 
-				.input, .output {
-					width: 50%;
-					height: 70vh;
+				.input, .output, .controle {
+					height: 50vh;
 					position: relative;
 					h2 {
 						margin-top: 5%;
 						text-align: center;
+					}
+					.element-wrapper {
+						position: absolute;
+						width: 140px;
+						height: 140px;
+						border-radius: 50%;
+						top: 50%;
+						margin-top: -70px;
+						left: 50%;
+						margin-left: -70px;
 					}
 					.counter {
 						position: absolute;
@@ -387,22 +390,12 @@ section#main, section#ajax {
 						font-family: @font-header;
 					}
 				}
+
 				.input {
-					background: @azul;
-					h2 {
-						color: @branco;
-					}
-					.counter {
-						color: @branco;
-					}
+					h2 {}
+					.counter {}
 					#servo-slider-wrapper {
-						width: 120px;
-						height: 120px;
-						position: absolute;
-						top: 50%;
-						margin-top: -60px;
-						left: 50%;
-						margin-left: -60px;
+						background: @vermelho;
 						.ui-slider {
 							background: @branco;
 							box-shadow: 0 2px 0 0 @preto inset;
@@ -433,16 +426,18 @@ section#main, section#ajax {
 					}
 				}
 				.output {
-					background: @verdeclaro;
+					.element-wrapper {
+						background: @verdeclaro;
+					}
 					#servo-animation {
-						background: url('../img/icones_servo-ani-lg.png') no-repeat 0 0;
+						position: absolute;
 						width: 120px;
 						height: 120px;
-						position: absolute;
 						top: 50%;
 						margin-top: -60px;
 						left: 50%;
 						margin-left: -60px;
+						background: url('../img/icones_servo-ani-lg.png') no-repeat 0 0;
 						.servo-horn {
 							animation: servospin 1s linear infinite;
 							position: absolute;

@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>Remote Spatialized Communication by E. Quintino</title>
+	<title>Computer-based systems for architecture by E. Quintino</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -23,7 +23,7 @@
 <![endif]-->
 
 <header id="main-title">
-	<h1>Interação remota espacializada</h1>
+	<h1>Computer-based systems for architecture</h1>
 	<h2>Estevam Quintino</h2>
 	<!--
 	<p>www.estevamgomes.com.br</p>
@@ -54,19 +54,27 @@
 
 	<article>
 		<div class="text">
-			<h1>Conexão simples (1 input - 1 output) e relação linear</h1>
+			<h1>Sistema linear</h1>
+			<h2>Conexão simples</h2>
+			<p>1 input - 1 output</p>
+			<p>Relação Linear</p>
+			<p>Sistemas lineares (open-loop) apenas reagem à mudanças. Por exemplo, ao apertar o interruptor é possível acender ou apagar a lâmpada, ou sensores de presença que acendem a lâmpada quando detectam movimento.</p>
 		</div>
 
-		<div class="diagram table" id="servo">
-			<div class="table-cell input">
+		<div class="diagram section" id="servo">
+			<div class="col span_4_of_12 input">
 				<h2>Input</h2>
-				<div id="servo-slider-wrapper"><div id="servo-slider"></div></div>
+				<div id="servo-slider-wrapper" class="element-wrapper"><div id="servo-slider"></div></div>
 				<div id="servo-slider-counter" class="counter"></div>
 			</div>
 
-			<div class="table-cell output">
+			<div class="col span_4_of_12 controle">
+				<h2>Controle</h2>
+			</div>
+
+			<div class="col span_4_of_12 output">
 				<h2>Output</h2>
-				<div id="servo-animation"><div class="servo-horn"></div></div>
+				<div class="element-wrapper"><div id="servo-animation"><div class="servo-horn"></div></div></div>
 				<div id="servo-animation-counter" class="counter"></div>
 			</div>
 		</div>
