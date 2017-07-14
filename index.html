@@ -23,7 +23,8 @@
 <![endif]-->
 
 <header id="main-title">
-	<h1>Computer-based systems for architecture</h1>
+	<h1>Sistemas computacionais para arquitetura</h1>
+	<!-- <h1 class="lg-en">Computer-based systems for architecture</h1> -->
 	<h2>Estevam Quintino</h2>
 	<!--
 	<p>www.estevamgomes.com.br</p>
@@ -46,19 +47,144 @@
 
 <section id="main">
 
+	<!-- Introdução -->
 	<article id="introducao">
 		<div class="text">
 			<h1>Introdução</h1>
+
+			<p>Este site é o registro de parte da minha pesquisa de mestrado que investiga o uso de sistemas computacionais na arquitetura para ampliar sua capacidade estética/informacional, ética/social ou abrigo/conforto. O site é um complemento à dissertação que ajuda na compreensão dos conceitos utilizando vídeos e diagramas interativos.</p>
 		</div>
 	</article>
 
 	<article>
 		<div class="text">
-			<h1>Sistema linear</h1>
-			<h2>Conexão simples</h2>
-			<p>1 input - 1 output</p>
-			<p>Relação Linear</p>
+			<h1>Componentes básicos</h1>
+
+			<p>Todos sistemas discutidos anteriormente podem ser desmembrados até chegar aos seus elementos essenciais. Este capítulo registra esses elementos (físicos e conceituais), criando um vocabulário para entender, estudar e criar ferramentas. Essa base de conhecimento visa estimular a aplicação experimental do computador na arquitetura e servir como referência para criação de espaços interativos e processos participativos de projeto.</p>
+			<p>Os sistemas discutidos são compostos de ao menos três elementos básicos: sensores, que captam as mudanças no espaço; atuadores, que transformam o espaço; e controle, que recebe as informações do sensor, executa o algoritmo, e controla o atuador.</p>
+
+			<img src="img/diagramas/sistemas_base.png" alt="Componentes básicos de um sistema">
+		</div>
+	</article>
+
+	<!-- Controlador -->
+	<article>
+		<div class="text">
+			<h2>Controlador</h2>
+
+			<p>O controlador é uma máquina reprogramável que armazena e processa informações através de algoritmos. Para os exemplos a seguir será utilizado o <a href="https://www.arduino.cc/" title="Site do Arduino - Acesso em 8 de outubro de 2016" target="_blank">Arduino</a>, uma plataforma reprogramável de prototipagem eletrônica de hardware livre e placa única na qual é possível acoplar diferentes sensores e atuadores. O Arduino pode ser programado na linguagem C++ e conta com um IDE (Integrated Development Environment) para os principais sistemas operacionais que facilita a comunicação da placa com o computador. A vantagem de usar o Arduino (ou outro microcontrolador) ao invés de circuitos elétricos específicos é a facilidade para testar múltiplos programas, programar comportamentos elaborados, comunicar com o computador localmente e pela internet, utilizar múltiplos sensores e atuadores, calibrar e suavizar a leitura dos sensores e manipular sensores e atuadores complexos (e.g. sensor ultrassônico e servo).</p>
+		</div>
+	</article>
+
+	<!-- Sensores -->
+	<article>
+		<div class="text">
+			<h2>Sensores</h2>
+
+			<p>Para os sistemas eletrônicos, sensores (receptores, input) são dispositivo que traduzem estímulo físico ou químico em estímulo elétrico. Fazem a interface entre o computador e o ambiente e as pessoas. Os sensores que serão apresentados são o LDR (luz), potenciômetro (giro), Flexiforce (intensidade da pressão), push-button (pressão digital), chave óptica (interrupção de um faixo de luz), reed switch (presença de campo magnético), microfone piezoelétrico (intensidade do som), LM35 (temperatura), capacitivo (proximidade curta distância e toque), Sensor ultrassônico HC-SR04 (proximidade média distância), bússola (direção), PIR (movimento/presença), acelerômetro (movimento), potenciômetro slider (movimento linear), efeito hall (pólo magnético), Flex Sensor (flexão). Apesar de existirem outros sensores esses cobrem um boa quantidade das interações possíveis.</p>
+
+			<p>Os sensores apresentam dois tipos de comportamento. Os sensores que captam apenas dois estados, ligado ou desligado—como o push-button, chave óptica, reed switch, PIR, efeito hall—são chamados de sensores digitais ou binários. Os sensores que captam uma variação de leitura contínua entre um valor máximo e um valor mínimo são chamados sensores analógicos ou sensores de intensidade. É o caso do LDR, potenciômetro, Flexiforce, microfone, LM35, capacitivo, ultrasônico, bússola, acelerômetro, potenciômetro slider e o Flex Sensor. A precisão da medição realizada pelos sensores analógicos depende do sensor—a precisão do LM35, por exemplo, é de ±0.25°C—e da capacidade do processador—o Arduino converte os sinais analógicos em sinais digitais e reconhece no máximo 1023 estados.</p>
+		</div>
+
+		<div class="text">
+			<h3>Sensores analógicos (contínuo, intensidade)</h3>
+		</div>
+
+		<ul class="sidebyside-list">
+			<li><a class="ajax" href="content/i_ldr.html">		<img src="img/icones_ldr.png" alt="LDR">			<span class="name">Luz</span></a></li>
+			<li><a class="ajax" href="content/i_pot.html">		<img src="img/icones_pot.png" alt="Potenciômetro">	<span class="name">Giro</span></a></li>
+			<li><a class="ajax" href="content/i_pressao.html">	<img src="img/icones_pressao.png" alt="Pressão">	<span class="name">Pressão<br>[intensidade]</span></a></li>
+			<li><a class="ajax" href="content/i_mic.html">		<img src="img/icones_mic.png" alt="Microfone">		<span class="name">Som</span></a></li>
+			<li><a class="ajax" href="content/i_temp.html">		<img src="img/icones_temp.png" alt="Temperatura">	<span class="name">Temperatura</span></a></li>
+			<li><a class="ajax" href="content/i_cap.html">		<img src="img/icones_cap.png" alt="Capacitivo">		<span class="name">Toque</span></a></li>
+			<li><a class="ajax" href="content/i_sonar.html">	<img src="img/icones_sonar.png" alt="Sonar">		<span class="name">Distância<br>[proximidade]</span></a></li>
+			<li><a class="ajax" href="content/i_bussola.html">	<img src="img/icones_bussola.png" alt="Bússola">	<span class="name">Direção</span></a></li>
+			<li><a class="ajax" href="content/i_ace.html">		<img src="img/icones_ace.png" alt="Aceleração">		<span class="name">Movimento</span></a></li>
+			<li><a class="ajax" href="content/i_potlinear.html"><img src="img/icones_potlinear.png" alt="Potenciômetro linear"><span class="name">Movimento linear</span></a></li>
+			<li><a class="ajax" href="content/i_flex.html">		<img src="img/icones_flex.png" alt="Flexão">		<span class="name">Flexão</span></a></li>
+		</ul>
+
+		<div class="text">
+			<h3>Sensores digitais (ou binários)</h3>
+		</div>
+
+		<ul class="sidebyside-list">
+			<li><a class="ajax" href="content/i_hall.html">		<img src="img/icones_hall.png" alt="Efeito Hall">	<span class="name">Pólo Magnético</span></a></li>
+			<li><a class="ajax" href="content/i_push.html">		<img src="img/icones_push.png" alt="Push-button">	<span class="name">Pressão</span></a></li>
+			<li><a class="ajax" href="content/i_chave.html">	<img src="img/icones_chave.png" alt="Chave óptica">	<span class="name">Interrupção</span></a></li>
+			<li><a class="ajax" href="content/i_reed.html">		<img src="img/icones_reed.png" alt="Reed Switch">	<span class="name">Magnético</span></a></li>
+			<li><a class="ajax" href="content/i_presenca.html">	<img src="img/icones_presenca.png" alt="Presença">	<span class="name">Presença</span></a></li>
+		</ul>
+
+		<div class="text">
+			<h3>Amplificador ou tradutor do sensor</h3>
+		</div>
+	</article>
+
+	<!-- Atuadores -->
+	<article>
+		<div class="text">
+
+			<h2>Atuadores</h2>
+
+			<p>Para sistemas eletrônicos, atuadores (emissores, output) são dispositivo que traduzem estímulos elétricos em estímulo físico ou químico. Fazem a interface entre o computador e o ambiente e as pessoas. Os atuadores que serão apresentados são LED (luz), ventoinha (vento), motor DC (rotação), vibrador (vibração), servo (rotação 180 graus), auto-falante (som), solenoid (linear), relé (clique). Alguns atuadores podem ser acoplados à outros elementos para alterar o comportamento, a ventoinha é um motor DC com uma hélice para produzir correntes de ar e o vibrador é um motor DC com um peso deslocado do centro para produzir vibração.</p>
+
+			<p>Assim como os sensores, os atuadores podem ser categorizados em analógicos e digitais (ou binários). Os atuadores digitais são o relé e o solenoid. E todos os outros são analógicos (LED, ventoinha, motor DC, vibrador, servo e auto-falante), ou seja, podem ter sua intensidade controlada. Nos motores DC e nas ventoinhas, além de controlar a intensidade, é possível inverter a direção do movimento.</p>
+
+			<p>A precisão da intensidade dos atuadores analógicos também varia e está relacionada tanto à características dos atuadores como à capacidade do processador. O Arduino não gera sinais analógicos, ele utiliza uma estratégia chamada PWM (Pulse-Width Modulation), que simula uma onda analógica variando a frequência de pulsos digitais. A definição máxima que o Arduino fornece para controlar os atuadores são 255 estados. Alguns atuadores, como os motores DC, necessitam de um mínimo de energia para funcionar, o que acaba por reduzir o número de estados. E a variação muitas vezes é pouco perceptível, dando a impressão de serem menos estados.</p>
+		</div>
+
+		<div class="text">
+			<h3>Atuadores analógicos (contínuo, intensidade)</h3>
+		</div>
+
+		<ul class="sidebyside-list">
+			<li><a class="ajax" href="content/o_led.html">		<img src="img/icones_led.png" alt="LED">				<span class="name">Luz</span>		</a></li>
+			<li><a class="ajax" href="content/o_vent.html">		<img src="img/icones_ventoinha.png" alt="Ventoinha">	<span class="name">Vento</span>		</a></li>
+			<li><a class="ajax" href="content/o_dc.html">		<img src="img/icones_motordc.png" alt="Motor DC">		<span class="name">Rotação</span>	</a></li>
+			<li><a class="ajax" href="content/o_vib.html">		<img src="img/icones_vibrador.png" alt="Vibrador">		<span class="name">Vibração</span>	</a></li>
+			<li><a class="ajax" href="content/o_servo.html">	<img src="img/icones_servo.png" alt="Servo">			<span class="name">Rotação</span>	</a></li>
+			<li><a class="ajax" href="content/o_spk.html">		<img src="img/icones_speaker.png" alt="Auto-falante">	<span class="name">Som</span>		</a></li>
+		</ul>
+
+		<div class="text">
+			<h3>Atuadores digitais (ou binários)</h3>
+		</div>
+
+		<ul class="sidebyside-list">
+			<li><a class="ajax" href="content/o_linear.html">	<img src="img/icones_linear.png" alt="Linear">			<span class="name">Linear</span>	</a></li>
+			<li><a class="ajax" href="content/o_rele.html">		<img src="img/icones_rele.png" alt="Relé">				<span class="name">Clique</span>	</a></li>
+		</ul>
+
+		<div class="text">
+			<h3>Amplificador ou tradutor do atuador</h3>
+
+			<p>Alguns elementos podem ser acoplados aos atuadores para criar novos efeitos ou movimentos mais elaborados e uma variedade maior ou diferente de estados. Dar uma pesquisada nas para ver algumas referências assim como <a href="http://www.johnedmark.com/spirals/">John Edmark</a>, Theo Jansen, Arthur Ganson, Omar Khan<sup><a href="https://www.youtube.com/watch?v=HClHiYs7qSc">1</a>,<a href="https://www.google.com/search?q=omar+khan+architect&safe=off&source=lnms&tbm=isch&sa=X&ved=0ahUKEwizwbCJ3eXUAhULG5AKHXn6C3kQ_AUIBigB&biw=1280&bih=628#imgrc=6V4ifty-m5yNAM:">2</a></sup>, <a href="https://www.google.com/search?q=zimoun&safe=off&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiWq5bE0vXSAhUJjJAKHTtwC_kQ_AUICCgB&biw=1280&bih=628#imgrc=YSDfykS-AYL61M:">Zimoun</a>.</p>
+		</div>
+	</article>
+
+	<!-- Conceitos -->
+	<article>
+		<div class="text">
+			<h2>Conceitos</h2>
+
+			<p>Feedback, circularidade, controle, comunicação, objetivo</p>
+			<p>cibernética de segunda ordem: observador, autonomia, auto-organização, cognição, conversação</p>
+		</div>
+	</article>
+
+	<!-- Sistemas -->
+	<article>
+		<div class="text">
+			<h1>Sistemas</h1>
+
+			<p>Sistemas podem ser estáticos ou dinâmicos. Sistemas estáticos são aqueles que não podem agir e, portanto, têm pouco ou nenhum efeito significativo em seu ambiente como, por exemplo, uma cadeira. Sistemas dinâmicos são aqueles que podem agir e agem, mudando assim sua relação com o meio (DUBBERLY et al, 2009). O contexto ambiental e as pessoas são sistemas dinâmicos. As paredes, o telhado e a laje são sistemas estáticos. As portas, janelas, lâmpadas são sistemas estáticos em isolamentos mas dinâmicos se incluirmos o operador, seja um humano ou um computador. Os sistemas dinâmicos podem ser classificados em três tipos principais: lineares, auto-regulados, sistema de aprendizagem (DUBBERLY et al, 2009).</p>
+
+			<h2>Sistema linear</h2>
+			
 			<p>Sistemas lineares (open-loop) apenas reagem à mudanças. Por exemplo, ao apertar o interruptor é possível acender ou apagar a lâmpada, ou sensores de presença que acendem a lâmpada quando detectam movimento.</p>
+
+			<h3>Conexão simples (1 input - 1 output)</h3>
 		</div>
 
 		<div class="diagram section" id="servo">
@@ -78,14 +204,26 @@
 				<div id="servo-animation-counter" class="counter"></div>
 			</div>
 		</div>
+		
+		<div class="text">
+			<h2>Sistemas auto-regulados de primeira ordem (adaptativos)</h2>
+
+			<p>Sistemas auto-regulados tem um objetivo definido por um agente externo. O objetivo define a relação entre o sistema e o ambiente, que o sistema busca alcançar e manter. Esta relação é o que o sistema regula, o que procura manter constante diante de forças externas.</p>
+			
+			<p>Sistemas auto-regulados incluem feedback negativo. Ou seja, parte do sinal do output do sistema retorna como sinal para o input. Feedback negativo é um sistema que visa alcançar e manter automaticamente a condição desejada comparando-a com a condição real. Ele faz isso gerando um sinal de erro, que é a diferença entre o output e o input de referência. Um exemplo de sistema de circuito fechado com feedback negativo é um termostato que ajusta seu output, seja um sistema de aquecimento ou refrigeração, para alcançar a temperatura escolhida pelo operador.</p>
+
+			<h2>Sistemas de aprendizagem (sistemas de segunda-ordem)</h2>
+
+			<p>Sistemas de aprendizagem usam um sistema de auto-regulagem para controlar o objetivo de outro sistema de auto-regulagem. O segundo sistema mede o efeito do primeiro no ambiente e ajusta o objetivo do primeiro sistema de acordo com o quão bem seu próprio objetivo está sendo cumprido. O segundo sistema define o objetivo do primeiro  baseado no efeito da ação externa. Podemos chamar essa aprendizagem de modificação de metas com base no efeito das ações. Alguns sistemas de aprendizagem aninham vários sistemas de auto-regulação no primeiro nível. Ao perseguir seu próprio objetivo, o sistema de segunda ordem pode escolher quais sistemas de primeira ordem ativar. Como o sistema de segunda ordem persegue suas metas e opções de testes, ele aprende como suas ações afetam o meio ambiente. "Aprender" significa saber quais sistemas de primeira ordem podem combater os distúrbios lembrando aqueles que conseguiram o passado (DUBBERLY et al, 2009).</p>
+		</div>
 	</article>
 
+	<!-- Continuar pesquisa -->
 	<article>
 		<div class="text">
 			<h1>Continuar pesquisa</h1>
 			<ul>
 				<li><a href="http://www.dailytouslesjours.com/work/">http://www.dailytouslesjours.com/work/</a></li>
-				<li><a href="https://www.google.com/search?q=zimoun&safe=off&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiWq5bE0vXSAhUJjJAKHTtwC_kQ_AUICCgB&biw=1280&bih=628#imgrc=YSDfykS-AYL61M:">Zimoun</a></li>
 				<li><a href="https://www.kickstarter.com/projects/396691740/hold-hands-online-when-you-miss-someone/updates">Frebble: Projeto de interação háptica à distância</a></li>
 				<li><a href="http://iasl.uni-muenchen.de/links/GCA-VI.1e.html">History of Computer Art</a></li>
 				<li><a href="http://www.trossenrobotics.com/c/arduino-sensors.aspx?ps=192">Ícones e categorias de sensores</a></li>
@@ -97,19 +235,8 @@
 		</div>
 	</article>
 
-	<article id="categorias">
-		<div class="text">
-			<h1>Categorias</h1>
-			
-			<h2>Digital ou binário X Analógico, contínuo ou intensidade</h2>
-
-			<p>Os sensores e atuadores podem ser divididos em duas categorias: digitais e analógicos.</p>
-			<p>Os sensores e atuadores digitais são aqueles que só tem dois estados: ligado ou desligado.</p>
-			<p>Os sensores e atuadores analógicos são aqueles que podem variar a intensidade dentro de uma extensão.</p>
-		</div>
-	</article>
-
-	<article id="categorias">
+	<!-- Feedback -->
+	<article>
 		<div class="text">
 			<h1>Feedback</h1>
 			<h2>Positive feedback</h2>
@@ -139,51 +266,6 @@
 		</div>
 	</article>
 
-	<article>
-		<div class="text">
-			<h1>Sensores, receptores ou input</h1>
-			<h2>Off-the-shelf</h2>
-			<p>Sensores ou receptores são componentes capazes de traduzir estímulos em variações elétricas fazendo a interface entre computador e ambiente/pessoas.</p>
-		</div>
-
-		<ul class="sidebyside-list">
-			<li><a class="ajax" href="content/i_ldr.html">		<img src="img/icones_ldr.png" alt="LDR">			<span class="name">Luz</span></a></li>
-			<li><a class="ajax" href="content/i_pot.html">		<img src="img/icones_pot.png" alt="Potenciômetro">	<span class="name">Giro</span></a></li>
-			<li><a class="ajax" href="content/i_pressao.html">	<img src="img/icones_pressao.png" alt="Pressão">	<span class="name">Pressão<br>[intensidade]</span></a></li>
-			<li><a class="ajax" href="content/i_push.html">		<img src="img/icones_push.png" alt="Push-button">	<span class="name">Pressão</span></a></li>
-			<li><a class="ajax" href="content/i_chave.html">	<img src="img/icones_chave.png" alt="Chave óptica">	<span class="name">Interrupção</span></a></li>
-			<li><a class="ajax" href="content/i_reed.html">		<img src="img/icones_reed.png" alt="Reed Switch">	<span class="name">Magnético</span></a></li>
-			<li><a class="ajax" href="content/i_mic.html">		<img src="img/icones_mic.png" alt="Microfone">		<span class="name">Som</span></a></li>
-			<li><a class="ajax" href="content/i_temp.html">		<img src="img/icones_temp.png" alt="Temperatura">	<span class="name">Temperatura</span></a></li>
-			<li><a class="ajax" href="content/i_cap.html">		<img src="img/icones_cap.png" alt="Capacitivo">		<span class="name">Toque</span></a></li>
-			<li><a class="ajax" href="content/i_sonar.html">	<img src="img/icones_sonar.png" alt="Sonar">		<span class="name">Distância<br>[proximidade]</span></a></li>
-			<li><a class="ajax" href="content/i_bussola.html">	<img src="img/icones_bussola.png" alt="Bússola">	<span class="name">Direção</span></a></li>
-			<li><a class="ajax" href="content/i_presenca.html">	<img src="img/icones_presenca.png" alt="Presença">	<span class="name">Presença</span></a></li>
-			<li><a class="ajax" href="content/i_ace.html">		<img src="img/icones_ace.png" alt="Aceleração">		<span class="name">Movimento</span></a></li>
-			<li><a class="ajax" href="content/i_potlinear.html"><img src="img/icones_potlinear.png" alt="Potenciômetro linear"><span class="name">Movimento linear</span></a></li>
-			<li><a class="ajax" href="content/i_hall.html">		<img src="img/icones_hall.png" alt="Efeito Hall">	<span class="name">Pólo Magnético</span></a></li>
-			<li><a class="ajax" href="content/i_flex.html">		<img src="img/icones_flex.png" alt="Flexão">		<span class="name">Flexão</span></a></li>
-		</ul>
-	</article>
-
-	<article>
-		<div class="text">
-			<h1>Atuadores / Emissores / Output</h1>
-			<h2>Off-the-shelf</h2>
-			<p>Os atuadores ou emissores são componentes capazes de traduzir variações elétricas em estímulos físicos fazendo a interface entre computador e ambiente/pessoas.</p>			
-		</div>
-
-		<ul class="sidebyside-list">
-			<li><a class="ajax" href="content/o_led.html">		<img src="img/icones_led.png" alt="LED">				<span class="name">Luz</span>		</a></li>
-			<li><a class="ajax" href="content/o_vent.html">		<img src="img/icones_ventoinha.png" alt="Ventoinha">	<span class="name">Vento</span>		</a></li>
-			<li><a class="ajax" href="content/o_dc.html">		<img src="img/icones_motordc.png" alt="Motor DC">		<span class="name">Rotação</span>	</a></li>
-			<li><a class="ajax" href="content/o_vib.html">		<img src="img/icones_vibrador.png" alt="Vibrador">		<span class="name">Vibração</span>	</a></li>
-			<li><a class="ajax" href="content/o_servo.html">	<img src="img/icones_servo.png" alt="Servo">			<span class="name">Rotação</span>	</a></li>
-			<li><a class="ajax" href="content/o_spk.html">		<img src="img/icones_speaker.png" alt="Auto-falante">	<span class="name">Som</span>		</a></li>
-			<li><a class="ajax" href="content/o_linear.html">	<img src="img/icones_linear.png" alt="Linear">			<span class="name">Linear</span>	</a></li>
-			<li><a class="ajax" href="content/o_rele.html">		<img src="img/icones_rele.png" alt="Relé">				<span class="name">Clique</span>	</a></li>
-		</ul>
-	</article>
 
 	<article>
 		<div class="text">
@@ -1174,6 +1256,9 @@
 </footer>
 
 
+<!-- Scripts -->
+
+<!-- JQUERY -->
 <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
 <script src="js/plugins.js"></script>

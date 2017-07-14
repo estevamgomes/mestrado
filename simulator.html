@@ -1,0 +1,78 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>Computer-based systems for architecture by E. Quintino - Simulator</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="apple-touch-icon" href="apple-touch-icon.png">
+	<!-- Place favicon.ico in the root directory -->
+
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/simulator.css">
+</head>
+
+<body onload="init();">
+
+<!--[if lt IE 8]>
+	<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<header id="main-title">
+	<h1>Sistemas computacionais para arquitetura</h1>
+	<!-- <h1 class="lg-en">Computer-based systems for architecture</h1> -->
+	<h2>Estevam Quintino</h2>
+</header>
+
+
+<section id="main">
+
+	<article>
+		<div class="text">
+			<canvas id="simulatorCanvas" width="700" height="440">
+				<p>Your browser does not support the canvas tag.</p>
+			</canvas>
+		</div>
+
+		<div id="error" class="text">
+			<h1>Sorry!</h1>
+			<p>SoundJS is not currently supported in your browser.</p>
+			<p>Please <a href="http://github.com/CreateJS/SoundJS/issues" target="_blank">log a bug</a> with the device and browser you are using. Thank you.</p>
+		</div>
+
+		<div id="mobile" class="text">
+			<h1>Sorry!</h1>
+			<p>Mobile devices require sound to be played inside of user events, which this demo does not do.</p>
+			<p>Please <a href="http://github.com/CreateJS/SoundJS/issues" target="_blank">log a bug</a> with the OS and browser if you see this on a device that is not mobile. Thank you.</p>
+		</div>
+	</article>
+
+</section>
+
+
+<footer id="main-footer">
+	<h2>Interação remota espacializada</h2>
+	<p>Estevam Quintino</p>
+	<p>2017</p>
+	<p>Escola de Arquitetura</p>
+	<p>Universidade Federal de Minas Gerais</p>
+</footer>
+
+
+<!-- Scripts -->
+<!-- CREATE JS (EaselJS, PreloadJS, SoundJS) -->
+<script src="js/lib/preloadjs-0.6.2.min.js"></script>
+<script src="js/lib/soundjs-0.6.2.min.js"></script>
+<script src="js/lib/easeljs-0.8.2.min.js"></script>
+<script src="js/Component.js"></script>
+<script src="js/Helper.js"></script>
+<script src="js/simulator.js"></script>
+
+
+</body>
+
+</html>
+

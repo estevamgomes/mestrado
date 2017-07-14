@@ -1,0 +1,26 @@
+.loading {
+	position: relative;
+}
+
+.loading:after {
+	content: url("../img/loader.gif");
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin: -13px 0 0 -51px;
+	opacity: 0.8;
+}
+
+#simulatorCanvas {
+	margin: 0 auto;
+	border: 1px solid #f0f0f0;
+	background: #fff;
+}
+
+#error {
+	display:none;
+}
+
+#mobile {
+	display:none;
+}

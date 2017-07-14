@@ -234,15 +234,23 @@ h3 { font-size: 1.3rem; }
 
 header#main-title {
 	padding: 5%;
+
 	h1 {
 		letter-spacing: .05em;
-		display: inline-block;
 	}
+	
 	p {
 		font-family: @font-header;
 		font-size: 1.2rem;
 		margin: 0;
 	}
+}
+
+@keyframes blink {
+	0%		{ opacity: 1; }
+	49%		{ opacity: 1; }
+	50%		{ opacity: 0; }
+	100%	{ opacity: 0; }
 }
 
 nav#nav-main {
@@ -308,14 +316,6 @@ nav#nav-main {
 			}
 		}
 	}
-}
-
-
-@keyframes blink {
-	0%		{ opacity: 1; }
-	49%		{ opacity: 1; }
-	50%		{ opacity: 0; }
-	100%	{ opacity: 0; }
 }
 
 section#main, section#ajax {
