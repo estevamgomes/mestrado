@@ -37,7 +37,48 @@ Math.map = function(value, inMin, inMax, outMin, outMax) {
  * descrição: retorna um número inteiro pseudo-aleatório em um intervalo definido
  */
 Math.randomInt = function(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
-}
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min)) + min;
+};
+
+
+/* 
+ * função: addVector(vetor 1, vetor 2)
+ * descrição: retorna a soma dos dois vetores
+ */
+Math.addVector = function(v1, v2) {
+	var x = v1.x + v2.x;
+	var y = v1.y + v2.y;
+	return {x: x, y: y};
+};
+
+
+/* 
+ * função: radians(ângulo em graus)
+ * descrição: converte uma ângulo de graus para radianos
+ */
+Math.radians = function(degrees) {
+  return degrees * Math.PI / 180;
+};
+ 
+
+/* 
+ * função: degrees(ângulo em radianos)
+ * descrição: converte uma ângulo de radianos para graus
+ */
+Math.degrees = function(radians) {
+  return radians * 180 / Math.PI;
+};
+
+/* 
+ * função: roundTo(número, quantidade de casas decimais)
+ * descrição: arredonda um número mantendo o número de casas decimais
+ */
+Math.roundTo = function(x, digits) {
+	if (digits === undefined || digits < 1) {
+		digits = 1;
+	}
+	var d = digits * 10;
+	return Math.round(x * d) / d;
+};

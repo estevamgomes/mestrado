@@ -1,0 +1,41 @@
+{
+	"component": [
+		{
+			"id": 0,
+			"type": "slider",
+			"x": 100,
+			"y": 200
+		},
+		{
+			"id": 1,
+			"type": "add",
+			"x": 300,
+			"y": 200
+		},
+		{
+			"id": 1,
+			"type": "subtract",
+			"x": 300,
+			"y": 100
+		},
+		{
+			"id": 2,
+			"type": "round",
+			"x": 300,
+			"y": 300
+		},
+		{
+			"id": 4,
+			"type": "slider",
+			"x": 100,
+			"y": 300
+		},
+		{
+			"id": 3,
+			"type": "servo",
+			"x": 500,
+			"y": 200
+		}
+	],
+	"conections": []
+}
