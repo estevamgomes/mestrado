@@ -263,13 +263,13 @@ function init() {
 	if (!createjs.Sound.initializeDefaultPlugins()) {
 		document.getElementById("error").style.display = "block";
 		document.getElementById("content").style.display = "none";
-		return;
+		// return;
 	}
 
 	if (createjs.BrowserDetect.isIOS || createjs.BrowserDetect.isAndroid || createjs.BrowserDetect.isBlackberry) {
 		document.getElementById("mobile").style.display = "block";
 		document.getElementById("content").style.display = "none";
-		return;
+		// return;
 	}
 
 	// cria um objeto stage do createjs a partir de um canvas
