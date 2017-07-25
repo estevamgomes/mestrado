@@ -1,70 +1,68 @@
 /* 
- * classe: Component
- * descrição: classe com propriedades e funções comuns à todos os componentes
+ * classe: ComponentContainer
+ * descrição: classe do objeto que armazena e adiciona os componentes
  */
 (function (window) {
 
- 	// contrutor da classe ComponentArray
- 	function ComponentArray(config) {
+ 	// contrutor da classe ComponentContainer
+ 	function ComponentContainer(config) {
 		this.Container_constructor();
 
-		this.componentDefinitions = config.componentDefinitions;
-		this.componentContainer = new createjs.Container();
-		this.component = [];
-
-		this.componentAssets = config.componentAssets;
+		this.componentDefinitions = config.componentDefinitions; // características de cada componente
 
 		// configuração padrão dos componentes
-		this.defaultConfig = {
-			colorScheme: config.colorScheme,
-			fontStyle: config.fontStyle,
-			workarea: config.workarea
-		};
-
-		this.addChild(this.componentContainer);
+		this.defaultConfig = config;
 	}
-	var p = createjs.extend(ComponentArray, createjs.Container);
+	var p = createjs.extend(ComponentContainer, createjs.Container);
 
 	// cria e adiciona os componentes ao stage
-	p.add = function(customConfig) {
+	p.addComponent = function(customConfig) {
 		var config = Object.assign({}, this.defaultConfig, customConfig);
-		var tmpComponent;
 
 		// verifica se o tipo de componente existe na lista de componentes predefinidos
 		if(this.componentDefinitions[config.type] != null) {
 			// caso o componente exista ele soma as configurações e gera o componente
-			tmpComponent = new Component(Object.assign({},
-				config,
-				this.componentDefinitions[config.type]));
-		} else {
-			// caso não exista ele gera um componente genérico
-			switch(config.type) {
-				case "servo":
-					tmpComponent = new Servo(Object.assign({},
-						config,
-						{ sprite: this.componentAssets.servo }));
-					break;
-				case "slider":
-					tmpComponent = new Slider(config);
-					break;
-				default:
-					tmpComponent = new Component(config);
-					break;
-			}
+			this.addChild(new Component(Object.assign({},
+				config, this.componentDefinitions[config.type])))
+				.constrainPos();
 		}
 
-		var index = this.component.push(tmpComponent) - 1;
-		this.addChild(this.component[index]);
-		this.component[index].constrainPos();
-	}
+	};
+
+	p.exportCurrentState = function() {
+		var components = [];
+		for (var i = this.numChildren - 1; i >= 0; i--) {
+			var obj = this.getChildAt(i)
+			components.push({
+				"name": obj.name,
+				"type": obj.type,
+				"x": obj.x + obj.width / 2,
+				"y": obj.y + obj.height / 2
+			});
+		};
+		return components;
+	};
+
+	p.removeAllComponents = function() {
+		for (var i = this.numChildren - 1; i >= 0; i--) {
+			this.getChildAt(0).remove();
+		};
+	};
 
 	p.followMouse = function(event) {
-		for (var i = 0; i < this.component.length; i++) {
-			if(this.component[i].grabbing) this.component[i].followMouse(event);
+		for (var i = this.numChildren - 1; i >= 0; i--) {
+			var child = this.getChildAt(i);
+			if(child.isGrabbing != null && child.isGrabbing()) child.followMouse(event);
 		};
-	}
+	};
 
-	window.ComponentArray = createjs.promote(ComponentArray, "Container");
+	p.tick = function() {
+		for (var i = this.numChildren - 1; i >= 0; i--) {
+			this.getChildAt(i).tick();
+		};
+	};
+
+	window.ComponentContainer = createjs.promote(ComponentContainer, "Container");
 }(window));
 
 
@@ -79,20 +77,18 @@
  	function Component(config) {
 		this.Container_constructor();
 
-		this.label 		= config.label; 	// nome
-		this.fontStyle	= config.fontStyle; // estilo da fonte
-		this.workarea 	= config.workarea;  // tamanho do grid
-		this.cellSize 	= this.workarea.cellSize;  // tamanho do grid
-		this.grabbing 	= false;			// determina se está arrastando o elemento
+		this.run = function() {};	// ação do objeto
+		this.label = "NO LABEL"; 	// etiqueta
+		this.name = config.type + this.id; // nome
 
-		this.grabStart 	= {x: this.x, y: this.y};		// posição em que começou a arrastar
-		this.run 		= config.run || function() {};	// ação do objeto
+		this.inputSize = 0;
+		this.outputSize = 0;
 
-		this.inputSize = config.inputSize || 0;
-		this.outputSize = config.outputSize || 0;
+		Object.assign(this, config); // junta as configurações do objeto com as configurações enviadas
 
-		this.colorScheme  = config.colorScheme; 			 // colorScheme de cores
-		this.currentColor = this.colorScheme.default; 	 // colorScheme de cores
+		this.cellSize 	= this.workarea.cellSize; // tamanho do grid
+		this.state = "default"; // estado atual do componente: default || hover || grabbing
+		this.grabStart 	= {x: this.x, y: this.y}; // posição em que começou a arrastar
 
 		// quando clica sobre o componente essa variável armazena a diferença
 		// entre a posição do mouse e a origem do componente 
@@ -116,12 +112,8 @@
 		}
 
 		// posicao
-		var randomPos = {
-			x: Math.randomInt(0, 200),
-			y: Math.randomInt(0, 200)
-		};
-		this.x = config.x - this.width / 2 || randomPos.x;
-		this.y = config.y - this.height / 2 || randomPos.y;
+		this.x = config.x - this.width / 2;
+		this.y = config.y - this.height / 2;
 		this.alignToGrid();
 
 		// origem para alinhar as coisas a partir do centro
@@ -130,9 +122,17 @@
 			y: this.height / 2
 		};
 
+		// reseta as variáveis conforme a função específica
+		if(this.customConstructor != null) this.customConstructor(config);
+
 		this.setup();
 	}
 	var p = createjs.extend(Component, createjs.Container);
+
+	p.tick = function() {
+		this.run();
+		this.updateUI();
+	};
 
 	p.setup = function() {
 
@@ -140,28 +140,21 @@
 		this.border 	= new createjs.Shape(); // borda
 		this.background = new createjs.Shape(); // fundo
 		this.labelBg 	= new createjs.Shape(); // fundo do label
-
-		// cria campo de texto para o nome do componente
-		this.labelText = new createjs.Text(this.label, this.fontStyle, this.currentColor.labelText);
-		this.labelText.set({
-			x: this.center.x,
-			y: this.center.y,
-			textBaseline: "middle",
-			textAlign: "center",
-		});
+		this.labelText  = new createjs.Text();	// cria campo de texto para o nome do componente
 
 		// adiciona os elementos
 		this.addChild(this.background, this.labelBg, this.border, this.labelText);
 
 		// terminais dos inputs
 		this.input = [];
+		var terminalDefaultConfig = {
+			styleScheme: this.styleScheme,
+			type: "input",
+			cellSize: this.cellSize,
+			connectionContainer: this.connectionContainer
+		};
 		for (var i = 0; i < this.inputSize; i++) {
-			this.input[i] = new Terminal({
-				colorScheme: this.colorScheme,
-				type: "input",
-				cellSize: this.cellSize,
-				fontStyle: this.fontStyle
-			});
+			this.input[i] = new Terminal(Object.assign({}, terminalDefaultConfig, { type: "input", name: this.name + "-in-" + i }));
 			this.input[i].x = 0;
 			this.input[i].y = this.center.y + i * this.cellSize * 2 - (this.inputSize - 1) * this.cellSize;
 			this.addChild(this.input[i]);
@@ -170,12 +163,7 @@
 		// terminais dos outputs
 		this.output = [];
 		for (var i = 0; i < this.outputSize; i++) {
-			this.output[i] = new Terminal({
-				colorScheme: this.colorScheme,
-				type: "output",
-				cellSize: this.cellSize,
-				fontStyle: this.fontStyle
-			});
+			this.output[i] = new Terminal(Object.assign({}, terminalDefaultConfig, { type: "output", name: this.name + "-out-" + i }));
 			this.output[i].x = this.width;
 			this.output[i].y = this.center.y + i * this.cellSize * 2 - (this.outputSize - 1) * this.cellSize;
 			this.addChild(this.output[i]);				
@@ -200,36 +188,73 @@
 	};
 
 	p.updateUI = function() {
+		var currentStyle = Object.assign({}, this.styleScheme.default);
+
+		if(this.styleScheme[this.state] != null) {
+			Object.assign(currentStyle, this.styleScheme[this.state]);
+		}
+
+		// desenha a borda
 		this.border.graphics.clear()
-			.beginStroke(this.currentColor.border)
+			.beginStroke(currentStyle.border)
 			.setStrokeStyle(2)
 			.drawRoundRect(0, 0, this.width, this.height, this.cellSize / 2);
 
+		// desenha o fundo
 		this.background.graphics.clear()
-			.beginFill(this.currentColor.background)
+			.beginFill(currentStyle.background)
 			.setStrokeStyle(2)
 			.drawRoundRect(0, 0, this.width, this.height, this.cellSize / 2);
-		this.background.shadow = new createjs.Shadow(this.currentColor.shadow, 1, 1, 2);
+		this.background.shadow = new createjs.Shadow(currentStyle.shadow, 1, 1, 2);
 
+		// desenha o fundo do label
 		this.labelBg.graphics.clear()
-			.beginFill(this.currentColor.label)
+			.beginFill(currentStyle.label)
 			.drawRect(0 + this.cellSize, 0, this.width - this.cellSize * 2, this.height);
+
+		// desenha o nome do componente
+		this.labelText.set({
+			text: this.label,
+			font: currentStyle.labelFont,
+			color: currentStyle.labelText,
+			x: this.center.x,
+			y: this.center.y,
+			textBaseline: "middle",
+			textAlign: "center",
+		});
 
 		// atualiza os inputs e outputs
 		for (var i = 0; i < this.inputSize; i++) this.input[i].updateUI();
 		for (var i = 0; i < this.outputSize; i++) this.output[i].updateUI();
 	};
 
+	p.isGrabbing = function() {
+		return this.state == "grabbing" || this.state == "remove";
+	};
+
+	p.setState = function(state) {
+		this.state = state;
+		this.updateUI();
+	};
+
 	p.rollover = function(event) {
 		var obj = this.parent;
-		obj.currentColor = obj.colorScheme.hover;
-		obj.updateUI();
+		if(!obj.isGrabbing()) {
+			obj.setState("hover");
+		} else if(obj.state == "remove") {
+			obj.setState("grabbing");
+		}
 	};
 
 	p.rollout = function(event) {
 		var obj = this.parent;
-		obj.currentColor = obj.colorScheme.default;
-		obj.updateUI();
+
+		if(obj.underMouse(event.stageX, event.stageY).constructor.name == "Bin") {
+			obj.setState("remove");
+		} else if(!obj.isGrabbing()) {
+			obj.setState("default");
+		
+		}
 	};
 
 	p.mouseDown = function(event) {
@@ -238,16 +263,12 @@
 		obj.delta.x = obj.x - event.stageX;
 		obj.delta.y = obj.y - event.stageY;
 
-		if(obj.grabbing) {
-			obj.grabbing = false;
-			obj.currentColor = obj.colorScheme.hover;
-			obj.updateUI();
+		if(obj.isGrabbing()) {
+			obj.setState("hover");
 		} else {
-			obj.grabbing = true;
-			obj.parent.setChildIndex(obj, obj.parent.getNumChildren() - 1);
+			obj.parent.setChildIndex(obj, obj.parent.numChildren - 1);
 			obj.grabStart = {x: obj.x, y: obj.y};
-			obj.currentColor = obj.colorScheme.grabbing;
-			obj.updateUI();
+			obj.setState("grabbing");
 		}
 	};
 
@@ -255,6 +276,44 @@
 		this.parent.followMouse(event);
 	};
 
+	p.pressUp = function(event) {
+		var obj = this.parent;
+
+		if(obj.underMouse(event.stageX, event.stageY).constructor.name == "Bin") {
+			obj.remove();
+		}
+
+		if(obj.grabStart.x != obj.x && obj.grabStart.y != obj.y) {
+			obj.setState("hover");
+		}
+		// alinha o componente à grid
+		obj.alignToGrid();
+	};
+
+	p.remove = function() {
+		this.removeAllConnections();
+		this.parent.removeChild(this);
+	};
+
+
+	/* 
+	 * função: removeAllConnections()
+	 * descrição: 
+	 */
+	p.removeAllConnections = function() {
+		for (var i = 0; i < this.input.length; i++) {
+			this.input[i].removeAllConnections();
+		}
+		for (var i = 0; i < this.output.length; i++) {
+			this.output[i].removeAllConnections();
+		}
+	};
+
+
+	/* 
+	 * função: followMouse()
+	 * descrição: atualiza a posição seguindo a posição do mouse
+	 */
 	p.followMouse = function(event) {
 		var newPos = {
 			x: event.stageX + this.delta.x,
@@ -265,15 +324,12 @@
 		this.constrainPos();
 	};
 
-	p.pressUp = function(event) {
-		var obj = this.parent;
-		if(obj.grabStart.x != obj.x && obj.grabStart.y != obj.y) {
-			obj.grabbing = false;
-			obj.currentColor = obj.colorScheme.hover;
-			obj.updateUI();
-		}
-		// alinha o componente à grid
-		obj.alignToGrid();
+	/* 
+	 * função: underMouse()
+	 * descrição: verifica qual objeto está embaixo do mouse
+	 */
+	p.underMouse = function(x, y) {
+		return this.workarea.parent.getObjectUnderPoint(x, y, 2);
 	};
 
 	/* 
@@ -284,7 +340,7 @@
 	p.alignToGrid = function() {
 		this.x = Math.round(this.x / this.cellSize) * this.cellSize;
 		this.y = Math.round(this.y / this.cellSize) * this.cellSize;
-	}
+	};
 
 	/* 
 	 * função: constrainPos()
@@ -301,143 +357,6 @@
 
 
 
-/* 
- * classe: Servo
- * descrição: classe com propriedades e funções comuns à todos os componentes
- */
-(function (window) {
-
- 	// contrutor da classe Servo
- 	function Servo(config) {
- 		// configuração que precisam passar para o construtor da superclasse
- 		config.label = "SERVO";
- 		config.inputSize = 1;
- 		config.outputSize = 0;
-
- 		// chama a superclasse
-		this.Component_constructor(config);
-
-		/// tamanho
-		this.spriteWidth = 120;
-		this.spriteHeight = 120;
-
-		// sprite
-		this.spriteSheet = new createjs.SpriteSheet({
-			framerate: 12,
-			images: [config.sprite],
-			frames: {
-				width:  120,
-				height: 120,
-				count:   18,
-				regY:     0, // regX & regY indicate the registration point of the frames
-				regX:     0, //
-			},
-			animations: {    
-			//  "nome":     [frama inicio, frame fim, próxima animação, valocidade]
-				"base": 	[  0,  0, "base", 1],
-				"horn": 	[  1,  1, "horn", 1],
-				"horn-cw": 	[  1, 17, "horn-ccw", 1],
-				"horn-ccw": [ 17,  1, "horn-cw", 1],
-			}
-		});
-
-		this.componentBase = new createjs.Sprite(this.spriteSheet, "base");
-		this.componentHorn = new createjs.Sprite(this.spriteSheet, "horn");
-
-		this.componentBase.x = this.center.x - this.spriteWidth / 2;
-		this.componentBase.y = this.center.y - this.spriteHeight;
-
-		this.componentHorn.x = this.center.x - this.spriteWidth / 2;
-		this.componentHorn.y = this.center.y - this.spriteHeight;
-
-		// adiciona o sprite
-		this.addChild(this.componentBase, this.componentHorn); 
-
-		this.run = function() {
-			this.componentHorn.gotoAndStop(Math.round(Math.map(this.input[0].value, 0, 100, 1, 17)));
-		};
- 	};
-	var p = createjs.extend(Servo, Component);
-
-	window.Servo = createjs.promote(Servo, "Component");
-
-}(window));
-
-
-
-/* 
- * classe: Slider
- * descrição: classe com propriedades e funções comuns à todos os componentes
- */
-(function (window) {
-
- 	// contrutor da classe Slider
- 	function Slider(config) {
- 		// configuração que precisam passar para o construtor da superclasse
- 		config.label = "SLIDER";
- 		config.inputSize = 0;
- 		config.outputSize = 1;
-
- 		// chama a superclasse
-		this.Component_constructor(config);
-
-		/// tamanho
-		this.slider = new createjs.Container();
-		this.slider.height = this.cellSize * 2;
-		this.slider.width = this.width - this.cellSize * 2;
-		this.slider.x = this.cellSize;
-		this.slider.y = - this.slider.height - this.cellSize;
-		this.slider.handleWidth = this.cellSize;
-
-		this.slider.maxX = this.slider.width - this.slider.handleWidth;
-		this.slider.constrain = function(posx) {
-			if(posx < 0) return 0;
-			if(posx > this.maxX) return this.maxX;
-			return posx;
-		};
-		this.slider.moveHandle = function(newX) {
-			this.handle.x = this.constrain(newX - this.handleWidth / 2);
-			var newValue = Math.round(Math.map(this.handle.x, 0, this.maxX, 0, 100));
-			this.parent.output[0].setValue(newValue);
-			this.parent.labelText.text = newValue;
-		};
-		
-		this.sliderBackground = new createjs.Shape();
-		this.sliderBackground.graphics
-			.beginFill(this.currentColor.label)
-			.setStrokeStyle(2)
-			.beginStroke(this.currentColor.border)
-			.drawRect(0, 8, this.slider.width, this.cellSize / 2);
-
-		this.slider.handle = new createjs.Shape();
-		this.slider.handle.graphics
-			.beginFill(this.currentColor.background)
-			.drawRect(0, 0, this.slider.handleWidth, this.slider.height);
-		this.slider.handle.cursor = "pointer";
-
-		// adiciona o sprite
-		this.addChild(this.slider);
-		this.slider.addChild(this.sliderBackground, this.slider.handle);
-
-		// drag slider
-		this.slider.on("mousedown", this.handleMousedown);
-		this.slider.on("pressmove", this.handleMousePressmove);
- 	};
-	var p = createjs.extend(Slider, Component);
-
-	p.handleMousedown = function(event) {
-		this.moveHandle(event.localX);
-	};
-
-	p.handleMousePressmove = function(event) {
-		this.moveHandle(event.localX);
-	};
-
-	window.Slider = createjs.promote(Slider, "Component");
-
-}(window));
-
-
 
 /* 
  * classe: Terminal
@@ -449,12 +368,12 @@
  	function Terminal(config) {
 		this.Container_constructor();
 
-		this.colorScheme	= config.colorScheme;
-		this.currentColor	= this.colorScheme.default;
-		this.fontStyle 	= config.fontStyle;
-		this.type 		= config.type || "input"; // "input", "output"
-		this.value 		= 0;
-		this.cellSize 	= config.cellSize;
+		Object.assign(this, config);
+
+		this.value 		 = 0;
+		this.state 		 = "default"; // estado atual: default || hover
+
+		this.connectionContainer = config.connectionContainer;
 
 		this.setup();
  	};
@@ -465,29 +384,11 @@
 	* descrição: função executada uma vez na criação do componente
 	*/
 	p.setup = function() {
-		// texto indicando o valor do terminal
-		this.debugText = new createjs.Text(this.value, this.fontStyle, this.currentColor.terminalText);
-		var padding = 5;
-		if(this.type == "input") {
-			this.debugText.set({
-				x: -padding,
-				y: -padding,
-				textBaseline: "bottom",
-				textAlign: "right",
-			});
-		} else {
-			this.debugText.set({
-				x: padding,
-				y: -padding,
-				textBaseline: "bottom",
-				textAlign: "left",
-			});
-		}
-		this.debugText.text = this.value;
+		
+		this.debugText = new createjs.Text();	// texto indicando o valor do terminal
 		this.debugText.alpha = 0;
 
-		// desenha o terminal
-		this.output = new createjs.Shape();
+		this.output = new createjs.Shape();		// desenha o terminal
 
 		// cria uma área de interação que vai além da área desenhada
 		var hit = new createjs.Shape();
@@ -501,6 +402,8 @@
 		this.cursor = "pointer";
 
 		// interação com o mouse
+		this.on("mousedown", this.mousedown);
+
 		// hover
 		this.on("rollover", this.rollover);
 		this.on("rollout", 	this.rollout);
@@ -509,25 +412,67 @@
 	};
 
 	p.updateUI = function() {
+		var styleScheme = Object.assign({}, this.styleScheme.default);
+
+		if(this.styleScheme[this.state] != null) {
+			Object.assign(styleScheme, this.styleScheme[this.state]);
+		}
+
 		this.output.graphics.clear()
-			.beginStroke(this.currentColor.terminalBorder)
-			.beginFill(this.currentColor.terminal)
+			.beginStroke(styleScheme.terminalBorder)
+			.beginFill(styleScheme.terminal)
 			.setStrokeStyle(2)
 			.drawCircle(0, 0, this.cellSize / 3);
 
-		this.debugText.text = this.value;
+		var padding = 5;
+		this.debugText.set({
+			text: this.value,
+			font: styleScheme.labelFont,
+			color: styleScheme.terminalText,
+			y: -padding,
+			textBaseline: "bottom",
+		});
+
+		if(this.type == "input") {
+			this.debugText.set({
+				x: -padding,
+				textAlign: "right",
+			});
+		} else {
+			this.debugText.set({
+				x: padding,
+				textAlign: "left",
+			});
+		}
+	};
+
+	p.setState = function(state) {
+		this.state = state;
+		this.updateUI();
 	};
 
 	p.rollover = function(event) {
 		this.debugText.alpha = 1;
-		this.currentColor = this.colorScheme.hover;
-		this.updateUI();
+		this.setState("hover");
+		this.connectionContainer.terminalMagnet(this, true);
 	};
 
 	p.rollout = function(event) {
 		this.debugText.alpha = 0;
-		this.currentColor = this.colorScheme.default;
-		this.updateUI();
+		this.setState("default");
+		this.connectionContainer.terminalMagnet(this, false);
+	};
+
+	p.mousedown = function(event) {
+		this.connectionContainer.terminalClick(this);
+	};
+
+	p.mouseup = function(event) {
+		this.connectionContainer.terminalClick(this);
+	};
+
+	p.removeAllConnections = function() {
+		this.connectionContainer.removeConnectionsFrom(this);
 	};
 
 	p.setValue = function(value) {

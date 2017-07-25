@@ -55,6 +55,17 @@ Math.addVector = function(v1, v2) {
 
 
 /* 
+ * função: subVector(vetor 1, vetor 2)
+ * descrição: retorna a subtração de dois vetores
+ */
+Math.subVector = function(v1, v2) {
+	var x = v1.x - v2.x;
+	var y = v1.y - v2.y;
+	return {x: x, y: y};
+};
+
+
+/* 
  * função: radians(ângulo em graus)
  * descrição: converte uma ângulo de graus para radianos
  */

@@ -1,59 +1,248 @@
 /* 
- * classe: Wire
+ * classe: Bin
  * descrição: classe com propriedades e funções comuns à todos os inputs
  */
 (function (window) {
 
- 	// contrutor da classe output
- 	function Wire(config) {
+ 	// contrutor da classe Wire
+ 	function Bin(config) {
 		this.Container_constructor();
 
-		this.startPos = config.startPos;
-		this.endPos = config.endPos;
-		this.color = config.color;
+		this.componentContainer = config.componentContainer;
+		this.workarea 			= config.workarea;
+		this.styleScheme 		= config.styleScheme;
+		this.state 				= "default";
 
-		// cria um shape para armazenar o fio que representa a conexão
-		this.wire = new createjs.Shape();
-		this.drawWire();
-		this.addChild(this.wire);
+		this.size = this.workarea.cellSize * 2;
+		this.setPos(config.canvasWidth, config.canvasHeight);
 
+		this.binArea = new createjs.Shape();
+		this.addChild(this.binArea);
+
+		var hit = new createjs.Shape();
+		hit.graphics.clear()
+			.beginFill("#ffffff")
+			.drawRect(0, 0, this.size, this.size);
+		this.hitArea = hit;
+
+		this.updateUI();
+
+		this.on("mouseover", this.mouseover);
+		this.on("mouseout", this.mouseout);
+		this.on("mousedown", this.mousedown);
+		this.on("dblclick", this.dblclick);
  	};
-	var p = createjs.extend(Wire, createjs.Container);
+	var p = createjs.extend(Bin, createjs.Container);
 
-	/* 
-	 * função: drawWire()
-	 * descrição: função que desenha um fio usando uma curva bezier entre dois pontos
-	 */
-	p.drawWire = function() {
-		this.wire.graphics.clear().beginStroke(this.color).setStrokeStyle(2);
+	p.updateUI = function() {
+		var currentStyle = Object.assign({}, this.styleScheme.default);
 
-		// distancia entre o ponto inicial e final
-		var dist = Math.dist(this.startPos, this.endPos);
+		if(this.styleScheme[this.state] != null) {
+			Object.assign(currentStyle, this.styleScheme[this.state]);
+		}
 
-		// control point 1
-		var cp1 = {
-			x: this.startPos.x + 0.55 * dist,
-			y: this.startPos.y
+		var padding = 5;
+		this.binArea.graphics.clear()
+			.beginFill(currentStyle.background)
+			.beginStroke(currentStyle.border)
+			.setStrokeStyle(2)
+			.drawRect(0, 0, this.size, this.size)
+			.moveTo(padding, padding)
+			.lineTo(this.size - padding, this.size - padding)
+			.moveTo(this.size - padding, padding)
+			.lineTo(padding, this.size - padding);
+
+	};
+
+	p.setPos = function(canvasW, canvasH) {
+		var posX = canvasW > this.workarea.width ? this.workarea.width + this.workarea.x : canvasW;
+		var posY = canvasH > this.workarea.height ? this.workarea.height + this.workarea.y : canvasH;
+		this.x = posX - this.workarea.cellSize - this.size;
+		this.y = posY - this.workarea.cellSize - this.size;
+	};
+
+	p.resize = function(canvas) {
+		this.setPos(canvas.width, canvas.height);
+		this.updateUI();		
+	};
+
+	p.setState = function(state) {
+		this.state = state;
+		this.updateUI();
+	};
+
+	p.mouseover = function(event) {
+		this.setState("hover");
+	};
+
+	p.mouseout = function(event) {
+		this.setState("default");
+	};
+
+	p.mousedown = function(event) {
+		var obj = this.workarea.parent.getObjectsUnderPoint(event.stageX, event.stageY, 2);
+		for (var i = 0; i < obj.length; i++) {
+			if(obj[i].parent.parent === this.componentContainer) {
+				obj[i].parent.remove();
+			}
 		};
+	};
 
-		// controle point 2
-		var cp2 = {
-			x: this.endPos.x - 0.55 * dist,
-			y: this.endPos.y
-		};
+	p.dblclick = function(event) {
+		this.componentContainer.removeAllComponents();
+	};
 
-		this.wire.graphics			
-			.moveTo(this.startPos.x, this.startPos.y)
-			.bezierCurveTo(
-				cp1.x, cp1.y,
-				cp2.x, cp2.y,
-				this.endPos.x, this.endPos.y
-			);
-	}
-
-	window.Wire = createjs.promote(Wire, "Container");
+	window.Bin = createjs.promote(Bin, "Container");
 
 }(window));
+
+
+
+
+/* 
+ * classe: MouseTimer
+ * descrição: armazena as propriedades da área de trabalho e do grid e suas funções
+ */
+(function (window) {
+
+ 	// contrutor da classe Wire
+ 	function MouseTimer(config) {
+		this.Container_constructor();
+
+		this.styleScheme = config.styleScheme;
+
+		// click tag
+		this.gclickMaxRadius = 12;
+		this.gclickRadius = 0;
+		this.radius = 5;
+		this.clickTag = false;
+		this.gclick = new createjs.Shape();
+
+		// timer
+		this.timerRadius = 16;
+		this.timeStart = 0;
+		this.timeComplete = 600;
+		this.timeMin = 160;
+		this.complete = false;
+		this.gtimer = new createjs.Shape();
+
+		this.mousepressed = false;
+		this.mousePos = {x: 0, y: 0};
+
+		this.addChild(this.gclick, this.gtimer);
+
+		this.setup();
+	}
+	var p = createjs.extend(MouseTimer, createjs.Container);
+
+	p.setup = function() {
+		this.resetClick();
+		this.resetTimer();
+	};
+
+	p.resetClick = function() {
+		this.gclickRadius = 0;
+		this.gclick.alpha = 0;
+		this.gclick.graphics.clear();
+		this.clickTag = false;
+	};
+
+	p.resetTimer = function() {
+		this.complete = false;
+		this.gtimer.graphics.clear();
+	};
+
+	p.mousedown = function(event) {
+		this.mousepressed = true;
+
+		this.resetClick();
+		this.resetTimer();
+		this.gclick.alpha = 1;
+		this.timeStart = createjs.Ticker.getTime();
+
+		var obj = this.parent; // workarea
+		this.x = event.stageX - obj.x;
+		this.y = event.stageY - obj.y;
+	};
+
+	p.mouseup = function(event) {
+		this.mousepressed = false;
+
+		this.resetTimer();
+
+		if(this.mouseStatic() && this.getTimeElapsed() < this.timeMin) {
+			this.clickTag = true;
+		}
+
+		var obj = this.parent; // workarea
+		this.mousePos.x = event.stageX - obj.x;
+		this.mousePos.y = event.stageY - obj.y;
+	};
+
+	p.mousemove = function(event) {
+		if(!this.mouseStatic()) {
+			this.resetTimer();
+			this.timeStart = createjs.Ticker.getTime();
+		}
+
+		var obj = this.parent; // workarea
+		this.mousePos.x = event.stageX - obj.x;
+		this.mousePos.y = event.stageY - obj.y;
+	};
+
+	p.mouseStatic = function() {
+		return Math.dist({x: this.x, y: this.y}, this.mousePos) < 6;
+	};
+
+	p.getTimeElapsed = function() {
+		return createjs.Ticker.getTime() - this.timeStart;
+	};
+
+	p.updateUI = function() {
+		var timeElapsed = this.getTimeElapsed(); 
+
+		var currentStyle = Object.assign({}, this.styleScheme.default);
+
+		if(this.clickTag) {
+			this.gclickRadius += (this.gclickMaxRadius - this.gclickRadius) / 10;
+			this.gclick.alpha += (0 - this.gclick.alpha) / 10;
+			if(this.gclick.alpha < 0.1) this.resetClick();
+			this.gclick.graphics.clear()
+				.beginStroke(currentStyle.click)
+				.setStrokeStyle(2)
+				.drawCircle(0, 0, this.gclickRadius);
+		}
+
+		if(this.mousepressed && this.mouseStatic()) {
+			if(timeElapsed > this.timeMin) {
+				if(timeElapsed >= this.timeComplete) {
+					this.complete = true;
+					Object.assign(currentStyle, this.styleScheme.complete);
+				}
+
+				var angleStart = Math.radians(-90);
+				var angle = Math.radians(360 * (timeElapsed - this.timeMin) / (this.timeComplete - this.timeMin)) + angleStart;
+				this.gtimer.graphics.clear()
+					.beginStroke(currentStyle.timer)
+					.setStrokeStyle(3)
+					.arc(0, 0, this.timerRadius, angleStart, angle);
+				this.gtimer.shadow = new createjs.Shadow(currentStyle.shadow, 1, 1, 1);
+			}
+		} else {
+			this.resetTimer();
+		}
+	};
+
+	p.tick = function() {
+		if(this.mousepressed || this.gclick.alpha > 0) {
+			this.updateUI();
+		} 
+	};
+
+	window.MouseTimer = createjs.promote(MouseTimer, "Container");
+
+}(window));
+
 
 
 /* 
@@ -86,23 +275,15 @@
 
 		// informações para o grid
 		this.cellSize 	 = config.cellSize;
-		this.colorScheme = config.colorScheme;
-		this.gridStyle 	 = config.gridStyle || "dotted"; // crosshair, line, dotted, none
+		this.styleScheme = config.styleScheme;
 
-		// desenhar grid
-		this.grid = new createjs.Shape();
-		this.drawGrid();
-
-		//  desenha o background
-		background = new createjs.Shape();
-		background.graphics
-			// .beginStroke(this.gridColor)
-			// .setStrokeStyle(1)
-			.beginFill(this.colorScheme.background)
-			.drawRect(0, 0, this.width, this.height);
+		this.grid 		= new createjs.Shape();	// forma para armazenar o grid
+		this.background = new createjs.Shape(); // forma para armazenar o fundo
 
 		// adiciona o background e o grid
-		this.addChild(background, this.grid);
+		this.addChild(this.background, this.grid);
+
+		this.updateUI();
 
 		// quando clica sobre o componente essa variável armazena a diferença
 		// enter a posição do mouse e a origem do componente 
@@ -127,83 +308,98 @@
 
 		// adiciona as funções do mouse à área definida de intração
 		this.on("pressup", this.pressup);
-		this.dragArea.on("mousedown", this.mouseDown);
+		this.dragArea.on("mousedown", this.mousedown);
 		this.dragArea.on("pressmove", this.mousePressmove);
 
  	};
 	var p = createjs.extend(Workarea, createjs.Container);
 
 	/* 
-	 * função: drawGrid()
+	 * função: updateUI()
 	 * descrição: função que desenha o grid
 	 */
-	p.drawGrid = function() {
+	p.updateUI = function() {
+		// fundo
+		this.background.graphics
+			.beginFill(this.styleScheme.background)
+			.drawRect(0, 0, this.width, this.height);
+
+		// grid
 		var gridG = this.grid.graphics;
 		gridG.clear(); // limpa o que estiver desenhado
 
-		// line grid
-		if(this.gridStyle == "line") {
-			gridG.beginStroke(this.colorScheme.grid);
-			var gridCell = this.cellSize;
-			var line = 1;
-			var boldLine = 10; // criar uma linha mais grossa a cada 10 linhas
-
-			// linhas verticais
-			for (var x = gridCell; x < this.width; x += gridCell) {
-				if(line % boldLine == 0) {
-					gridG.setStrokeStyle(2);
-				} else {
-					gridG.setStrokeStyle(1);
-				}
-				line += 1;
-				gridG
-					.moveTo(x, 0)
-					.lineTo(x, this.height);
-			};
-
-			// linhas horizontais
-			line = 1;
-			for (var y = gridCell; y < this.height; y += gridCell) {
-				if(line % boldLine == 0) {
-					gridG.setStrokeStyle(2);
-				} else {
-					gridG.setStrokeStyle(1);
-				}
-				line += 1;
-				gridG
-					.moveTo(0, y)
-					.lineTo(this.width, y);
-			};
-		}
-
-		// crosshair
-		if(this.gridStyle == "crosshair") {
-			gridG.beginStroke(this.colorScheme.grid).setStrokeStyle(1);
-			var gridCell = this.cellSize * 3;
-			var dash = this.cellSize;
-			for (var x = 0; x <= this.width; x += gridCell) {
-				for (var y = 0; y <= this.height; y += gridCell) {
-					gridG
-						.moveTo(x - dash / 2, y)
-						.lineTo(x + dash / 2, y)
-						.moveTo(x, y - dash / 2)
-						.lineTo(x, y + dash / 2);
-				};
-			};
-		}
-
-		// dotted grid
-		if(this.gridStyle == "dotted") {
-			var gridCell = this.cellSize;
-			gridG.beginFill(this.colorScheme.grid);
-			for (var x = 0; x <= this.width; x += gridCell) {
-				for (var y = 0; y <= this.height; y += gridCell) {
-					gridG.moveTo(x, y).drawCircle(x, y, 1);
-				};
-			};
+		switch(this.styleScheme.gridType) {
+			case "line":
+				this.drawGridLine(gridG);
+				break;
+			case "crosshair":
+				this.drawGridCrosshair(gridG);
+				break;
+			case "dotted":
+				this.drawGridDotted(gridG);
+				break;
 		}
 	};
 	
+	p.drawGridLine = function(gridG) {
+		gridG.beginStroke(this.styleScheme.grid);
+		var gridCell = this.cellSize;
+		var line = 1;
+		var boldLine = 10; // criar uma linha mais grossa a cada 10 linhas
+
+		// linhas verticais
+		for (var x = gridCell; x < this.width; x += gridCell) {
+			if(line % boldLine == 0) {
+				gridG.setStrokeStyle(2);
+			} else {
+				gridG.setStrokeStyle(1);
+			}
+			line += 1;
+			gridG
+				.moveTo(x, 0)
+				.lineTo(x, this.height);
+		};
+
+		// linhas horizontais
+		line = 1;
+		for (var y = gridCell; y < this.height; y += gridCell) {
+			if(line % boldLine == 0) {
+				gridG.setStrokeStyle(2);
+			} else {
+				gridG.setStrokeStyle(1);
+			}
+			line += 1;
+			gridG
+				.moveTo(0, y)
+				.lineTo(this.width, y);
+		};
+	};
+	
+	p.drawGridCrosshair = function(gridG) {
+		gridG.beginStroke(this.styleScheme.grid).setStrokeStyle(1);
+		var gridCell = this.cellSize * 2;
+		var dash = this.cellSize;
+		for (var x = 0; x <= this.width; x += gridCell) {
+			for (var y = 0; y <= this.height; y += gridCell) {
+				gridG
+					.moveTo(x - dash / 2, y)
+					.lineTo(x + dash / 2, y)
+					.moveTo(x, y - dash / 2)
+					.lineTo(x, y + dash / 2);
+			};
+		};
+	};
+
+	p.drawGridDotted = function(gridG) {
+		var gridCell = this.cellSize;
+		gridG.beginFill(this.styleScheme.grid);
+		for (var x = 0; x <= this.width; x += gridCell) {
+			for (var y = 0; y <= this.height; y += gridCell) {
+				gridG.moveTo(x, y).drawCircle(x, y, 1);
+			};
+		};
+	};
+
 	/* 
 	 * função: resize()
 	 * descrição: atualiza o tamanho da workarea para preencher todo o canvas
@@ -237,10 +433,10 @@
 	};
 
 	/* 
-	 * função: mouseDown(), mousePressmove()
+	 * função: mousemove(), mousePressmove()
 	 * descrição: funções que tratam do movimento do stage
 	 */
-	p.mouseDown = function(event) {
+	p.mousedown = function(event) {
 		// salva a diferença entre a posição do mouse e a origem do componente
 		this.parent.delta.x = this.parent.x - event.stageX;
 		this.parent.delta.y = this.parent.y - event.stageY;
@@ -292,6 +488,8 @@
 }(window));
 
 
+
+
 /* 
  * classe: MenuRoot
  * descrição: Essa classe contém funções e propriedades do Menu e seus submenus
@@ -304,8 +502,7 @@
 
 		this.config			= config;
 
-		this.fontStyle   	= config.fontStyle;
-		this.colorScheme 	= config.colorScheme;
+		this.styleScheme 	= config.styleScheme;
 		this.subMenuDraft 	= config.draft;
 		this.subMenu 		= [];
 		this.isOpen			= false;
@@ -400,6 +597,8 @@
 }(window));
 
 
+
+
 /* 
  * classe: MenuItem
  * descrição: 
@@ -410,20 +609,19 @@
  	function MenuItem(config) {
 		this.MenuRoot_constructor(config);
 
-		this.currentColor = this.colorScheme.default;
-
-		this.name 			= config.draft.name;
+		this.label 			= config.draft.label;
 		this.componentName	= config.draft.componentName;
 		this.subMenuDraft 	= config.draft.subMenu;
 		this.startAngle 	= config.startAngle;
 		this.cursor 		= "pointer";
-		this.componentArray = config.componentArray;
+
+		// objeto que adiciona os componentes
+		this.componentContainer = config.componentContainer;
 	
 		this.button = new MenuButton({
-			fontStyle: this.fontStyle,
-			colorScheme: this.colorScheme,
+			styleScheme: this.styleScheme,
 			radius: this.childrenRadius,
-			name: this.name,
+			label: this.label,
 		});
 		this.addChild(this.button);
 
@@ -459,8 +657,8 @@
 
 	p.open = function(x, y) {
 		this.parent.setChildIndex(this, this.parent.getNumChildren() - 1);
-		this.enable();
 		this.showItens();
+		this.enable();
 	};
 
 	p.disable = function() {
@@ -469,7 +667,11 @@
 	};
 
 	p.enable = function() {
-		this.button.enable();
+		if(this.isOpen) {
+			this.button.selected();
+		} else {
+			this.button.enable();
+		}
 	};
 
 	p.enableSiblings = function() {
@@ -493,17 +695,17 @@
 	p.mousedown = function(event) {
 		var obj = this.parent;
 		if(obj.isOpen) {
-			obj.enableSiblings();
 			obj.close();
+			obj.enableSiblings();
 		} else {
-			obj.disableSiblings();
 			obj.open();
+			obj.disableSiblings();
 		}
 
 		// adiciona o elemento
 		if(!obj.hasChildren) {
 			var root = obj.getRoot();
-			obj.componentArray.add({
+			obj.componentContainer.addComponent({
 				type: obj.componentName,
 				x: root.x,
 				y: root.y
@@ -528,6 +730,8 @@
 }(window));
 
 
+
+
 /* 
  * classe: MenuButton
  * descrição: 
@@ -538,12 +742,12 @@
  	function MenuButton(config) {
 		this.Container_constructor();
 
-		this.colorScheme  = config.colorScheme;
-		this.currentColor = this.colorScheme.default;
-		this.fontStyle    = config.fontStyle;
+		this.styleScheme  = config.styleScheme;
+		this.currentColor = this.styleScheme.default;
 		this.radius 	  = config.radius;
-		this.disabled	  = false;
-		this.name		  = config.name;
+		this.lastState	  = "default"; // selected, disabled, default, hover
+		this.state		  = "default"; // selected, disabled, default, hover
+		this.label		  = config.label;
 
 		this.background = new createjs.Shape();
 		this.text 	= new createjs.Text();
@@ -557,22 +761,26 @@
  	}
 	var p = createjs.extend(MenuButton, createjs.Container);
 
-	p.updateUI = function(colorScheme) {
-		if(colorScheme != null) this.currentColor = colorScheme;
+	p.updateUI = function() {
+		var currentStyle = Object.assign({}, this.styleScheme.default);
+
+		if(this.styleScheme[this.state] != null) {
+			Object.assign(currentStyle, this.styleScheme[this.state]);
+		}
 
 		// cria um circulo
 		this.background.graphics.clear()
-			// .beginStroke(this.currentColor.border)
+			// .beginStroke(currentStyle.border)
 			// .setStrokeStyle(2)
-			.beginFill(this.currentColor.background)
+			.beginFill(currentStyle.background)
 			.drawCircle(0, 0, this.radius, this.radius);
-		this.background.shadow = new createjs.Shadow(this.currentColor.shadow, 2, 2, 6);
+		this.background.shadow = new createjs.Shadow(currentStyle.shadow, 2, 2, 6);
 
 		// cria campo de texto para o nome do componente
 		this.text.set({
-			text: this.name,
-			font: this.fontStyle,
-			color: this.currentColor.text,
+			text: this.label,
+			font: currentStyle.font,
+			color: currentStyle.text,
 			x: 0,
 			y: 0,
 			textBaseline: "middle",
@@ -580,26 +788,33 @@
 		});
 	};
 
+	p.setState = function(state) {
+		this.lastState = this.state;
+		this.state = state;
+		this.updateUI();
+	}
+
 	p.rollover = function(event) {
-		if(!this.disabled) {
-			this.updateUI(this.colorScheme.hover);
+		this.lastState = this.state;
+		if(this.state != "disabled") {
+			this.setState("hover");
 		}
 	};
 
 	p.rollout = function(event) {
-		if(!this.disabled) {
-			this.updateUI(this.colorScheme.default);
-		}
+		if(this.state == "hover") this.setState(this.lastState);
 	};
 
 	p.disable = function() {
-		this.disabled = true;
-		this.updateUI(this.colorScheme.disabled);
+		this.setState("disabled");
 	};
 
 	p.enable = function() {
-		this.disabled = false;
-		this.updateUI(this.colorScheme.default);
+		this.setState("default");
+	};
+
+	p.selected = function() {
+		this.setState("selected");
 	};
 
 	window.MenuButton = createjs.promote(MenuButton, "Container");

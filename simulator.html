@@ -12,7 +12,7 @@
 	<!-- Place favicon.ico in the root directory -->
 
 	<link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="css/simulator.css">
+	<!-- <link rel="stylesheet" href="css/simulator.css"> -->
 </head>
 
 <body onload="init();">
@@ -30,11 +30,25 @@
 
 <section id="main">
 
-	<article>
+	<article id="simulator">
 		<div>
 			<canvas id="simulatorCanvas" width="700" height="440">
 				<p>Your browser does not support the canvas tag.</p>
 			</canvas>
+		</div>
+
+		<div id="simulatorInfo" class="text">
+			<button onClick="exportCurrentState();">Download da cena</button>
+			<h1>Controles</h1>
+			<ul>
+				<li>Clique duas vezes ou clique e segure para abrir o menu</li>
+				<li>Arraste os componentes para a área com um x no canto inferior direito para apagá-los</li>
+				<li>Clique no círculo de um dos lados do componente e arraste ou clique em outro círculo para criar uma conexão</li>
+				<li>Clique duas vezes sobre o fio para desativar a conexão</li>
+				<li>G = muda o estilo do grid</li>
+				<li>W = muda o estilo do fio</li>
+				<li>E = exporta a cena atual</li>
+			</ul>
 		</div>
 
 		<div id="error" class="text">
@@ -68,7 +82,9 @@
 <script src="js/simulator/lib/soundjs-0.6.2.min.js"></script>
 <script src="js/simulator/lib/easeljs-0.8.2.min.js"></script>
 <script src="js/simulator/lib/tweenjs-0.6.2.min.js"></script>
+<script src="js/simulator/config.js"></script>
 <script src="js/simulator/Component.js"></script>
+<script src="js/simulator/Connection.js"></script>
 <script src="js/simulator/Classes.js"></script>
 <script src="js/simulator/Helper.js"></script>
 <script src="js/simulator/simulator.js"></script>

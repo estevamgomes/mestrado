@@ -1,0 +1,50 @@
+.loading {
+	position: relative;
+}
+
+.loading:after {
+	content: url("../img/loader.gif");
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin: -13px 0 0 -51px;
+	opacity: 0.8;
+}
+
+#simulator {}
+
+#simulatorInfo {
+	button {
+		border: 2px solid @preto;
+		font-size: 1.2rem;
+		color: @preto;
+		background: @branco;
+		margin: 2em 0;
+		padding: .8em 1.2em;
+		text-transform: uppercase;
+		font-family: @font-header;
+		font-weight: bold;
+		letter-spacing: .1em;
+		&:hover {
+			border-color: @vermelho;
+			color: @vermelho;
+		}
+	}
+	ul {
+		padding: 0;
+	}
+}
+
+#simulatorCanvas {
+	margin: 0 auto;
+	/*border: 1px solid #f0f0f0;*/
+	background: #f0f0f0;
+}
+
+#error {
+	display:none;
+}
+
+#mobile {
+	display:none;
+}

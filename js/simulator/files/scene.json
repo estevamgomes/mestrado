@@ -1,0 +1,1 @@
+{"component":[{"name":"servo56","type":"servo","x":305,"y":150},{"name":"counter90","type":"counter","x":305,"y":330}],"connection":[{"inputName":"servo56","inputNodeName":"servo56-in-0","outputName":"counter90","outputNodeName":"counter90-out-0"}],"styleScheme":{"connection":{"default":{"wireType":"ortho"}},"workarea":{"gridType":"dotted"}}}
