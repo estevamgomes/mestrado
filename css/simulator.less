@@ -11,25 +11,44 @@
 	opacity: 0.8;
 }
 
-#simulator {}
-
 #simulatorInfo {
-	button {
-		border: 2px solid @preto;
-		font-size: 1.2rem;
-		color: @preto;
-		background: @branco;
-		margin: 2em 0;
+	// botoes de exportar e importar cena
+	.ui-button {
+		border: 2px solid mix(@preto, @cinzaclaro, 5%);
+		font-size: 1.1rem;
+		color: mix(@preto, @cinzaclaro, 50%);
+		background: @cinzaclaro;
+		margin: 2rem 0;
 		padding: .8em 1.2em;
 		text-transform: uppercase;
 		font-family: @font-header;
 		font-weight: bold;
 		letter-spacing: .1em;
+		cursor: pointer;
 		&:hover {
-			border-color: @vermelho;
-			color: @vermelho;
+			color: @branco;
+			background: @vermelho;
+			border-color: mix(@preto, @vermelho, 10%);
 		}
 	}
+	//
+	#importSceneButton {
+		display: inline-block;
+		position: relative;
+		#importSceneLabel {}
+		#importSceneFileHolder {
+			font-size: 10rem;
+			position: absolute;
+			right: 0;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			overflow: hidden;
+			max-width: 100%;
+			opacity: 0;
+		}
+	}
+	//
 	ul {
 		padding: 0;
 	}

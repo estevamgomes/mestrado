@@ -41,7 +41,7 @@ var styleScheme = {
 	connection: {
 		default: {
 			wire: color.vermelho,
-			wireType: "bezier", // estilo do fio = bezier || ortho || line
+			wireType: "orthoB", // estilo do fio = bezier || ortho || line
 			size: 2,
 			caps: "butt", // butt, round, square,
 			dash: false

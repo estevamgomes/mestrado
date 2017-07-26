@@ -332,6 +332,9 @@
 			case "line":
 				this.drawGridLine(gridG);
 				break;
+			case "lineh":
+				this.drawGridLineHor(gridG);
+				break;
 			case "crosshair":
 				this.drawGridCrosshair(gridG);
 				break;
@@ -341,36 +344,30 @@
 		}
 	};
 	
-	p.drawGridLine = function(gridG) {
-		gridG.beginStroke(this.styleScheme.grid);
+	p.drawGridLineHor = function(gridG) {
+		gridG.beginStroke(this.styleScheme.grid).setStrokeStyle(1);
 		var gridCell = this.cellSize;
-		var line = 1;
-		var boldLine = 10; // criar uma linha mais grossa a cada 10 linhas
+
+		// linhas horizontais
+		for (var y = gridCell; y < this.height; y += gridCell) {
+			gridG.moveTo(0, y)
+				.lineTo(this.width, y);
+		};
+	};
+	
+	p.drawGridLine = function(gridG) {
+		gridG.beginStroke(this.styleScheme.grid).setStrokeStyle(1);
+		var gridCell = this.cellSize;
 
 		// linhas verticais
 		for (var x = gridCell; x < this.width; x += gridCell) {
-			if(line % boldLine == 0) {
-				gridG.setStrokeStyle(2);
-			} else {
-				gridG.setStrokeStyle(1);
-			}
-			line += 1;
-			gridG
-				.moveTo(x, 0)
+			gridG.moveTo(x, 0)
 				.lineTo(x, this.height);
 		};
 
 		// linhas horizontais
-		line = 1;
 		for (var y = gridCell; y < this.height; y += gridCell) {
-			if(line % boldLine == 0) {
-				gridG.setStrokeStyle(2);
-			} else {
-				gridG.setStrokeStyle(1);
-			}
-			line += 1;
-			gridG
-				.moveTo(0, y)
+			gridG.moveTo(0, y)
 				.lineTo(this.width, y);
 		};
 	};

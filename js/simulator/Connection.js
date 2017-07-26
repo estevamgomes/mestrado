@@ -116,7 +116,7 @@
 	};
 
 
-	p.exportCurrentState = function() {
+	p.exportCurrentScene = function() {
 		var connections = [];
 		for (var i = this.numChildren - 1; i >= 0; i--) {
 			var node = this.getChildAt(i).node;
@@ -202,7 +202,7 @@
 	 * descrição: 
 	 */
 	p.mouseover = function() {
-		this.setState("hover");
+		if(this.isAttached()) this.setState("hover");
 	};
 
 
@@ -347,12 +347,23 @@
 
 		if(startPos != null && endPos != null) {
 			var g;
+			var radius = this.workarea.cellSize * 4;
+			var seg = radius + this.workarea.cellSize * 2;
 			switch(currentStyle.wireType) {
 				case "line":
 					g = this.drawWireLine(startPos, endPos);
 					break;
 				case "ortho":
-					g = this.drawWireOrtho(startPos, endPos);
+					g = this.drawWireOrtho(startPos, endPos, radius, seg);
+					break;
+				case "orthoB":
+					g = this.drawWireOrthoB(startPos, endPos, radius, seg);
+					break;
+				case "orthoC":
+					g = this.drawWireOrthoC(startPos, endPos, radius, seg);
+					break;
+				case "diagonal":
+					g = this.drawWireDiagonal(startPos, endPos, radius, seg);
 					break;
 				default:
 					g = this.drawWireBezier(startPos, endPos);
@@ -411,67 +422,228 @@
 
 
 	/* 
+	 * função: drawWireDiagonal()
+	 * descrição: 
+	 */
+	p.drawWireDiagonal = function(startPos, endPos, radius, seg) {
+		var middlePos = {
+			x: (endPos.x + startPos.x) / 2,
+			y: (endPos.y + startPos.y) / 2
+		};
+
+		var seg = this.workarea.cellSize * 8;
+		var dirx = endPos.x - seg * 2 > startPos.x ? 1 : -1;
+
+		// pos x dos segmentos verticais
+		var verSegSX = startPos.x + seg;
+		var verSegEX = endPos.x   - seg;
+
+		var point = [
+			startPos,
+			{
+				x: verSegSX,
+				y: startPos.y
+			}, { 
+				x: verSegEX,
+				y: endPos.y,
+			},
+			endPos
+		];
+
+		return this.pointToLine(point, radius);
+	};
+
+
+	/* 
 	 * função: drawWireOrtho()
 	 * descrição: 
 	 */
-	p.drawWireOrtho = function(startPos, endPos) {
+	p.drawWireOrtho = function(startPos, endPos, radius, seg) {
 		var middlePos = {
-			x: startPos.x + (endPos.x - startPos.x) / 2,
-			y: startPos.y + (endPos.y - startPos.y) / 2
+			x: (endPos.x + startPos.x) / 2,
+			y: (endPos.y + startPos.y) / 2
+		};
+
+		var dirx = endPos.x - seg * 2 > startPos.x ? 1 : -1;
+
+		// pos x dos segmentos verticais
+		var verSegSX = startPos.x + seg;
+		var verSegEX = endPos.x   - seg;
+
+		var point = [
+			startPos,
+			{
+				x: verSegSX,
+				y: startPos.y
+			}, {
+				x: verSegSX,
+				y: middlePos.y
+			}, {
+				x: verSegEX,
+				y: middlePos.y 
+			}, { 
+				x: verSegEX,
+				y: endPos.y,
+			},
+			endPos
+		];
+
+		return this.pointToLine(point, radius);
+	};
+
+
+	/* 
+	 * função: drawWireOrthoB()
+	 * descrição: 
+	 */
+	p.drawWireOrthoB = function(startPos, endPos, radius, seg) {
+		var middlePos = {
+			x: (endPos.x + startPos.x) / 2,
+			y: (endPos.y + startPos.y) / 2
+		};
+
+		var dirx = endPos.x - seg * 2 > startPos.x ? 1 : -1;
+
+		// pos x dos segmentos verticais
+		var verSegSX = startPos.x + seg;
+		var verSegEX = endPos.x   - seg;
+
+		var point = [
+			startPos,
+			{
+				x: verSegSX,
+				y: startPos.y
+			}, {
+				x: verSegSX,
+				y: middlePos.y
+			}, {
+				x: verSegEX,
+				y: middlePos.y 
+			}, { 
+				x: verSegEX,
+				y: endPos.y,
+			},
+			endPos
+		];
+
+		if(dirx > 0) {
+			point[1].x = middlePos.x;
+			point[2].x = middlePos.x;
+			point[3].x = middlePos.x;
+			point[4].x = middlePos.x;
+		}
+
+		return this.pointToLine(point, radius);
+	};
+
+
+	/* 
+	 * função: drawWireOrthoC()
+	 * descrição: 
+	 */
+	p.drawWireOrthoC = function(startPos, endPos, radius, seg) {
+		var middlePos = {
+			x: (endPos.x + startPos.x) / 2,
+			y: (endPos.y + startPos.y) / 2
 		};
 
 		var dirY = endPos.y > startPos.y ? 1 : -1;
-		var arcRadiusX = Math.abs(startPos.x - endPos.x) / 2;	
-		var arcRadiusY = Math.abs(startPos.y - endPos.y) / 4;
-		var arcRadiusMin = 20;
-		var arcRadius = Math.min(arcRadiusX, arcRadiusY, arcRadiusMin);
 
-		var seg = 12;
+		// pos x dos segmentos verticais
+		var newStartPosX = startPos.x + seg;
+		var newEndPosX 	 = endPos.x - seg;
+
+		var height = Math.abs((startPos.y - endPos.y) / 4);
+
+		var verSegSX = startPos.x + seg;
+		var verSegEX = endPos.x   - seg;
+
+		var arcRadius = Math.min(height, radius);
+		var arcRadiusD = arcRadius * dirY;
+
+		var minDeltaX = - 2 * arcRadius;
+		var maxDeltaX = 2 * arcRadius;
+		var deltaX = newEndPosX - newStartPosX;
+		var deltaX = Math.constrain(deltaX, minDeltaX, maxDeltaX);
+		var dirX = Math.map(deltaX, minDeltaX, maxDeltaX, 1, -1);
+
+		var xtoY = 1 - Math.abs(dirX);
+
+		var point = [
+			startPos, {
+				x: newStartPosX,
+				y: startPos.y
+			}, {
+				x: verSegSX,
+				y: middlePos.y - (arcRadiusD * xtoY)
+			}, {
+				x: verSegEX,
+				y: middlePos.y + (arcRadiusD * xtoY)
+			}, {
+				x: newEndPosX,
+				y: endPos.y,
+			},
+			endPos
+		];
+
+		return this.pointToLine(point, radius);
+	};
+
+	p.pointToLine = function(points, radius) {
+		if(radius <= 0) this.pointToLineHardCorner(points);
 
 		var g = new createjs.Graphics();
-		if(endPos.x > startPos.x && Math.abs(startPos.x - endPos.x) > (seg * 2 + arcRadiusMin * 2)) {
-			g.moveTo(startPos.x, startPos.y)
-				.lineTo(middlePos.x - arcRadius, startPos.y)
-				.arcTo(
-					middlePos.x, startPos.y,
-					middlePos.x, startPos.y + arcRadius * dirY,
-					arcRadius
-				)
-				.lineTo(middlePos.x, endPos.y - arcRadius * dirY)
-				.arcTo(
-					middlePos.x, endPos.y,
-					middlePos.x + arcRadius, endPos.y,
-					arcRadius
-				)
-				.lineTo(endPos.x, endPos.y);
-		} else {
-			arcRadiusX = Math.abs((startPos.x + (seg + arcRadiusMin) * 2) - endPos.x) / 2;	
-			arcRadius = Math.min(arcRadiusX, arcRadiusY, arcRadiusMin);		
-			arcRadiusY = Math.min(arcRadiusY, arcRadiusMin);
-			g.moveTo(startPos.x, startPos.y)
-				.lineTo(startPos.x + seg, startPos.y)
-				.arcTo(
-					startPos.x + (seg + arcRadiusMin), startPos.y,
-					startPos.x + (seg + arcRadiusMin), startPos.y + arcRadiusMin * dirY,
-					arcRadiusY
-				)
-				.arcTo(
-					startPos.x + (seg + arcRadiusMin), middlePos.y,
-					startPos.x + (seg - arcRadius), middlePos.y,
-					arcRadius
-				)
-				.arcTo(
-					endPos.x - (seg + arcRadiusMin), middlePos.y,
-					endPos.x - (seg + arcRadiusMin), middlePos.y + arcRadius * dirY,
-					arcRadius
-				)
-				.arcTo(
-					endPos.x - (seg + arcRadiusMin), endPos.y,
-					endPos.x - seg, endPos.y,
-					arcRadiusY
-				)
-				.lineTo(endPos.x, endPos.y);
-		}
+		g.moveTo(points[0].x, points[0].y);
+		for (var i = 1; i < points.length - 1; i++) {
+			var pa = points[i - 1]; // Previous point
+			var pb = points[i + 1]; // Next point
+			var corner = points[i];	// current point
+
+			var angleCorner = Math.angleFromPoints(corner, pa, pb);
+			
+			// if the point is not a corner jump the point
+			if(!isNaN(angleCorner)) {
+				var distFromCorner = radius / Math.tan(angleCorner / 2);
+
+				var lineA = [corner, pa];
+				var lineALength = Math.lineLength(lineA);
+
+				var lineB = [corner, pb];
+				var lineBLength = Math.lineLength(lineB);
+
+				// limita o raio
+				distFromCorner = Math.min(distFromCorner, lineALength / 2, lineBLength / 2);
+
+				var startPoint = Math.pointInLine(lineA, distFromCorner);
+				var endPoint = Math.pointInLine(lineB, distFromCorner);
+
+				g.lineTo(startPoint.x, startPoint.y);
+
+				// arc
+				var limitedRadius = distFromCorner * Math.tan(angleCorner / 2);
+				g.arcTo(corner.x, corner.y, endPoint.x, endPoint.y, limitedRadius);
+
+				// bezier
+				// g.quadraticCurveTo(corner.x, corner.y, endPoint.x, endPoint.y);
+
+				// debug points
+				// g.moveTo(startPoint.x, startPoint.y).drawCircle(startPoint.x, startPoint.y, 1);
+				// g.moveTo(corner.x, corner.y).drawCircle(corner.x, corner.y, 1);
+				// g.moveTo(endPoint.x, endPoint.y).drawCircle(endPoint.x, endPoint.y, 1);
+				// g.moveTo(endPoint.x, endPoint.y);
+			}
+		};
+		var lastPoint = points[points.length - 1];
+		g.lineTo(lastPoint.x, lastPoint.y);
+		return g;
+	};
+
+	p.pointToLineHardCorner = function(points) {
+		var g = new createjs.Graphics();
+		g.moveTo(points[0].x, points[0].y);
+		for (var i = 1; i < points.length; i++) {
+			g.lineTo(points[i].x, points[i].y);
+		};
 		return g;
 	};
 

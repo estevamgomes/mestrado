@@ -38,7 +38,14 @@
 		</div>
 
 		<div id="simulatorInfo" class="text">
-			<button onClick="exportCurrentState();">Download da cena</button>
+
+			<button class="ui-button" onClick="exportCurrentScene();">Download da cena</button>
+
+			<div class="ui-button" id="importSceneButton">
+				<div id="importSceneLabel">Importar cena</div>
+				<input id="importSceneFileHolder" type="file" tile="Nenhum arquivo selecionado" onChange="importScene(event, this);">
+			</div>
+
 			<h1>Controles</h1>
 			<ul>
 				<li>Clique duas vezes ou clique e segure para abrir o menu</li>

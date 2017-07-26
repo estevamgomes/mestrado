@@ -29,7 +29,7 @@
 
 	};
 
-	p.exportCurrentState = function() {
+	p.exportCurrentScene = function() {
 		var components = [];
 		for (var i = this.numChildren - 1; i >= 0; i--) {
 			var obj = this.getChildAt(i)
@@ -176,6 +176,15 @@
 		this.dragArea.hitArea = this.labelBg;
 		this.addChild(this.dragArea); 
 
+		this.dragArea.cursor = "url(img/grabbing.png),pointer";
+		/*
+		cursor: grab,-webkit-grab,-moz-grab;
+		&.ui-state-active {
+			cursor: grabbing;
+			cursor: -webkit-grabbing;
+			cursor: -moz-grabbing;
+			*/
+
 		// interação com o mouse
 		// hover
 		this.dragArea.on("rollover", this.rollover);
@@ -231,7 +240,7 @@
 	p.isGrabbing = function() {
 		return this.state == "grabbing" || this.state == "remove";
 	};
-
+	
 	p.setState = function(state) {
 		this.state = state;
 		this.updateUI();
@@ -248,8 +257,8 @@
 
 	p.rollout = function(event) {
 		var obj = this.parent;
-
-		if(obj.underMouse(event.stageX, event.stageY).constructor.name == "Bin") {
+		var underMouse = obj.underMouse(event.stageX, event.stageY);
+		if(underMouse != null && underMouse.constructor.name == "Bin") {
 			obj.setState("remove");
 		} else if(!obj.isGrabbing()) {
 			obj.setState("default");

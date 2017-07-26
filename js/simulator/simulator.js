@@ -1,11 +1,12 @@
 // variáveis
-var stage,			// objeto root lrvrl onde outros elementos serão fixados e renderizados
-	canvas,			// canvas é o elemento html onde as coisas são desenhadas
-	preload, 		// loader do PreloadJs
-	workarea, 		// area de trabalho
-	menu, 			// objeto do menu
-	mousetimer,		// objeto que armazena o timer do mouse
-	bin,			// lixeira
+var stage,		// objeto root lrvrl onde outros elementos serão fixados e renderizados
+	canvas,		// canvas é o elemento html onde as coisas são desenhadas
+	preload, 	// loader do PreloadJs
+	workarea, 	// area de trabalho
+	menu, 		// objeto do menu
+	mousetimer,	// objeto que armazena o timer do mouse
+	bin,		// lixeira
+	scene,		// cena
 
 	componentContainer,  // objeto que armazena os componentes
 	connectionContainer; // objeto que armazena as conexões
@@ -135,7 +136,7 @@ function start() {
 
 	// carrega as configurações iniciais (quais componentes existem e suas conexões)
 	// e salva na variável scene
-	var scene = preload.getResult("scene");
+	if(scene == null) scene = preload.getResult("scene");
 
 	// atualiza as cores da cena a partir do arquivo carregado
 	// Object.assign(styleScheme, scene.styleScheme);
@@ -398,20 +399,20 @@ function handleKeyPress(e) {
 			changeWireType();
 			return false;
 		case KEYCODE_E:
-			exportCurrentState();
+			exportCurrentScene();
 			return false;
 	}
 }
 
 
 /* 
- * função: exportCurrentState()
+ * função: exportCurrentScene()
  * descrição: 
  */
-function exportCurrentState() {
+function exportCurrentScene() {
 	var scene = {
-		component: componentContainer.exportCurrentState(),
-		connection: connectionContainer.exportCurrentState(),
+		component: componentContainer.exportCurrentScene(),
+		connection: connectionContainer.exportCurrentScene(),
 		styleScheme: styleScheme
 	};
 
@@ -429,10 +430,38 @@ function exportCurrentState() {
 
 
 /* 
+ * função: exportCurrentScene()
+ * descrição: 
+ */
+function importScene(e, obj) {
+	readSingleFile(e);	// 
+	obj.value = ""; 	// apaga o arquivo do input
+}
+
+function readSingleFile(e) {
+  var file = e.target.files[0];
+  if (!file) {
+    return;
+  }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var contents = e.target.result;
+    displayContents(contents);
+  };
+  reader.readAsText(file);
+}
+
+function displayContents(newScene) {
+	scene = JSON.parse(newScene);
+	start();
+}
+
+
+/* 
  * função: changeWireType()
  * descrição: 
  */
-var wireType = ["bezier", "ortho", "line"];
+var wireType = ["bezier", "ortho", "orthoB", "orthoC", "diagonal", "line"];
 function changeWireType() {
 	var index = wireType.indexOf(styleScheme.connection.default.wireType);
 	index = index < wireType.length - 1 ? index + 1 : 0;
@@ -444,7 +473,7 @@ function changeWireType() {
  * função: changeGridType()
  * descrição: 
  */
-var gridType = ["line", "crosshair", "dotted", "null"];
+var gridType = ["line", "lineh", "crosshair", "dotted", "null"];
 function changeGridType() {
 	var index = gridType.indexOf(styleScheme.workarea.gridType);
 	index = index < gridType.length - 1 ? index + 1 : 0;
