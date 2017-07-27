@@ -62,6 +62,22 @@
 		};
 	};
 
+	p.removeActiveComponent = function() {
+		for (var i = this.numChildren - 1; i >= 0; i--) {
+			var child = this.getChildAt(i);
+			if(child.isActive()) child.remove();
+		};
+	};
+
+	p.updateComponentText = function(e) {
+		for (var i = this.numChildren - 1; i >= 0; i--) {
+			var child = this.getChildAt(i);
+			if(child.isActive() && child.isEditable()) {
+				child.updateText(e);
+			}
+		};
+	};
+
 	window.ComponentContainer = createjs.promote(ComponentContainer, "Container");
 }(window));
 
@@ -80,6 +96,7 @@
 		this.run = function() {};	// ação do objeto
 		this.label = "NO LABEL"; 	// etiqueta
 		this.name = config.type + this.id; // nome
+		this.editableTextField = false;    // se tem um campo de texto editável
 
 		this.inputSize = 0;
 		this.outputSize = 0;
@@ -122,19 +139,6 @@
 			y: this.height / 2
 		};
 
-		// reseta as variáveis conforme a função específica
-		if(this.customConstructor != null) this.customConstructor(config);
-
-		this.setup();
-	}
-	var p = createjs.extend(Component, createjs.Container);
-
-	p.tick = function() {
-		this.run();
-		this.updateUI();
-	};
-
-	p.setup = function() {
 
 		// cria elementos
 		this.border 	= new createjs.Shape(); // borda
@@ -168,23 +172,18 @@
 			this.output[i].y = this.center.y + i * this.cellSize * 2 - (this.outputSize - 1) * this.cellSize;
 			this.addChild(this.output[i]);				
 		}
-
-		this.updateUI();
 		
 		// área de contato invisível para movimentar o componente
 		this.dragArea = new createjs.Container();
 		this.dragArea.hitArea = this.labelBg;
 		this.addChild(this.dragArea); 
 
-		this.dragArea.cursor = "url(img/grabbing.png),pointer";
-		/*
-		cursor: grab,-webkit-grab,-moz-grab;
-		&.ui-state-active {
-			cursor: grabbing;
-			cursor: -webkit-grabbing;
-			cursor: -moz-grabbing;
-			*/
+		// reseta as variáveis conforme a função específica
+		if(this.customConstructor != null) this.customConstructor(config);
 
+		// desenha a interface gráfica
+		this.updateUI();
+		
 		// interação com o mouse
 		// hover
 		this.dragArea.on("rollover", this.rollover);
@@ -194,6 +193,12 @@
 		this.dragArea.on("mousedown", this.mouseDown);
 		this.dragArea.on("pressup",   this.pressUp);
 		this.dragArea.on("pressmove", this.mousePressmove);
+	}
+	var p = createjs.extend(Component, createjs.Container);
+
+	p.tick = function() {
+		this.run();
+		this.updateUI();
 	};
 
 	p.updateUI = function() {
@@ -202,6 +207,8 @@
 		if(this.styleScheme[this.state] != null) {
 			Object.assign(currentStyle, this.styleScheme[this.state]);
 		}
+
+		this.dragArea.cursor = currentStyle.cursor;
 
 		// desenha a borda
 		this.border.graphics.clear()
@@ -214,7 +221,7 @@
 			.beginFill(currentStyle.background)
 			.setStrokeStyle(2)
 			.drawRoundRect(0, 0, this.width, this.height, this.cellSize / 2);
-		this.background.shadow = new createjs.Shadow(currentStyle.shadow, 1, 1, 2);
+		// this.background.shadow = new createjs.Shadow(currentStyle.shadow, 1, 1, 2);
 
 		// desenha o fundo do label
 		this.labelBg.graphics.clear()
@@ -232,6 +239,9 @@
 			textAlign: "center",
 		});
 
+		// acrescenta qualquer alteração na UI
+		if(this.customUpdateUI != null) this.customUpdateUI(currentStyle);
+
 		// atualiza os inputs e outputs
 		for (var i = 0; i < this.inputSize; i++) this.input[i].updateUI();
 		for (var i = 0; i < this.outputSize; i++) this.output[i].updateUI();
@@ -239,6 +249,14 @@
 
 	p.isGrabbing = function() {
 		return this.state == "grabbing" || this.state == "remove";
+	};
+
+	p.isActive = function() {
+		return this.isGrabbing();
+	};
+
+	p.isEditable = function() {
+		return this.editableTextField;
 	};
 	
 	p.setState = function(state) {
@@ -275,10 +293,18 @@
 		if(obj.isGrabbing()) {
 			obj.setState("hover");
 		} else {
-			obj.parent.setChildIndex(obj, obj.parent.numChildren - 1);
+			obj.bringToFront();
 			obj.grabStart = {x: obj.x, y: obj.y};
 			obj.setState("grabbing");
 		}
+	};
+
+	/* 
+	 * função: bringToFront()
+	 * descrição: move o elemento para topo da lista de renderização
+	 */
+	p.bringToFront = function() {
+		this.parent.setChildIndex(this, this.parent.numChildren - 1);
 	};
 
 	p.mousePressmove = function(event) {

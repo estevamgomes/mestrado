@@ -132,6 +132,6 @@ Math.roundTo = function(x, digits) {
 	if (digits === undefined || digits < 1) {
 		digits = 1;
 	}
-	var d = digits * 10;
+	var d = Math.pow(10, digits);
 	return Math.round(x * d) / d;
 };

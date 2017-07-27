@@ -226,7 +226,7 @@
 					.beginStroke(currentStyle.timer)
 					.setStrokeStyle(3)
 					.arc(0, 0, this.timerRadius, angleStart, angle);
-				this.gtimer.shadow = new createjs.Shadow(currentStyle.shadow, 1, 1, 1);
+				// this.gtimer.shadow = new createjs.Shadow(currentStyle.shadow, 1, 1, 1);
 			}
 		} else {
 			this.resetTimer();
@@ -771,7 +771,7 @@
 			// .setStrokeStyle(2)
 			.beginFill(currentStyle.background)
 			.drawCircle(0, 0, this.radius, this.radius);
-		this.background.shadow = new createjs.Shadow(currentStyle.shadow, 2, 2, 6);
+		// this.background.shadow = new createjs.Shadow(currentStyle.shadow, 2, 2, 6);
 
 		// cria campo de texto para o nome do componente
 		this.text.set({

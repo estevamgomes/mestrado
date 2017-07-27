@@ -64,19 +64,23 @@
 
 	p.addConnection = function(connection) {
 		var cIn = this.componentContainer.getChildByName(connection.inputName);
-		var cInNode = cIn.getChildByName(connection.inputNodeName);
-
 		var cOut = this.componentContainer.getChildByName(connection.outputName);
-		var cOutNode = cOut.getChildByName(connection.outputNodeName);
 
-		this.addChild(new Connection({
-			styleScheme: this.styleScheme,
-			workarea: this.workarea,
-			node: {
-				input: cInNode,
-				output: cOutNode
-			}
-		}));
+		if(cIn != null && cOut != null) {
+			var cInNode = cIn.getChildByName(connection.inputNodeName);
+			var cOutNode = cOut.getChildByName(connection.outputNodeName);
+
+			this.addChild(new Connection({
+				styleScheme: this.styleScheme,
+				workarea: this.workarea,
+				node: {
+					input: cInNode,
+					output: cOutNode
+				},
+				wireTypeIndex: connection.wireTypeIndex,
+				customWireType: connection.customWireType,
+			}));
+		}
 	};
 
 
@@ -119,14 +123,18 @@
 	p.exportCurrentScene = function() {
 		var connections = [];
 		for (var i = this.numChildren - 1; i >= 0; i--) {
-			var node = this.getChildAt(i).node;
+			var child = this.getChildAt(i);
+			var node = child.node;
 			connections.push({
 				inputName: node.input.parent.name,
 				inputNodeName: node.input.name,
 				outputName: node.output.parent.name,
 				outputNodeName: node.output.name,
+				wireTypeIndex: child.wireTypeIndex,
+				customWireType: child.customWireType,
 			});
 		};
+		console.log(connections);
 		return connections;
 	};
 
@@ -151,6 +159,11 @@
 		this.workarea	 = config.workarea;
 		this.state 		 = "temporary";
 
+		// wire type
+		this.wireTypeArray  = ["bezier", "ortho", "orthoB", "orthoC", "diagonal", "diagonalRect", "line"];
+		this.wireTypeIndex  = config.wireTypeIndex != null ? config.wireTypeIndex : this.wireTypeArray.indexOf(this.styleScheme.default.wireType);
+		this.customWireType = config.customWireType != null ? config.customWireType : false;
+
 		this.node = {
 			input:  null, // terminal do tipo input
 			output: null, // terminal do tipo output
@@ -173,10 +186,25 @@
 		this.on("mouseover", this.mouseover);
 		this.on("mouseout", this.mouseout);
 		this.on("dblclick", this.mousedblclick);
+		this.on("click", this.mouseclick);
 
 		if(this.isAttached()) this.setState("default");
  	};
 	var p = createjs.extend(Connection, createjs.Container);
+
+
+	/* 
+	 * função: mouseclick()
+	 * descrição: 
+	 */
+	p.mouseclick = function() {
+		this.changeWireType();
+	};
+
+	p.changeWireType = function () {
+		this.customWireType = true;
+		this.wireTypeIndex = this.wireTypeIndex < this.wireTypeArray.length - 1 ? this.wireTypeIndex + 1 : 0;
+	};
 
 
 	/* 
@@ -202,7 +230,24 @@
 	 * descrição: 
 	 */
 	p.mouseover = function() {
-		if(this.isAttached()) this.setState("hover");
+		if(this.isAttached()) {
+			this.setState("hover");
+			this.bringToFront();
+		}
+	};
+
+
+	/* 
+	 * função: bringToFront()
+	 * descrição: move o elemento para topo da lista de renderização
+	 */
+	p.bringToFront = function() {
+		if(this.parent.hasTemporaryConnection()) {
+			var newIndex = this.parent.numChildren - 2;
+		} else {
+			var newIndex = this.parent.numChildren - 1;
+		}
+		this.parent.setChildIndex(this, newIndex);
 	};
 
 
@@ -211,7 +256,9 @@
 	 * descrição: 
 	 */
 	p.mouseout = function() {
-		this.setState("default");
+		if(this.isAttached()) {
+			this.setState("default");
+		}
 	};
 
 
@@ -347,9 +394,10 @@
 
 		if(startPos != null && endPos != null) {
 			var g;
-			var radius = this.workarea.cellSize * 4;
-			var seg = radius + this.workarea.cellSize * 2;
-			switch(currentStyle.wireType) {
+			var radius = this.workarea.cellSize * 3;
+			var seg = radius + this.workarea.cellSize * 3;
+			var wireType = this.customWireType ? this.wireTypeArray[this.wireTypeIndex] : currentStyle.wireType;
+			switch(wireType) {
 				case "line":
 					g = this.drawWireLine(startPos, endPos);
 					break;
@@ -364,6 +412,9 @@
 					break;
 				case "diagonal":
 					g = this.drawWireDiagonal(startPos, endPos, radius, seg);
+					break;
+				case "diagonalRect":
+					g = this.drawWireDiagonalRect(startPos, endPos, radius, seg);
 					break;
 				default:
 					g = this.drawWireBezier(startPos, endPos);
@@ -422,18 +473,46 @@
 
 
 	/* 
-	 * função: drawWireDiagonal()
-	 * descrição: 
+	 * função: drawWireDiagonalRect()
+	 * descrição: limita a inclinação do segmento médio à 45 graus
 	 */
-	p.drawWireDiagonal = function(startPos, endPos, radius, seg) {
+	p.drawWireDiagonalRect = function(startPos, endPos, radius, seg) {
 		var middlePos = {
 			x: (endPos.x + startPos.x) / 2,
 			y: (endPos.y + startPos.y) / 2
 		};
 
-		var seg = this.workarea.cellSize * 8;
-		var dirx = endPos.x - seg * 2 > startPos.x ? 1 : -1;
+		var distY = Math.abs(startPos.y - endPos.y);
 
+		// pos x dos segmentos verticais
+		var verSegSX = startPos.x + seg;
+		var verSegEX = endPos.x   - seg;
+
+		verSegSX = Math.max(verSegSX, middlePos.x - distY / 2);
+		verSegEX = Math.min(verSegEX, middlePos.x + distY / 2);
+
+		var point = [
+			startPos,
+			{
+				x: verSegSX,
+				y: startPos.y
+			}, { 
+				x: verSegEX,
+				y: endPos.y,
+			},
+			endPos
+		];
+
+		return this.pointToLine(point, radius);
+	};
+
+
+
+	/* 
+	 * função: drawWireDiagonal()
+	 * descrição: 
+	 */
+	p.drawWireDiagonal = function(startPos, endPos, radius, seg) {
 		// pos x dos segmentos verticais
 		var verSegSX = startPos.x + seg;
 		var verSegEX = endPos.x   - seg;

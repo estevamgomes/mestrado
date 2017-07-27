@@ -8,6 +8,9 @@ var stage,		// objeto root lrvrl onde outros elementos serão fixados e renderiz
 	bin,		// lixeira
 	scene,		// cena
 
+	mouseWorkareaX,		// posicao x do mouse relativo à workarea
+	mouseWorkareaY,		// posicao y do mouse relativo à workarea
+
 	componentContainer,  // objeto que armazena os componentes
 	connectionContainer; // objeto que armazena as conexões
 
@@ -78,7 +81,9 @@ function loadFiles() {
 	var imagesPath = "./img/";
 	var images = [
 		// componentes
-		{id: "servo",	src: "icones_servo-ani-lg.png"},
+		{id: "servo", src: "icones_servo-ani-lg.png"},
+		{id: "led",	  src: "icones_led-sim.png"},
+		{id: "sonar", src: "icones_sonar.png"}
 	];
 
 	// array com o scene
@@ -177,7 +182,9 @@ function start() {
 	componentContainer = new ComponentContainer({
 		componentDefinitions: componentDefinitions,
 		componentAssets: {
-			servo: preload.getResult("servo")
+			servo: preload.getResult("servo"),
+			sonar: preload.getResult("sonar"),
+			led: preload.getResult("led")
 		},
 		styleScheme: styleScheme.component,
 		workarea: workarea,
@@ -263,6 +270,10 @@ function start() {
  * descrição: 
  */
 function stagemousemove(event) {
+
+	mouseWorkareaX = event.stageX - workarea.x;
+	mouseWorkareaY = event.stageY - workarea.y;
+
 	// atualiza a posição dos componentes caso estejam sendo arrastados
 	componentContainer.followMouse(event);
 	connectionContainer.mousemove(event);
@@ -372,14 +383,23 @@ function resize() {
  * descrição: 
  */
 // keycodes
-var KEYCODE_W = 119,
-	KEYCODE_G = 103,
-	KEYCODE_E = 101;
+var KEYCODE_W = 87,
+	KEYCODE_w = 119,
+	KEYCODE_G = 71,
+	KEYCODE_g = 103,
+	KEYCODE_E = 69,
+	KEYCODE_e = 101,
+
+	KEYCODE_DELETE 	  = 46,
+	KEYCODE_CTRL 	  = 17,
+	KEYCODE_BACKSPACE = 8;
+
+var CTRL = false;
 
 // register key functions
 document.onkeypress = handleKeyPress;
 // document.onkeydown = handleKeyDown;
-// document.onkeyup = handleKeyUp;
+document.onkeyup = handleKeyUp;
 
 /* 
  * função: handleKeyPress()
@@ -390,19 +410,50 @@ function handleKeyPress(e) {
 	if (!e) {
 		var e = window.event;
 	}
-
+	
 	switch (e.keyCode) {
 		case KEYCODE_G:
+		case KEYCODE_g:
 			changeGridType();
 			return false;
 		case KEYCODE_W:
+		case KEYCODE_w:
 			changeWireType();
 			return false;
 		case KEYCODE_E:
+		case KEYCODE_e:
 			exportCurrentScene();
 			return false;
 	}
+
+	componentContainer.updateComponentText(e);
 }
+
+// Instead of keypress, use the keyup or keydown event:
+// keypress is meant for PRINTABLE characters, whereas
+// keydown will capture non-printing key presses including
+// delete, backspace, and return
+
+/* 
+ * função: handleKeyUp()
+ * descrição: 
+ */
+function handleKeyUp(e) {
+	//cross browser issues exist
+	if (!e) {
+		var e = window.event;
+	}
+
+	switch (e.keyCode) {
+		case KEYCODE_DELETE:
+			componentContainer.removeActiveComponent();
+			return false;
+		case KEYCODE_BACKSPACE:
+			componentContainer.updateComponentText(e);
+			return false;
+	}
+}
+
 
 
 /* 
@@ -461,7 +512,7 @@ function displayContents(newScene) {
  * função: changeWireType()
  * descrição: 
  */
-var wireType = ["bezier", "ortho", "orthoB", "orthoC", "diagonal", "line"];
+var wireType = ["bezier", "ortho", "orthoB", "orthoC", "diagonal", "diagonalRect", "line"];
 function changeWireType() {
 	var index = wireType.indexOf(styleScheme.connection.default.wireType);
 	index = index < wireType.length - 1 ? index + 1 : 0;
