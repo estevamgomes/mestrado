@@ -87,18 +87,19 @@ var styleScheme = {
 			cursor: "pointer",
 			// cursor: "url(img/grab.png), pointer",
 			labelFont: "bold 1rem 'Overpass Mono', monospace",
-			sensorRange: color.azul,
-			sensorRangeAlpha: 0
+			range: color.azul,
+			rangeAlpha: 0
 		},
 		grabbing: {
 			background: color.azulclaro,
 			border: color.azulclaro,
+			rangeAlpha: .3
 		},
 		hover: {
 			background: color.azul,
 			border: color.azul,
 			terminalBorder: color.vermelho,
-			sensorRangeAlpha: 1
+			rangeAlpha: .3
 		},
 		remove: {
 			background: color.vermelho,
@@ -691,11 +692,11 @@ var predefinedComponent = [
 				this.sensorRangeG.set({
 					x: this.center.x,
 					y: this.center.y - this.height / 2 - this.spriteHeight / 2,
-					alpha: currentStyle.sensorRangeAlpha
+					alpha: currentStyle.rangeAlpha
 				}).graphics.clear()
-					.beginStroke(currentStyle.sensorRange)
+					.beginStroke(currentStyle.range)
 					.setStrokeStyle(1)
-					.setStrokeDash([5,5])
+					// .setStrokeDash([5,5])
 					.drawCircle(0, 0, this.sensorRange);
 			},
 			run: function() {
@@ -705,8 +706,8 @@ var predefinedComponent = [
 				});
 				var absPos = Math.addVector(spriteCenter, this);
 				var mouseDist = Math.dist({ x: mouseWorkareaX, y: mouseWorkareaY }, absPos);
-				mouseDist = Math.constrain(mouseDist, this.domain[0], this.domain[1]);
-				this.output[0].value = Math.roundTo(Math.map(mouseDist, 0, this.sensorRange, this.domain[0], this.domain[1]), 2);
+				mouseDist = Math.constrain(mouseDist, 0, this.range);
+				this.output[0].value = Math.roundTo(Math.map(mouseDist, 0, this.range, this.domain[0], this.domain[1]), 2);
 				this.output[1].value = this.domain;
 			}
 		}]
@@ -778,7 +779,7 @@ var predefinedComponent = [
 				/// tamanho
 				this.spriteWidth = 60;
 				this.spriteHeight = 60;
-				this.effectRadius = this.cellSize * 10;
+				this.effectRange = this.cellSize * 10;
 				this.effectResolution = 10;
 				this.domain = [0, 255];
 
@@ -810,23 +811,36 @@ var predefinedComponent = [
 
 				//
 				this.light = new createjs.Container();
-				var radiusStep = this.effectRadius / this.effectResolution;
+				this.rangeStartAng = Math.radians(-135);
+				this.rangeEndAng = Math.radians(-45);
+				var radiusStep = this.effectRange / this.effectResolution;
 				for (var i = 0; i < this.effectResolution; i++) {
 					var newCircle = new createjs.Shape();
-					var startAngle = Math.radians(-135);
-					var endAngle = Math.radians(-45);
-					newCircle.set({alpha: 0, x: 30, y: 26}).graphics
+					newCircle.set({
+						alpha: 0, x: this.spriteWidth / 2, y: this.spriteHeight / 2}).graphics
 						.beginFill("#f00")
 						.moveTo(0, 0)
-						.arc(0, 0, this.effectRadius - radiusStep * i, startAngle, endAngle);
+						.arc(0, 0, this.effectRange - radiusStep * i, this.rangeStartAng, this.rangeEndAng);
 					this.light.addChild(newCircle);
 				};
 
+				this.rangeG = new createjs.Shape();
+
 				// adiciona o sprite
 				ledSprite.addChild(this.light, this.componentLight, componentBase); 
-				this.addChildAt(ledSprite, 0); 
+				this.addChildAt(this.rangeG, ledSprite, 0); 
 			},
 			customUpdateUI: function(currentStyle) {
+				this.rangeG.set({
+					x: this.center.x,
+					y: this.center.y - this.height / 2 - this.spriteHeight / 2,
+					alpha: currentStyle.rangeAlpha
+				}).graphics.clear()
+					.beginStroke(currentStyle.range)
+					.setStrokeStyle(1)
+					.moveTo(0, 0)
+					.arc(0, 0, this.effectRange, this.rangeStartAng, this.rangeEndAng)
+					.closePath();
 			},
 			run: function() {
 				var obj = this.light;
