@@ -1,63 +1,153 @@
-.loading {
+
+.shadow-1 { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
+.shadow-2 { box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); }
+.shadow-3 { box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); }
+.shadow-4 { box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); }
+.shadow-5 { box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); }
+
+.trama-wrapper {
 	position: relative;
-}
-
-.loading:after {
-	content: url("../img/loader.gif");
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	margin: -13px 0 0 -51px;
-	opacity: 0.8;
-}
-
-#simulatorInfo {
-	// botoes de exportar e importar cena
-	.ui-button {
-		border: 2px solid mix(@preto, @cinzaclaro, 5%);
-		font-size: 1.1rem;
-		color: mix(@preto, @cinzaclaro, 50%);
-		background: @cinzaclaro;
-		margin: 2rem 0;
-		padding: .8em 1.2em;
-		text-transform: uppercase;
-		font-family: @font-header;
-		font-weight: bold;
-		letter-spacing: .1em;
-		cursor: pointer;
-		&:hover {
-			color: @branco;
-			background: @vermelho;
-			border-color: mix(@preto, @vermelho, 10%);
-		}
+	.trama-canvas {
+		// background: url("../img/bg-paper.jpg");
 	}
-	//
-	#importSceneButton {
-		display: inline-block;
-		position: relative;
-		#importSceneLabel {}
-		#importSceneFileHolder {
-			font-size: 10rem;
+	.trama-menu {
+		.trama-menu-toggle {
 			position: absolute;
+			top: 0;
 			right: 0;
+			border: 0;
+			margin: 20px;
+			width: 24px;
+			height: 24px;
+			background: transparent url("../img/icones_gear.png") center center no-repeat;
+			outline: 0;
+		}
+		.trama-menu-list {
+			display: none;
+			list-style: none;
+			padding: 20px;
+			margin: 0;
+			position: absolute;
 			top: 0;
 			left: 0;
-			bottom: 0;
-			overflow: hidden;
-			max-width: 100%;
-			opacity: 0;
+			background: @branco;
+			.shadow-3;
+			li {
+				margin: 0 0 8px 0;
+				&:last-child {
+					margin-bottom: 0;
+				}
+				// botoes de exportar e importar cena
+				.trama-button {
+					background: @azul;
+					display: block;
+					width: 100%;
+					padding: .8em 1.6em;
+					cursor: pointer;
+					border: 3px solid mix(@azul, @preto, 50%);
+					border-top-color: transparent;
+					border-left-color: transparent;
+
+					// text
+					text-align: center;
+					text-transform: uppercase;
+					color: @branco;
+					font-family: @font-header;
+					font-weight: bold;
+					font-size: 1.2rem;
+					letter-spacing: .1em;
+					&:hover, &:focus {
+						background: @vermelho;
+						border-color: @vermelho;
+						outline: 0;
+					}
+					&:active {
+						border-color: mix(@vermelho, @preto, 50%);
+						border-bottom-color: transparent;
+						border-right-color: transparent;
+						outline: 0;
+					}
+				}
+
+				//
+				.trama-import {
+					position: relative;
+					.ui-import-label {}
+					.ui-import-fileholder {
+						font-size: 10rem;
+						position: absolute;
+						right: 0;
+						top: 0;
+						left: 0;
+						bottom: 0;
+						overflow: hidden;
+						max-width: 100%;
+						opacity: 0;
+					}
+				}
+			}
 		}
 	}
-	//
-	ul {
-		padding: 0;
-	}
-}
+	.trama-menu-box {
+		display: none;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		background: @branco;
+		padding: 2em;
+		max-width: 500px;
+		min-width: 200px;
+		margin: 5%;
 
-#simulatorCanvas {
-	margin: 0 auto;
-	/*border: 1px solid #f0f0f0;*/
-	background: #f0f0f0;
+		font-family: @font-header;
+		color: @preto;
+		font-size: 1.2rem;
+		.shadow-3;
+		h2 {
+			margin: 0 0 10px 0;
+			text-align: center;
+		}
+		.close {
+			position: absolute;
+			display: block;
+			top: 0;
+			right: 0;
+			height: 1.2em;
+			width: 1.2em;
+			text-align: center;
+			background: @preto;
+			outline: 0;
+			border: 0;
+			padding: 0;
+			font-size: 1.4rem;
+			color: @branco;
+			&:hover, &:focus {
+					background: @vermelho;
+			}
+		}
+		ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			li {	
+				.exampleButton {
+					width: 100%;
+					border: 0;
+					border-bottom: 1px solid mix(@preto, @branco, 10%);
+					background: transparent;
+					padding: 5px;
+					&:hover, &:focus {
+						color: @vermelho;
+					}
+				}
+				&:last-child {
+					.exampleButton {
+						border-bottom: 0;
+					}
+				}
+			}
+		}
+	}
 }
 
 #error {

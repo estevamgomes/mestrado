@@ -45,7 +45,6 @@ Math.constrain = function(x, min, max) {
 	return ((x) < (min) ? (min) : ((x) > (max) ? (max) : (x)));
 }
 
-
 $(document).ready(function(){
 
 	// ljs.initHighlightingOnLoad(); // Highlight code
@@ -155,6 +154,35 @@ $(document).ready(function(){
 	$('#ajax-menu a.close').click(function(event){
 		event.preventDefault();
 		ajaxClose();
+	});
+
+
+
+
+
+	// simulator
+	var sim1;
+
+	trama.loadAssets();
+
+	var path = "/js/files/",
+		ext	 = ".trm";
+
+	var divId = "simulator-simples";
+	var scene = document.getElementById(divId).getAttribute("data-scene");
+
+	trama.ajax({
+		url: path + scene + ext,
+		onload: function(data) {
+			sim1 = new trama.Simulator({
+				scene: data,
+				divId: divId,
+				width: "fit",
+				height: 350
+				// mainmenu: false,
+				// compmenu: false,
+			});
+		}
 	});
 
 });

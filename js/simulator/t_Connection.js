@@ -56,7 +56,7 @@
 	 */
 	p.mouseDownOverObj = function(obj) {
 		// se clicar sobre outra coisa que não seja o terminal apagar a conexão temporária
-		if(obj.parent.constructor.name != "Terminal") {
+		if(obj.parent.constructor.name !== "Terminal") {
 			if(this.hasTemporaryConnection()) this.removeChild(this.lastChild);
 		}
 	};
@@ -66,7 +66,7 @@
 		var cIn = this.componentContainer.getChildByName(connection.inputName);
 		var cOut = this.componentContainer.getChildByName(connection.outputName);
 
-		if(cIn != null && cOut != null) {
+		if(cIn && cOut) {
 			var cInNode = cIn.getChildByName(connection.inputNodeName);
 			var cOutNode = cOut.getChildByName(connection.outputNodeName);
 
@@ -101,7 +101,7 @@
 	p.removeConnectionsFrom = function(node) {
 		for (var i = this.numChildren - 1; i >= 0; i--) {
 			var child = this.getChildAt(i);
-			if(child.node.input == node || child.node.output == node) {
+			if(child.node.input === node || child.node.output === node) {
 				this.removeChild(child);
 			}
 		}
@@ -111,8 +111,8 @@
 	p.removeOverlappedConnections = function(connection) {
 		for (var i = this.numChildren - 1; i >= 0; i--) {
 			var child = this.getChildAt(i);
-			if(child != connection) {
-				if(child.node.input == connection.node.input) {
+			if(child !== connection) {
+				if(child.node.input === connection.node.input) {
 					this.removeChild(child);
 				}
 			}
@@ -134,8 +134,18 @@
 				customWireType: child.customWireType,
 			});
 		};
-		console.log(connections);
 		return connections;
+	};
+
+
+	p.isConnected = function(obj) {
+		for (var i = this.numChildren - 1; i >= 0; i--) {
+			var child = this.getChildAt(i);
+			if(child.node.input === obj || child.node.output === obj) {
+				return true;
+			}
+		}
+		return false;
 	};
 
 	window.ConnectionContainer = createjs.promote(ConnectionContainer, "Container");
@@ -160,9 +170,9 @@
 		this.state 		 = "temporary";
 
 		// wire type
-		this.wireTypeArray  = ["bezier", "ortho", "orthoB", "orthoC", "diagonal", "diagonalRect", "line"];
-		this.wireTypeIndex  = config.wireTypeIndex != null ? config.wireTypeIndex : this.wireTypeArray.indexOf(this.styleScheme.default.wireType);
-		this.customWireType = config.customWireType != null ? config.customWireType : false;
+		this.wireTypeArray  = ["bezier", "ortho", "diagonal", "line"];
+		this.wireTypeIndex  = config.wireTypeIndex ? config.wireTypeIndex : this.wireTypeArray.indexOf(this.styleScheme.default.wireType);
+		this.customWireType = config.customWireType ? config.customWireType : false;
 
 		this.node = {
 			input:  null, // terminal do tipo input
@@ -267,7 +277,7 @@
 	 * descrição: 
 	 */
 	p.isAttached = function() {
-		return this.node.output != null && this.node.input != null;
+		return (this.node.output && this.node.input);
 	};
 
 
@@ -281,7 +291,7 @@
 		// verifica se os dois nodes pertencem ao componente
 		// e impede a conexão
 		if(this.isAttached()) {
-			if(this.node.input.parent == this.node.output.parent) {
+			if(this.node.input.parent === this.node.output.parent) {
 				this.node[node.type] = null;
 			}
 		}
@@ -298,8 +308,8 @@
 	 * descrição: 
 	 */
 	p.magnet = function(node, on) {
-		if((node.type == "input" && this.node.output != null) ||
-		   (node.type == "output" && this.node.input != null)) {
+		if((node.type === "input" && this.node.output) ||
+		   (node.type === "output" && this.node.input)) {
 			if(on) {
 				this.node.magnet = node;
 				this.setState("active");
@@ -363,7 +373,7 @@
 		// define o esqueme de cores e o estilo da linha
 		var currentStyle = Object.assign({}, this.styleScheme.default);
 
-		if(this.styleScheme[this.state] != null) {
+		if(this.styleScheme[this.state]) {
 			Object.assign(currentStyle, this.styleScheme[this.state]);
 		}
 
@@ -376,23 +386,23 @@
 		// define a posição incial e final com base nos Nodes e no mouse
 		var startPos, endPos;
 
-		if(this.node.input != null) {
+		if(this.node.input) {
 			endPos = Math.addVector(this.node.input, this.node.input.parent);
-		} else if(this.node.magnet != null) {
+		} else if(this.node.magnet) {
 			endPos = Math.addVector(this.node.magnet, this.node.magnet.parent);
-		} else if(this.mousePos != null) {
+		} else if(this.mousePos) {
 			endPos = this.getMousePos();
 		}
 
-		if(this.node.output != null) {
+		if(this.node.output) {
 			startPos = Math.addVector(this.node.output, this.node.output.parent);
-		} else if(this.node.magnet != null) {
+		} else if(this.node.magnet) {
 			startPos = Math.addVector(this.node.magnet, this.node.magnet.parent);
-		} else if(this.mousePos != null) {
+		} else if(this.mousePos) {
 			startPos = this.getMousePos();
 		}
 
-		if(startPos != null && endPos != null) {
+		if(startPos && endPos) {
 			var g;
 			var radius = this.workarea.cellSize * 3;
 			var seg = radius + this.workarea.cellSize * 3;
@@ -407,17 +417,12 @@
 				case "orthoB":
 					g = this.drawWireOrthoB(startPos, endPos, radius, seg);
 					break;
-				case "orthoC":
-					g = this.drawWireOrthoC(startPos, endPos, radius, seg);
+				case "bezier":
+					g = this.drawWireBezier(startPos, endPos);
 					break;
 				case "diagonal":
-					g = this.drawWireDiagonal(startPos, endPos, radius, seg);
-					break;
-				case "diagonalRect":
-					g = this.drawWireDiagonalRect(startPos, endPos, radius, seg);
-					break;
 				default:
-					g = this.drawWireBezier(startPos, endPos);
+					g = this.drawWireDiagonal(startPos, endPos, radius, seg);
 			}
 
 			this.hit.graphics.clear().beginStroke("#ffffff").setStrokeStyle(10);
@@ -473,10 +478,10 @@
 
 
 	/* 
-	 * função: drawWireDiagonalRect()
+	 * função: drawWireDiagonal()
 	 * descrição: limita a inclinação do segmento médio à 45 graus
 	 */
-	p.drawWireDiagonalRect = function(startPos, endPos, radius, seg) {
+	p.drawWireDiagonal = function(startPos, endPos, radius, seg) {
 		var middlePos = {
 			x: (endPos.x + startPos.x) / 2,
 			y: (endPos.y + startPos.y) / 2
@@ -509,73 +514,10 @@
 
 
 	/* 
-	 * função: drawWireDiagonal()
-	 * descrição: 
-	 */
-	p.drawWireDiagonal = function(startPos, endPos, radius, seg) {
-		// pos x dos segmentos verticais
-		var verSegSX = startPos.x + seg;
-		var verSegEX = endPos.x   - seg;
-
-		var point = [
-			startPos,
-			{
-				x: verSegSX,
-				y: startPos.y
-			}, { 
-				x: verSegEX,
-				y: endPos.y,
-			},
-			endPos
-		];
-
-		return this.pointToLine(point, radius);
-	};
-
-
-	/* 
 	 * função: drawWireOrtho()
 	 * descrição: 
 	 */
 	p.drawWireOrtho = function(startPos, endPos, radius, seg) {
-		var middlePos = {
-			x: (endPos.x + startPos.x) / 2,
-			y: (endPos.y + startPos.y) / 2
-		};
-
-		var dirx = endPos.x - seg * 2 > startPos.x ? 1 : -1;
-
-		// pos x dos segmentos verticais
-		var verSegSX = startPos.x + seg;
-		var verSegEX = endPos.x   - seg;
-
-		var point = [
-			startPos,
-			{
-				x: verSegSX,
-				y: startPos.y
-			}, {
-				x: verSegSX,
-				y: middlePos.y
-			}, {
-				x: verSegEX,
-				y: middlePos.y 
-			}, { 
-				x: verSegEX,
-				y: endPos.y,
-			},
-			endPos
-		];
-
-		return this.pointToLine(point, radius);
-	};
-
-
-	/* 
-	 * função: drawWireOrthoB()
-	 * descrição: 
-	 */
-	p.drawWireOrthoB = function(startPos, endPos, radius, seg) {
 		var middlePos = {
 			x: (endPos.x + startPos.x) / 2,
 			y: (endPos.y + startPos.y) / 2
@@ -617,10 +559,10 @@
 
 
 	/* 
-	 * função: drawWireOrthoC()
-	 * descrição: 
+	 * função: drawWireOrthoB()
+	 * descrição: a diferença desse está quando os dois segmentos verticais se aproximam  
 	 */
-	p.drawWireOrthoC = function(startPos, endPos, radius, seg) {
+	p.drawWireOrthoB = function(startPos, endPos, radius, seg) {
 		var middlePos = {
 			x: (endPos.x + startPos.x) / 2,
 			y: (endPos.y + startPos.y) / 2

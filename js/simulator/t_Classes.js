@@ -31,13 +31,13 @@
 		this.on("mouseout", this.mouseout);
 		this.on("mousedown", this.mousedown);
 		this.on("dblclick", this.dblclick);
- 	};
+ 	}
 	var p = createjs.extend(Bin, createjs.Container);
 
 	p.updateUI = function() {
 		var currentStyle = Object.assign({}, this.styleScheme.default);
 
-		if(this.styleScheme[this.state] != null) {
+		if(this.styleScheme[this.state]) {
 			Object.assign(currentStyle, this.styleScheme[this.state]);
 		}
 
@@ -101,7 +101,7 @@
 
 /* 
  * classe: MouseTimer
- * descrição: armazena as propriedades da área de trabalho e do grid e suas funções
+ * descrição: 
  */
 (function (window) {
 
@@ -191,7 +191,7 @@
 	};
 
 	p.mouseStatic = function() {
-		return Math.dist({x: this.x, y: this.y}, this.mousePos) < 6;
+		return Math.dist({x: this.x, y: this.y}, this.mousePos) < 4;
 	};
 
 	p.getTimeElapsed = function() {
@@ -257,18 +257,24 @@
 
 		this.dragging = false;
 
-		this.width = config.width == "auto" ? config.canvasWidth : config.width;
-		this.height = config.height == "auto" ? config.canvasHeight : config.height;
+		this.width  = config.width  === "auto" ? config.canvasWidth  : config.width;
+		this.height = config.height === "auto" ? config.canvasHeight : config.height;
 
 		// garante que o tamanho da workarea seja múltiplo do tamanho da célula
 		this.width = Math.floor(this.width / config.cellSize) * config.cellSize;
 		this.height = Math.floor(this.height / config.cellSize) * config.cellSize;
+
+		this.mouseX = 0;
+		this.mouseY = 0;
 
 		// área visível, ou seja, o tamanho do elemento canvas
 		this.visibleArea = {
 			width: config.canvasWidth,
 			height: config.canvasHeight
 		};
+
+		// componentContainer
+		this.componentContainer;
 
 		// alinha a workarea ao centro da visible area		
 		this.alignCenter();
@@ -277,11 +283,12 @@
 		this.cellSize 	 = config.cellSize;
 		this.styleScheme = config.styleScheme;
 
-		this.grid 		= new createjs.Shape();	// forma para armazenar o grid
-		this.background = new createjs.Shape(); // forma para armazenar o fundo
+		this.backgroundImage = config.background;
+		this.background 	= new createjs.Shape(); // forma para armazenar o fundo
+		this.selectionArea  = new createjs.Shape(); // forma para armazenar o fundo
 
 		// adiciona o background e o grid
-		this.addChild(this.background, this.grid);
+		this.addChild(this.background,  this.selectionArea);
 
 		this.updateUI();
 
@@ -298,7 +305,7 @@
 		// sem ele a interação com os componentes ficaria sobreposta
 		// com a interação para movimentar a área de trabalho 
 		var hit = new createjs.Shape();
-		hit.graphics
+		hit.graphics.clear()
 			.beginFill("#000")
 			.drawRect(0, 0, this.width, this.height);
 
@@ -315,85 +322,38 @@
 	var p = createjs.extend(Workarea, createjs.Container);
 
 	/* 
+	 * função: mouseMove()
+	 * descrição: 
+	 */
+	p.mouseMove = function(event) {
+		this.mouseX = event.stageX - this.x;
+		this.mouseY = event.stageY - this.y;
+	};
+
+	/* 
 	 * função: updateUI()
 	 * descrição: função que desenha o grid
 	 */
 	p.updateUI = function() {
+
+		// escala o tamanho da imagem para correponder ao tamanho da célula
+		// var patternScaleX = this.cellSize / this.backgroundImage.width;
+		// var patternScaleY = this.cellSize / this.backgroundImage.height;
+		var scale = new createjs.Matrix2D()
+			// .scale(patternScaleX, patternScaleY)
+			.translate(this.backgroundImage.width / 2, this.backgroundImage.height / 2	);
+
 		// fundo
-		this.background.graphics
-			.beginFill(this.styleScheme.background)
+		this.background.set({ alpha: .5 }).graphics.clear()
+			.beginBitmapFill(this.backgroundImage, "repeat", scale)
 			.drawRect(0, 0, this.width, this.height);
-
-		// grid
-		var gridG = this.grid.graphics;
-		gridG.clear(); // limpa o que estiver desenhado
-
-		switch(this.styleScheme.gridType) {
-			case "line":
-				this.drawGridLine(gridG);
-				break;
-			case "lineh":
-				this.drawGridLineHor(gridG);
-				break;
-			case "crosshair":
-				this.drawGridCrosshair(gridG);
-				break;
-			case "dotted":
-				this.drawGridDotted(gridG);
-				break;
-		}
 	};
 	
-	p.drawGridLineHor = function(gridG) {
-		gridG.beginStroke(this.styleScheme.grid).setStrokeStyle(1);
-		var gridCell = this.cellSize;
-
-		// linhas horizontais
-		for (var y = gridCell; y < this.height; y += gridCell) {
-			gridG.moveTo(0, y)
-				.lineTo(this.width, y);
-		};
-	};
-	
-	p.drawGridLine = function(gridG) {
-		gridG.beginStroke(this.styleScheme.grid).setStrokeStyle(1);
-		var gridCell = this.cellSize;
-
-		// linhas verticais
-		for (var x = gridCell; x < this.width; x += gridCell) {
-			gridG.moveTo(x, 0)
-				.lineTo(x, this.height);
-		};
-
-		// linhas horizontais
-		for (var y = gridCell; y < this.height; y += gridCell) {
-			gridG.moveTo(0, y)
-				.lineTo(this.width, y);
-		};
-	};
-	
-	p.drawGridCrosshair = function(gridG) {
-		gridG.beginStroke(this.styleScheme.grid).setStrokeStyle(1);
-		var gridCell = this.cellSize * 2;
-		var dash = this.cellSize;
-		for (var x = 0; x <= this.width; x += gridCell) {
-			for (var y = 0; y <= this.height; y += gridCell) {
-				gridG
-					.moveTo(x - dash / 2, y)
-					.lineTo(x + dash / 2, y)
-					.moveTo(x, y - dash / 2)
-					.lineTo(x, y + dash / 2);
-			};
-		};
-	};
-
-	p.drawGridDotted = function(gridG) {
-		var gridCell = this.cellSize;
-		gridG.beginFill(this.styleScheme.grid);
-		for (var x = 0; x <= this.width; x += gridCell) {
-			for (var y = 0; y <= this.height; y += gridCell) {
-				gridG.moveTo(x, y).drawCircle(x, y, 1);
-			};
+	p.exportCurrentScene = function() {
+		return {
+			width: this.width,
+			height: this.height,
+			cellSize: this.cellSize
 		};
 	};
 
@@ -417,8 +377,8 @@
 	 * descrição: centraliza a área de trabalho na área visível
 	 */
 	p.alignCenter = function() {
-		this.x = this.visibleArea.width / 2 - this.width / 2;
-		this.y = this.visibleArea.height / 2 - this.height / 2;
+		this.x = Math.round(this.visibleArea.width / 2 - this.width / 2);
+		this.y = Math.round(this.visibleArea.height / 2 - this.height / 2);
 	};
 	
 	/* 
@@ -427,16 +387,22 @@
 	 */
 	p.pressup = function(event) {
 		this.dragging = false;
+		this.selectionStop();
 	};
 
 	/* 
-	 * função: mousemove(), mousePressmove()
+	 * função: mousedown(), mousePressmove()
 	 * descrição: funções que tratam do movimento do stage
 	 */
 	p.mousedown = function(event) {
+		var obj = this.parent;
+
 		// salva a diferença entre a posição do mouse e a origem do componente
-		this.parent.delta.x = this.parent.x - event.stageX;
-		this.parent.delta.y = this.parent.y - event.stageY;
+		obj.delta.x = obj.x - event.stageX;
+		obj.delta.y = obj.y - event.stageY;
+
+		// remove os elementos selecionados
+		obj.getComponentContainer().clearSelection();
 	};
 
 	p.mousePressmove = function(event) {
@@ -447,6 +413,8 @@
 			x: event.stageX + obj.delta.x,
 			y: event.stageY + obj.delta.y
 		}
+
+		obj.selectionUpdate(event);
 
 		var visibleArea = obj.visibleArea;
 		var limit = {
@@ -478,6 +446,49 @@
 		if(obj.height > visibleArea.height) obj.y = newPos.y;
 
 		if(obj.width  > visibleArea.width || obj.height > visibleArea.height) obj.dragging = true;
+
+		obj.x = Math.round(obj.x);
+		obj.y = Math.round(obj.y);
+	};
+
+	p.selectionUpdate = function(event) {
+		var startPos = {
+			x: - this.delta.x,
+			y: - this.delta.y
+		}
+		var endPos = {
+			x: event.stageX + this.delta.x,
+			y: event.stageY + this.delta.y
+		}
+
+		// coloca a área de seleção sobre os outros elementos
+		this.setChildIndex(this.selectionArea, this.getNumChildren() - 1);
+
+		// desenha a área de seleção
+		this.selectionArea.set({ alpha: .2 }).graphics.clear()
+			.beginFill(this.styleScheme.selectionArea)
+			.beginStroke(this.styleScheme.selectionArea)
+			.setStrokeStyle(1)
+			.drawRect(startPos.x, startPos.y, endPos.x - this.x, endPos.y - this.y);
+
+		// procura por elementos que toque a área de seleção
+		this.getComponentContainer().checkSelection(this.selectionArea);
+	};
+
+	p.selectionStop = function() {
+		this.selectionArea.graphics.clear();
+	};
+
+	p.getComponentContainer = function() {
+		if(!this.componentContainer) {
+			for (var i = this.numChildren - 1; i >= 0; i--) {
+				var child = this.getChildAt(i);
+				if(child.constructor.name === "ComponentContainer") {
+					this.componentContainer = child;
+				}
+			};
+		}
+		return this.componentContainer;
 	};
 
 	window.Workarea = createjs.promote(Workarea, "Container");
@@ -512,7 +523,7 @@
 	var p = createjs.extend(MenuRoot, createjs.Container);
 
 	p.setup = function() {
-		if(this.subMenuDraft != null) {
+		if(this.subMenuDraft) {
 			var margin = 2;
 			var radius = (this.childrenRadius + margin) / Math.sin(Math.radians(180 / this.subMenuDraft.length));
 			var angleStep = 360 / this.subMenuDraft.length;
@@ -531,7 +542,7 @@
 
 			var config = Object.assign({}, this.config, {
 				draft: draft,
-				startAngle: angle,
+				startAngle: angle
 			});
 
 			this.subMenu[i] = new MenuItem(config);
@@ -629,7 +640,7 @@
 	var p = createjs.extend(MenuItem, MenuRoot);
 
 	p.setup = function() {
-		if(this.subMenuDraft != null) {
+		if(this.subMenuDraft) {
 			var itens = this.subMenuDraft.length > 1 ? this.subMenuDraft.length : 1;
 			var margin = 2;
 			var minRadius = this.radius + this.childrenRadius + margin;
@@ -716,7 +727,7 @@
 		var i = 0;
 		var depth = 10;
 		for (var i = 0; i < depth; i++) {
-			if(parent.constructor.name == "MenuRoot") return parent;
+			if(parent.constructor.name === "MenuRoot") return parent;
 			parent = parent.parent;
 		};
 		return null;
@@ -747,7 +758,7 @@
 		this.label		  = config.label;
 
 		this.background = new createjs.Shape();
-		this.text 	= new createjs.Text();
+		this.text 		= new createjs.Text();
 		this.addChild(this.background, this.text);
 
 		this.updateUI();
@@ -761,7 +772,7 @@
 	p.updateUI = function() {
 		var currentStyle = Object.assign({}, this.styleScheme.default);
 
-		if(this.styleScheme[this.state] != null) {
+		if(this.styleScheme[this.state]) {
 			Object.assign(currentStyle, this.styleScheme[this.state]);
 		}
 
@@ -781,7 +792,7 @@
 			x: 0,
 			y: 0,
 			textBaseline: "middle",
-			textAlign: "center",
+			textAlign: "center"
 		});
 	};
 
@@ -793,13 +804,13 @@
 
 	p.rollover = function(event) {
 		this.lastState = this.state;
-		if(this.state != "disabled") {
+		if(this.state !== "disabled") {
 			this.setState("hover");
 		}
 	};
 
 	p.rollout = function(event) {
-		if(this.state == "hover") this.setState(this.lastState);
+		if(this.state === "hover") this.setState(this.lastState);
 	};
 
 	p.disable = function() {

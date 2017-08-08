@@ -20,13 +20,12 @@
 		var config = Object.assign({}, this.defaultConfig, customConfig);
 
 		// verifica se o tipo de componente existe na lista de componentes predefinidos
-		if(this.componentDefinitions[config.type] != null) {
+		if(this.componentDefinitions[config.type]) {
 			// caso o componente exista ele soma as configurações e gera o componente
 			this.addChild(new Component(Object.assign({},
 				config, this.componentDefinitions[config.type])))
 				.constrainPos();
 		}
-
 	};
 
 	p.exportCurrentScene = function() {
@@ -37,8 +36,21 @@
 				"name": obj.name,
 				"type": obj.type,
 				"x": obj.x + obj.width / 2,
-				"y": obj.y + obj.height / 2
+				"y": obj.y + obj.height / 2,
+				"input": [],
+				"output": []
 			});
+
+			// salva os valores dos inputs
+			var index = components.length - 1;
+			for (var j = 0; j < obj.inputSize; j++) {
+				components[index].input[j] = obj.input[j].value;
+			};
+
+			// salva os valores dos outputs
+			for (var j = 0; j < obj.outputSize; j++) {
+				components[index].output[j] = obj.output[j].value;
+			};
 		};
 		return components;
 	};
@@ -52,7 +64,7 @@
 	p.followMouse = function(event) {
 		for (var i = this.numChildren - 1; i >= 0; i--) {
 			var child = this.getChildAt(i);
-			if(child.isGrabbing != null && child.isGrabbing()) child.followMouse(event);
+			if(child.isGrabbing && child.isGrabbing()) child.followMouse(event);
 		};
 	};
 
@@ -75,6 +87,52 @@
 			if(child.isActive() && child.isEditable()) {
 				child.updateText(e);
 			}
+		};
+	};
+
+	/*
+	 *
+	 *
+	 */
+	p.checkSelection = function(selectionArea) {
+		for (var i = this.numChildren - 1; i >= 0; i--) {
+			var child = this.getChildAt(i);
+			if(selectionArea.hitTest(child.x, child.y) ||
+			   selectionArea.hitTest(child.x + child.width, child.y) ||
+			   selectionArea.hitTest(child.x, child.y + child.height) ||
+			   selectionArea.hitTest(child.x + child.width, child.y + child.height))
+			{
+				child.setState("selected");
+			} else {
+				child.setState("default");
+			}
+		};
+	};
+
+	p.clearSelection = function() {
+		for (var i = this.numChildren - 1; i >= 0; i--) {
+			this.getChildAt(i).setState("default");
+		};
+	};
+
+	p.startGrabbingActive = function(event) {
+		for (var i = this.numChildren - 1; i >= 0; i--) {
+			var child = this.getChildAt(i);
+			if(child.isActive()) child.startGrabbing(event);
+		};
+	};
+
+	p.stopGrabbing = function(event) {
+		for (var i = this.numChildren - 1; i >= 0; i--) {
+			var child = this.getChildAt(i);
+			if(child.isGrabbing()) child.stopGrabbing(event);
+		};
+	};
+
+	p.setActiveChildState = function(state) {
+		for (var i = this.numChildren - 1; i >= 0; i--) {
+			var child = this.getChildAt(i);
+			if(child.isActive()) child.setState(state);
 		};
 	};
 
@@ -158,7 +216,11 @@
 			connectionContainer: this.connectionContainer
 		};
 		for (var i = 0; i < this.inputSize; i++) {
-			this.input[i] = new Terminal(Object.assign({}, terminalDefaultConfig, { type: "input", name: this.name + "-in-" + i }));
+			this.input[i] = new Terminal(Object.assign({}, terminalDefaultConfig, {
+				type: "input",
+				name: this.name + "-in-" + i,
+				value: config.input ? config.input[i] : false
+			}));
 			this.input[i].x = 0;
 			this.input[i].y = this.center.y + i * this.cellSize * 2 - (this.inputSize - 1) * this.cellSize;
 			this.addChild(this.input[i]);
@@ -167,7 +229,11 @@
 		// terminais dos outputs
 		this.output = [];
 		for (var i = 0; i < this.outputSize; i++) {
-			this.output[i] = new Terminal(Object.assign({}, terminalDefaultConfig, { type: "output", name: this.name + "-out-" + i }));
+			this.output[i] = new Terminal(Object.assign({}, terminalDefaultConfig, {
+				type: "output",
+				name: this.name + "-out-" + i,
+				value: config.output ? config.output[i] : false
+			}));
 			this.output[i].x = this.width;
 			this.output[i].y = this.center.y + i * this.cellSize * 2 - (this.outputSize - 1) * this.cellSize;
 			this.addChild(this.output[i]);				
@@ -179,7 +245,7 @@
 		this.addChild(this.dragArea); 
 
 		// reseta as variáveis conforme a função específica
-		if(this.customConstructor != null) this.customConstructor(config);
+		if(this.customConstructor) this.customConstructor(config);
 
 		// desenha a interface gráfica
 		this.updateUI();
@@ -204,7 +270,7 @@
 	p.updateUI = function() {
 		var currentStyle = Object.assign({}, this.styleScheme.default);
 
-		if(this.styleScheme[this.state] != null) {
+		if(this.styleScheme[this.state]) {
 			Object.assign(currentStyle, this.styleScheme[this.state]);
 		}
 
@@ -213,14 +279,14 @@
 		// desenha a borda
 		this.border.graphics.clear()
 			.beginStroke(currentStyle.border)
-			.setStrokeStyle(2)
-			.drawRoundRect(0, 0, this.width, this.height, this.cellSize / 2);
+			.setStrokeStyle(currentStyle.borderWidth)
+			// .drawRect(0, 0, this.width, this.height);
+			.drawRoundRect(0, 0, this.width, this.height, this.cellSize);
 
 		// desenha o fundo
 		this.background.graphics.clear()
 			.beginFill(currentStyle.background)
-			.setStrokeStyle(2)
-			.drawRoundRect(0, 0, this.width, this.height, this.cellSize / 2);
+			.drawRoundRect(0, 0, this.width, this.height, this.cellSize);
 		// this.background.shadow = new createjs.Shadow(currentStyle.shadow, 1, 1, 2);
 
 		// desenha o fundo do label
@@ -236,11 +302,11 @@
 			x: this.center.x,
 			y: this.center.y,
 			textBaseline: "middle",
-			textAlign: "center",
+			textAlign: "center"
 		});
 
 		// acrescenta qualquer alteração na UI
-		if(this.customUpdateUI != null) this.customUpdateUI(currentStyle);
+		if(this.customUpdateUI) this.customUpdateUI(currentStyle);
 
 		// atualiza os inputs e outputs
 		for (var i = 0; i < this.inputSize; i++) this.input[i].updateUI();
@@ -248,11 +314,11 @@
 	};
 
 	p.isGrabbing = function() {
-		return this.state == "grabbing" || this.state == "remove";
+		return this.state === "grabbing" || this.state === "remove";
 	};
 
 	p.isActive = function() {
-		return this.isGrabbing();
+		return this.isGrabbing() || this.state === "selected";
 	};
 
 	p.isEditable = function() {
@@ -266,36 +332,55 @@
 
 	p.rollover = function(event) {
 		var obj = this.parent;
-		if(!obj.isGrabbing()) {
-			obj.setState("hover");
-		} else if(obj.state == "remove") {
-			obj.setState("grabbing");
+
+		if(obj.state !== "selected") {
+			if(!obj.isGrabbing()) {
+				obj.setState("hover");
+			} else if(obj.state === "remove") {
+				obj.setState("grabbing");
+				obj.parent.setActiveChildState("grabbing");
+			}
 		}
 	};
 
 	p.rollout = function(event) {
 		var obj = this.parent;
 		var underMouse = obj.underMouse(event.stageX, event.stageY);
-		if(underMouse != null && underMouse.constructor.name == "Bin") {
+		if(underMouse && underMouse.constructor.name === "Bin") {
 			obj.setState("remove");
-		} else if(!obj.isGrabbing()) {
+			obj.parent.setActiveChildState("remove");
+		} else if(!obj.isGrabbing() && obj.state !== "selected") {
 			obj.setState("default");
-		
 		}
 	};
 
 	p.mouseDown = function(event) {
 		var obj = this.parent;
-		// salva a diferença entre a posição do mouse e a origem do componente
-		obj.delta.x = obj.x - event.stageX;
-		obj.delta.y = obj.y - event.stageY;
+
+		if(!obj.isActive()) obj.parent.clearSelection();
 
 		if(obj.isGrabbing()) {
 			obj.setState("hover");
 		} else {
-			obj.bringToFront();
-			obj.grabStart = {x: obj.x, y: obj.y};
-			obj.setState("grabbing");
+			obj.parent.startGrabbingActive(event);
+			obj.startGrabbing(event);
+		}
+	};
+
+	p.startGrabbing = function(event) {
+		// salva a diferença entre a posição do mouse e a origem do componente
+		this.delta.x = this.x - event.stageX;
+		this.delta.y = this.y - event.stageY;
+
+		this.bringToFront();
+		this.grabStart = {x: this.x, y: this.y};
+		this.setState("grabbing");
+	};
+
+	p.stopGrabbing = function(event) {
+		if(this.grabStart.x !== this.x && this.grabStart.y !== this.y) {
+			this.setState("selected");
+			this.alignToGrid();
 		}
 	};
 
@@ -307,20 +392,24 @@
 		this.parent.setChildIndex(this, this.parent.numChildren - 1);
 	};
 
+	p.sendToBack = function() {
+		this.parent.setChildIndex(this, 0);
+	};
+
 	p.mousePressmove = function(event) {
-		this.parent.followMouse(event);
+		if(this.parent.isGrabbing()) this.parent.followMouse(event);
 	};
 
 	p.pressUp = function(event) {
 		var obj = this.parent;
 
-		if(obj.underMouse(event.stageX, event.stageY).constructor.name == "Bin") {
-			obj.remove();
+		obj.parent.stopGrabbing(event);
+
+		var underMouse = obj.underMouse(event.stageX, event.stageY);
+		if(underMouse && underMouse.constructor.name === "Bin") {
+			obj.parent.removeActiveComponent();
 		}
 
-		if(obj.grabStart.x != obj.x && obj.grabStart.y != obj.y) {
-			obj.setState("hover");
-		}
 		// alinha o componente à grid
 		obj.alignToGrid();
 	};
@@ -405,8 +494,8 @@
 
 		Object.assign(this, config);
 
-		this.value 		 = 0;
-		this.state 		 = "default"; // estado atual: default || hover
+		this.value = config.value || 0;
+		this.state = "default"; // estado atual: default || hover
 
 		this.connectionContainer = config.connectionContainer;
 
@@ -427,7 +516,7 @@
 
 		// cria uma área de interação que vai além da área desenhada
 		var hit = new createjs.Shape();
-		hit.graphics
+		hit.graphics.clear()
 			.beginFill("#ffffff")
 			.drawRect(-this.cellSize, -this.cellSize, this.cellSize * 2, this.cellSize * 2);
 		this.output.hitArea = hit;
@@ -449,7 +538,7 @@
 	p.updateUI = function() {
 		var styleScheme = Object.assign({}, this.styleScheme.default);
 
-		if(this.styleScheme[this.state] != null) {
+		if(this.styleScheme[this.state]) {
 			Object.assign(styleScheme, this.styleScheme[this.state]);
 		}
 
@@ -468,7 +557,7 @@
 			textBaseline: "bottom",
 		});
 
-		if(this.type == "input") {
+		if(this.type === "input") {
 			this.debugText.set({
 				x: -padding,
 				textAlign: "right",
@@ -514,6 +603,10 @@
 		this.value = value;
 		this.updateUI();
 		this.parent.run();
+	};
+
+	p.isConnected = function() {
+		return this.connectionContainer.isConnected(this);
 	};
 
 	window.Terminal = createjs.promote(Terminal, "Container");

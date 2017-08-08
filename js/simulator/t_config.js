@@ -29,12 +29,14 @@ var color = {
 
 var styleScheme = {
 	// cor do fundo do canvas
-	background: color.cinzaclaro,
-
-	// tela de carregamento
-	loading: {
-		font: "bold 1.4rem 'Overpass Mono', monospace",
-		text: color.preto,
+	main: {
+		background: color.cinzaclaro,
+		overshadow: color.cinzaclaro,
+		framerateFont: "1rem 'Overpass Mono', monospace",
+		framerateText: color.preto,
+		// tela de carregamento
+		loadingFont: "bold 1.4rem 'Overpass Mono', monospace",
+		loadingText: color.preto
 	},
 
 	// conexoes
@@ -48,12 +50,12 @@ var styleScheme = {
 		},
 		temporary: {
 			wire: color.preto,
-			dash: true,
+			dash: true
 		},
 		active: {
 			wire: color.preto,
 			size: 3,
-			caps: "round",
+			caps: "round"
 		},
 		hover: {
 			wire: color.azul,
@@ -74,10 +76,11 @@ var styleScheme = {
 	},
 
 	// cor do componente
-	component: {	
+	component: {
 		default: {
-			background: color.preto,
+			background: color.branco,
 			border: color.preto,
+			borderWidth: 2,
 			label: color.branco,
 			labelText: color.preto,
 			terminal: color.branco,
@@ -91,28 +94,35 @@ var styleScheme = {
 			rangeAlpha: 0
 		},
 		grabbing: {
-			background: color.azulclaro,
 			border: color.azulclaro,
+			labelText: color.azulclaro,
 			rangeAlpha: .3
 		},
+		selected: {
+			border: color.azulclaro,
+			labelText: color.azulclaro
+		},
 		hover: {
-			background: color.azul,
 			border: color.azul,
-			terminalBorder: color.vermelho,
+			terminal: color.vermelho,
 			rangeAlpha: .3
 		},
 		remove: {
-			background: color.vermelho,
 			border: color.vermelho,
-			labelText: color.vermelho,
+			labelText: color.vermelho
+		},
+		custom: {
+			led: color.vermelho,
+			border: color.preto,
+			background: color.branco,
+			handle: color.preto
 		}
 	},
 
 	// cor da área de trabalho
 	workarea: {
 		background: color.cinzaclaro,
-		grid: color.cinzamedio,
-		gridType: "dotted", // line, crosshair, dotted
+		selectionArea: color.azulclaro,
 	},
 
 	// cor do menu
@@ -122,21 +132,21 @@ var styleScheme = {
 			text: color.preto,
 			border: color.preto,
 			shadow: color.cinzaescuro,
-			font: "bold 1rem 'Overpass Mono', monospace",
+			font: "bold 1rem 'Overpass Mono', monospace"
 		},
 		hover: {
 			background: color.vermelho,
 			text: color.branco,
-			border: color.vermelho,
+			border: color.vermelho
 		},
 		disabled: {
 			background: color.cinza,
 			text: color.branco,
-			border: color.branco,
+			border: color.branco
 		},
 		selected: {
 			background: color.preto,
-			text: color.branco,
+			text: color.branco
 		},
 	},
 
@@ -144,10 +154,10 @@ var styleScheme = {
 		default: {
 			click: color.cinza,
 			timer: color.cinza,
-			shadow: color.cinzaescuro,
+			shadow: color.cinzaescuro
 		},
 		complete: {
-			timer: color.vermelho,
+			timer: color.vermelho
 		},
 	}
 };
@@ -164,16 +174,28 @@ var predefinedComponent = [
 		categoryLabel: "|o|",
 		components: [
 		{
+			type: "reversedomain",
+			menuLabel: "rev",
+			label: "REV DOM",
+			description: "Retorna o domínio invertido",
+
+			inputSize: 1,
+			outputSize: 1,
+
+			run: function() {
+				this.output[0].value = [this.input[0].value[1], this.input[0].value[0]];
+			}
+		}, {
 			type: "min",
 			menuLabel: "min",
 			label: "MIN",
 			description: "Retorna o menor valor",
 
-			inputSize: 3,
+			inputSize: 2,
 			outputSize: 1,
 
 			run: function() {
-				this.output[0].value = Math.min(this.input[0].value, this.input[1].value, this.input[2].value);
+				this.output[0].value = Math.min(this.input[0].value, this.input[1].value);
 			}
 		}, {
 			type: "max",
@@ -181,16 +203,16 @@ var predefinedComponent = [
 			label: "MAX",
 			description: "Retorna o maior valor",
 
-			inputSize: 3,
+			inputSize: 2,
 			outputSize: 1,
 
 			run: function() {
-				this.output[0].value = Math.max(this.input[0].value, this.input[1].value, this.input[2].value);
+				this.output[0].value = Math.max(this.input[0].value, this.input[1].value);
 			}
 		}, {
 			type: "domain",
 			menuLabel: "domain",
-			label: "[A, B]",
+			label: "[A,B]",
 			description: "Cria um domain a partir de dois valores",
 
 			inputSize: 2,
@@ -276,15 +298,15 @@ var predefinedComponent = [
 				};
 
 				this.sliderBackground = new createjs.Shape();
-				this.sliderBackground.graphics
-					.beginFill(this.styleScheme.default.label)
+				this.sliderBackground.graphics.clear()
+					.beginFill(this.styleScheme.custom.background)
 					.setStrokeStyle(2)
-					.beginStroke(this.styleScheme.default.border)
+					.beginStroke(this.styleScheme.custom.border)
 					.drawRect(0, 8, this.slider.width, this.cellSize / 2);
 
 				s.handle = new createjs.Shape();
-				s.handle.graphics
-					.beginFill(this.styleScheme.default.background)
+				s.handle.graphics.clear()
+					.beginFill(this.styleScheme.custom.handle)
 					.drawRect(0, 0, s.handleWidth, s.height);
 				this.slider.handle.cursor = "pointer";
 
@@ -308,7 +330,7 @@ var predefinedComponent = [
 			},
 			run: function() {
 				var timeSinceUpdate = createjs.Ticker.getTime() - this.lastUpdate;
-				if(timeSinceUpdate > this.updateDelay && this.manualOutput == false) {
+				if(timeSinceUpdate > this.updateDelay && !this.manualOutput) {
 					var inputTotal = 0;
 					var newOutput = 0;
 					inputTotal += this.output[0].value; // feedback
@@ -360,7 +382,7 @@ var predefinedComponent = [
 					fromDomain = this.input[1].value,
 					toDomain = this.input[2].value;
 
-				this.output[0].value = Math.map(value, fromDomain[0], fromDomain[1], toDomain[0], toDomain[1]);
+				this.output[0].value = Math.roundTo(Math.map(value, fromDomain[0], fromDomain[1], toDomain[0], toDomain[1]), 2);
 			}
 		}, {
 			type: "division",
@@ -455,7 +477,7 @@ var predefinedComponent = [
 			},
 			updateText: function(e) {
 				// 0-9 only
-				var keyBackspace = e.keyCode == KEYCODE_BACKSPACE,
+				var keyBackspace = e.keyCode === KEYCODE_BACKSPACE,
 					keyNumber = e.keyCode >= 48 && e.keyCode <= 57;
 
 				var maxSize = 8;
@@ -466,12 +488,12 @@ var predefinedComponent = [
 
 				if(keyBackspace) {
 					this.label = this.label.slice(0, this.label.length - 1);
-					if(this.label.length == 0) this.label = "0";
+					if(this.label.length === 0) this.label = "0";
 				}
 
 				if (keyNumber && this.label.length < maxSize) {
 					var inputChar = String.fromCharCode(e.keyCode);
-					if(this.label.charAt(0) == "0") {
+					if(this.label.charAt(0) === "0") {
 						this.label = inputChar;
 					} else {
 						this.label += inputChar;
@@ -487,13 +509,14 @@ var predefinedComponent = [
 			description: "Contador de tempo",
 			menuLabel: "clock",
 
-			inputSize: 0,
+			inputSize: 1,
 			outputSize: 2,
 
 			// component variables
 			customConstructor: function(config) {
 				this.timestart = createjs.Ticker.getTime();
 				this.domain = [-100, 100];
+				this.speed = 10;
 
 				this.clockRadius = this.cellSize;
 
@@ -508,8 +531,9 @@ var predefinedComponent = [
 				this.addChild(clock);
 			},
 			run: function() {
-				this.output[0].value = Math.round(((createjs.Ticker.getTime() - this.timestart) / 10) % (this.domain[1] - this.domain[0])) + this.domain[0];
+				this.output[0].value = Math.round(((createjs.Ticker.getTime() - this.timestart) / this.speed) % (this.domain[1] - this.domain[0])) + this.domain[0];
 				this.output[1].value = this.domain;
+				this.speed = this.input[0].value || this.speed;
 				this.label = this.output[0].value;
 			},
 			customUpdateUI: function(currentStyle) {
@@ -539,7 +563,8 @@ var predefinedComponent = [
 			// component variables
 			customConstructor: function(config) {
 				this.timestart = createjs.Ticker.getTime();
-				this.speed = 5;
+				this.speed = 1;
+				this.angle = 0;
 				this.domain = [0, 255];
 				this.input[1].value = this.domain;
 
@@ -556,9 +581,9 @@ var predefinedComponent = [
 				this.addChild(clock);
 			},
 			run: function() {
-				this.speed = this.input[0].value > 1 ? this.input[0].value : 1;
-				var angle = (createjs.Ticker.getTime() - this.timestart) / (100 * this.speed);
-				this.output[0].value = Math.round(Math.map(Math.sin(angle), -1, 1, this.domain[0], this.domain[1]));
+				this.speed = this.input[0].value > 1 ? Math.constrain(this.input[0].value, this.domain[0], this.domain[1]) : 1;
+				this.angle += Math.map(this.speed, this.domain[0], this.domain[1], 0.01, 0.2);
+				this.output[0].value = Math.round(Math.map(Math.sin(this.angle), -1, 1, this.domain[0], this.domain[1]));
 
 				if(Array.isArray(this.input[1].value)) this.domain = this.input[1].value;
 				this.output[1].value = this.domain;
@@ -585,13 +610,15 @@ var predefinedComponent = [
 			menuLabel: "slider",
 			category: "sensor",
 
-			inputSize: 0,
-			outputSize: 1,
+			inputSize: 1,
+			outputSize: 2,
 
 			/// tamanho
 			slider: null,
 			customConstructor: function(config) {
 				this.slider = new createjs.Container();
+				this.domain = [0, 1023];
+
 				var s = this.slider;
 				s.height = this.cellSize * 2;
 				s.width = this.width - this.cellSize * 2;
@@ -606,28 +633,39 @@ var predefinedComponent = [
 					return posx;
 				};
 				s.moveHandle = function(newX) {
+					var slider = this.parent;
 					this.handle.x = this.constrain(newX - this.handleWidth / 2);
-					var newValue = Math.round(Math.map(this.handle.x, 0, this.maxX, 0, 100));
-					this.parent.output[0].setValue(newValue);
-					this.parent.label = newValue;
+					var newValue = Math.round(Math.map(this.handle.x, 0, this.maxX, slider.domain[0], slider.domain[1]));
+					slider.output[0].setValue(newValue);
+					slider.label = newValue;
+				};
+				s.setHandlePos = function(value) {
+					var slider = this.parent;
+					value = Math.constrain(value, slider.domain[0], slider.domain[1]);
+					var newX = Math.round(Math.map(value, slider.domain[0], slider.domain[1], 0, this.maxX));
+					this.handle.x = this.constrain(newX - this.handleWidth / 2);
+					slider.output[0].setValue(newX);
+					slider.label = value;
 				};
 
 				this.sliderBackground = new createjs.Shape();
-				this.sliderBackground.graphics
-					.beginFill(this.styleScheme.default.label)
+				this.sliderBackground.graphics.clear()
+					.beginFill(this.styleScheme.custom.background)
 					.setStrokeStyle(2)
-					.beginStroke(this.styleScheme.default.border)
+					.beginStroke(this.styleScheme.custom.border)
 					.drawRect(0, 8, this.slider.width, this.cellSize / 2);
 
 				s.handle = new createjs.Shape();
-				s.handle.graphics
-					.beginFill(this.styleScheme.default.background)
+				s.handle.graphics.clear()
+					.beginFill(this.styleScheme.custom.handle)
 					.drawRect(0, 0, s.handleWidth, s.height);
 				this.slider.handle.cursor = "pointer";
 
 				// adiciona o sprite
 				this.addChild(s);
 				s.addChild(this.sliderBackground, s.handle);
+
+				if(config.output) s.setHandlePos(config.output[0]);
 
 				// drag slider
 				s.on("mousedown", this.handleMousedown);
@@ -639,7 +677,14 @@ var predefinedComponent = [
 			handleMousePressmove: function(event) {
 				this.moveHandle(event.localX);
 			},
-			run: function() {}
+			run: function() {
+				this.output[1].value = this.domain;
+				if(!this.input[0].isConnected()) {
+					this.input[0].value = this.domain;
+				} else {
+					this.domain = this.input[0].value;
+				}
+			}
 		}, {	
 			type: "sonar",
 			label: "SONAR",
@@ -705,9 +750,9 @@ var predefinedComponent = [
 					y: this.spriteHeight / 2
 				});
 				var absPos = Math.addVector(spriteCenter, this);
-				var mouseDist = Math.dist({ x: mouseWorkareaX, y: mouseWorkareaY }, absPos);
-				mouseDist = Math.constrain(mouseDist, 0, this.range);
-				this.output[0].value = Math.roundTo(Math.map(mouseDist, 0, this.range, this.domain[0], this.domain[1]), 2);
+				var mouseDist = Math.dist({ x: this.workarea.mouseX, y: this.workarea.mouseY }, absPos);
+				mouseDist = Math.constrain(mouseDist, 0, this.sensorRange);
+				this.output[0].value = Math.roundTo(Math.map(mouseDist, 0, this.sensorRange, this.domain[0], this.domain[1]), 2);
 				this.output[1].value = this.domain;
 			}
 		}]
@@ -728,6 +773,8 @@ var predefinedComponent = [
 				this.spriteWidth = 120;
 				this.spriteHeight = 120;
 				this.domain = [0, 180];
+				this.currentRotation = this.domain[0];
+				this.speed = 5;
 
 				// sprite
 				this.spriteSheet = new createjs.SpriteSheet({
@@ -736,7 +783,7 @@ var predefinedComponent = [
 					frames: {
 						width:  120,
 						height: 120,
-						count:   18,
+						count:   19,
 						regY:     0, // regX & regY indicate the registration point of the frames
 						regX:     0, //
 					},
@@ -744,8 +791,6 @@ var predefinedComponent = [
 					//  "nome":     [frama inicio, frame fim, próxima animação, valocidade]
 						"base": 	[  0,  0, "base", 1],
 						"horn": 	[  1,  1, "horn", 1],
-						"horn-cw": 	[  1, 17, "horn-ccw", 1],
-						"horn-ccw": [ 17,  1, "horn-cw", 1],
 					}
 				});
 
@@ -755,15 +800,38 @@ var predefinedComponent = [
 				this.componentBase.x = this.center.x - this.spriteWidth / 2;
 				this.componentBase.y = this.center.y - this.spriteHeight;
 
-				this.componentHorn.x = this.center.x - this.spriteWidth / 2;
-				this.componentHorn.y = this.center.y - this.spriteHeight;
+				this.componentHorn.regX = 48;
+				this.componentHorn.regY = 44;
+				this.componentHorn.x = this.center.x - this.spriteWidth / 2 + this.componentHorn.regX;
+				this.componentHorn.y = this.center.y - this.spriteHeight    + this.componentHorn.regY;
 
 				// adiciona o sprite
 				this.addChild(this.componentBase, this.componentHorn); 
 			},
 			run: function() {
-				var value = Math.constrain(this.input[0].value, this.domain[0], this.domain[1]);
-				this.componentHorn.gotoAndStop(Math.round(Math.map(value, this.domain[0], this.domain[1], 1, 17)));
+				var desiredRotation = Math.constrain(this.input[0].value, this.domain[0], this.domain[1]);
+
+				var frameCount = 18; // numero de frames da animacao que vai do 0 a 90 graus
+				var totalSteps = frameCount * 2 - 1; // como o motor gira de 0 a 180 o numero de passos é o dobro menos 1 (90 graus)
+
+				var dist = Math.abs(this.currentRotation - desiredRotation);
+				if(this.currentRotation < desiredRotation) {
+					this.currentRotation += dist > this.speed ? this.speed : dist;
+				} else if(this.currentRotation > desiredRotation) {
+					this.currentRotation -= dist > this.speed ? this.speed : dist;
+				}
+				this.currentRotation = Math.round(Math.constrain(this.currentRotation, this.domain[0], this.domain[1]));
+
+				// como o sprite do servo só gira de 0 a 90 graus o scaleX é usado para espelhar o sprite
+				var frame = Math.round(Math.map(this.currentRotation, this.domain[0], this.domain[1], 1, totalSteps));
+				if(frame <= frameCount) {
+					this.componentHorn.scaleX = 1;
+				} else {
+					this.componentHorn.scaleX = -1;
+					frame = totalSteps - frame + 1;
+				}
+				this.componentHorn.gotoAndStop(frame);
+				this.label = this.currentRotation;
 				this.output[0].value = this.domain;
 			}
 		}, {	
@@ -817,21 +885,21 @@ var predefinedComponent = [
 				for (var i = 0; i < this.effectResolution; i++) {
 					var newCircle = new createjs.Shape();
 					newCircle.set({
-						alpha: 0, x: this.spriteWidth / 2, y: this.spriteHeight / 2}).graphics
-						.beginFill("#f00")
+						alpha: 0, x: this.spriteWidth / 2, y: this.spriteHeight / 2}).graphics.clear()
+						.beginFill(this.styleScheme.custom.led)
 						.moveTo(0, 0)
 						.arc(0, 0, this.effectRange - radiusStep * i, this.rangeStartAng, this.rangeEndAng);
 					this.light.addChild(newCircle);
 				};
 
-				this.rangeG = new createjs.Shape();
+				this.effectRangeG = new createjs.Shape();
 
 				// adiciona o sprite
 				ledSprite.addChild(this.light, this.componentLight, componentBase); 
-				this.addChildAt(this.rangeG, ledSprite, 0); 
+				this.addChildAt(this.effectRangeG, ledSprite, 0); 
 			},
 			customUpdateUI: function(currentStyle) {
-				this.rangeG.set({
+				this.effectRangeG.set({
 					x: this.center.x,
 					y: this.center.y - this.height / 2 - this.spriteHeight / 2,
 					alpha: currentStyle.rangeAlpha
@@ -844,16 +912,70 @@ var predefinedComponent = [
 			},
 			run: function() {
 				var obj = this.light;
-				var max = Math.floor(Math.map(this.input[0].value, this.domain[0], this.domain[1], 0, obj.numChildren));
+				var max = Math.floor(Math.map(this.input[0].value, this.domain[0], this.domain[1], obj.numChildren, 0));
 				for (var i = 0; i < obj.numChildren; i++) {
 					var child = obj.getChildAt(i);
-					if(i > max) {
+					if(i >= max) {
 						child.alpha = 1 / (obj.numChildren - 1);
 					} else {
 						child.alpha = 0;
 					}
 				};
 				this.output[0].value = this.domain;
+			}
+		}, {	
+			type: "car",
+			label: "CAR",
+			description: "",
+			menuLabel: "car",
+
+			inputSize: 2,
+			outputSize: 2,
+
+			customConstructor: function(config) {
+				/// tamanho
+				this.speedDomain = [0, 10];
+				this.angleDomain = [0, 360];
+
+				// clock
+				this.clockRadius = this.cellSize;
+
+				var clock = new createjs.Container();
+				clock.x = this.width / 2;
+				clock.y = -this.clockRadius - this.cellSize;
+
+				this.clockBorder = new createjs.Shape();
+				this.clockArrow = new createjs.Shape();
+
+				clock.addChild(this.clockBorder, this.clockArrow);
+				this.addChild(clock);
+			},
+			run: function() {
+				if(!this.isGrabbing()) {
+					var speed = Math.constrain(this.input[0].value, this.speedDomain[0], this.speedDomain[1]) / 5;
+					var radians = Math.radians(Math.constrain(this.input[1].value, this.angleDomain[0], this.angleDomain[1]));
+					this.x += Math.cos(radians) * speed;
+					this.y += Math.sin(radians) * speed;
+					this.constrainPos();
+					this.output[0].value = this.speedDomain;
+					this.output[1].value = this.angleDomain;
+				}
+			},
+			customUpdateUI: function(currentStyle) {
+				var degrees = Math.constrain(this.input[1].value, this.angleDomain[0], this.angleDomain[1]);
+				var radians = Math.radians(degrees);
+
+				this.clockBorder.graphics.clear()
+					.beginFill(currentStyle.labelText)
+					.moveTo(0, 0)
+					.drawCircle(0, 0, this.clockRadius);
+
+				var arrowRadius = this.clockRadius * 0.7;
+				this.clockArrow.graphics.clear()
+					.beginStroke(currentStyle.label)
+					.setStrokeStyle(2)
+					.moveTo(0, 0)
+					.lineTo(Math.cos(radians) * arrowRadius, Math.sin(radians) * arrowRadius);		
 			}
 		}]
 	}];
@@ -874,7 +996,7 @@ for (var i = predefinedComponent.length - 1; i >= 0; i--) {
 		var comp = compArray.components[j];
 		componentDefinitions[comp.type] = comp;
 		menuDraft[menuIndex].subMenu.push({
-			label: comp.menuLabel != null ? comp.menuLabel : comp.type,
+			label: comp.menuLabel || comp.type,
 			componentName: comp.type
 		});
 	};
