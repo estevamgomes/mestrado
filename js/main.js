@@ -163,22 +163,25 @@ $(document).ready(function(){
 	// simulator
 	var sim1;
 
-	trama.loadAssets();
-
-	var path = "/js/files/",
+	var directory_root = typeof directory_root !== 'undefined' ? directory_root : "",
+		scenesPath = directory_root + "/js/files/",
 		ext	 = ".trm";
+
+	var assetsPath = directory_root + "/img/";
+	trama.loadAssets(assetsPath);
 
 	var divId = "simulator-simples";
 	var scene = document.getElementById(divId).getAttribute("data-scene");
 
 	trama.ajax({
-		url: path + scene + ext,
+		url: scenesPath + scene + ext,
 		onload: function(data) {
 			sim1 = new trama.Simulator({
 				scene: data,
 				divId: divId,
 				width: "fit",
-				height: 350
+				height: 350,
+				scenesPath: scenesPath // saved scene path
 				// mainmenu: false,
 				// compmenu: false,
 			});

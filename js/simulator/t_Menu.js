@@ -9,6 +9,7 @@
  		var mobj = function(config) {
  			this.div 	= config.div;
  			this.simObj = config.simObj;
+ 			this.scenesPath = config.scenesPath || "";
 
  			this.setup();
  		};
@@ -79,7 +80,7 @@
 			var exampleLink = menudiv.querySelectorAll(".exampleButton");
 			Array.prototype.forEach.call(exampleLink, function(el, i){
 				el.addEventListener("click", function(evt) {
-					var path = "/js/files/",
+					var path = this.scenesPath,
 						ext	 = ".trm";
 
 					trama.ajax({
