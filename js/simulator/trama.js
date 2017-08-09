@@ -566,8 +566,8 @@
 						text: "CLIQUE PARA CONTINUAR"
 					});
 				} else {
-					if(mainmenu) mainmenu.close();
-					overshadow.alpha = 0; // altera o texto
+					if(mainmenu && mainmenu.hasOwnProperty("close")) mainmenu.close();
+					if(overshadow) overshadow.alpha = 0; // altera o texto
 					messageField.alpha = 0; // altera o texto
 				}
 			}

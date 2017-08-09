@@ -161,7 +161,8 @@ $(document).ready(function(){
 
 
 	// simulator
-	var directory_root = document.location.hostname == "localhost" ? 'https://site' : 'https://estevamgomes.github.io/mestrado';
+	var directory_root = document.location.hostname == "site" ? 'http://site' : 'https://estevamgomes.github.io/mestrado';
+
 	var sim1;
 
 	var scenesPath = directory_root + "/js/files/",
