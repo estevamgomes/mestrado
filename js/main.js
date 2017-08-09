@@ -161,10 +161,10 @@ $(document).ready(function(){
 
 
 	// simulator
+	var directory_root = document.location.hostname == "localhost" ? 'https://site' : 'https://estevamgomes.github.io/mestrado';
 	var sim1;
 
-	var directory_root = typeof directory_root !== 'undefined' ? directory_root : "",
-		scenesPath = directory_root + "/js/files/",
+	var scenesPath = directory_root + "/js/files/",
 		ext	 = ".trm";
 
 	var assetsPath = directory_root + "/img/";
