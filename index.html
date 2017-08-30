@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>Computer-based systems for architecture by E. Quintino</title>
+	<title>Sistemas computacionais para arquitetura</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -119,6 +119,8 @@
 
 		<div class="text">
 			<h3>Amplificador ou tradutor do sensor</h3>
+
+			<p>Os sensores acima são os sensores básicos ou simples. É possível usá-los acoplando diferentes elementos que mudam o comportamento. Por exemplo, o LDR é um sensor de luz mas é possível usá-lo como sensor de passagem se colocar um laser apontado para ele e toda vez que algo interromper esse laser ele aciona o computador. O reed switch é um sensor magnético mas pode ser usado para detectar se uma porta está aberta ou fechada acoplando um imã à porta. Muitos portões de garagem automáticas utilizam esse tipo de sensor ou um botão para indicar quando ele está completamente aberto ou fechado, chamado de chave de fim de curso.</p>
 		</div>
 	</article>
 
@@ -160,11 +162,16 @@
 		<div class="text">
 			<h3>Amplificador ou tradutor do atuador</h3>
 
-			<p>Alguns elementos podem ser acoplados aos atuadores para criar novos efeitos ou movimentos mais elaborados e uma variedade maior ou diferente de estados. Dar uma pesquisada nas para ver algumas referências assim como <a href="http://www.johnedmark.com/spirals/">John Edmark</a>, Theo Jansen, Arthur Ganson, Omar Khan<sup><a href="https://www.youtube.com/watch?v=HClHiYs7qSc">1</a>,<a href="https://www.google.com/search?q=omar+khan+architect&safe=off&source=lnms&tbm=isch&sa=X&ved=0ahUKEwizwbCJ3eXUAhULG5AKHXn6C3kQ_AUIBigB&biw=1280&bih=628#imgrc=6V4ifty-m5yNAM:">2</a></sup>, <a href="https://www.google.com/search?q=zimoun&safe=off&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiWq5bE0vXSAhUJjJAKHTtwC_kQ_AUICCgB&biw=1280&bih=628#imgrc=YSDfykS-AYL61M:">Zimoun</a>.</p>
+			<p>Alguns elementos podem ser acoplados aos atuadores para criar novos efeitos ou movimentos mais elaborados e uma variedade maior ou diferente de estados.</p>
+
+			<p>Por exemplo, o comportamento de um motor DC é girar. É possível acoplar uma roda para que o giro se converta em distância percorrida, acoplar uma hélice para que produza vento ou impulso, ou acoplar um peso assimétrico para criar um vibrador.</p>
+
+			<p>Algumas referências são: <a href="http://www.johnedmark.com/spirals/">John Edmark</a>, Theo Jansen, Arthur Ganson, Omar Khan<sup><a href="https://www.youtube.com/watch?v=HClHiYs7qSc">1</a>,<a href="https://www.google.com/search?q=omar+khan+architect&safe=off&source=lnms&tbm=isch&sa=X&ved=0ahUKEwizwbCJ3eXUAhULG5AKHXn6C3kQ_AUIBigB&biw=1280&bih=628#imgrc=6V4ifty-m5yNAM:">2</a></sup>, <a href="https://www.google.com/search?q=zimoun&safe=off&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiWq5bE0vXSAhUJjJAKHTtwC_kQ_AUICCgB&biw=1280&bih=628#imgrc=YSDfykS-AYL61M:">Zimoun</a>.</p>
 		</div>
 	</article>
 
 	<!-- Conceitos -->
+	<!--
 	<article>
 		<div class="text">
 			<h2>Conceitos</h2>
@@ -173,6 +180,7 @@
 			<p>cibernética de segunda ordem: observador, autonomia, auto-organização, cognição, conversação</p>
 		</div>
 	</article>
+	-->
 
 	<!-- Sistemas -->
 	<article>
@@ -190,24 +198,6 @@
 		</div>
 
 		<div id="simulator-simples" data-scene="scene-servo"></div>
-
-		<div class="diagram section" id="servo">
-			<div class="col span_4_of_12 input">
-				<h2>Input</h2>
-				<div id="servo-slider-wrapper" class="element-wrapper"><div id="servo-slider"></div></div>
-				<div id="servo-slider-counter" class="counter"></div>
-			</div>
-
-			<div class="col span_4_of_12 controle">
-				<h2>Controle</h2>
-			</div>
-
-			<div class="col span_4_of_12 output">
-				<h2>Output</h2>
-				<div class="element-wrapper"><div id="servo-animation"><div class="servo-horn"></div></div></div>
-				<div id="servo-animation-counter" class="counter"></div>
-			</div>
-		</div>
 		
 		<div class="text">
 			<h2>Sistemas auto-regulados de primeira ordem (adaptativos)</h2>
@@ -223,6 +213,7 @@
 	</article>
 
 	<!-- Continuar pesquisa -->
+	<!--
 	<article>
 		<div class="text">
 			<h1>Continuar pesquisa</h1>
@@ -238,8 +229,10 @@
 			</ul>
 		</div>
 	</article>
+	-->
 
 	<!-- Feedback -->
+	<!--
 	<article>
 		<div class="text">
 			<h1>Feedback</h1>
@@ -269,7 +262,7 @@
 			<p>Negative feedback is widely used in mechanical and electronic engineering, but it also occurs naturally within living organisms,[1][2] and can be seen in many other fields from chemistry and economics to physical systems such as the climate. General negative feedback systems are studied in control systems engineering.</p>
 		</div>
 	</article>
-
+	-->
 
 	<article>
 		<div class="text">
@@ -735,15 +728,19 @@
 
 			<h2>Suavização (Smoothing)</h2>
 
-			<p><a href="https://www.arduino.cc/en/tutorial/smoothing">https://www.arduino.cc/en/tutorial/smoothing</a></p>
+			<p>Alguns sensores são instáveis e eventualmente fazem leituras erradas. Uma das formas de lidar com esse problema é armazenar uma quantidade de leituras e fazer uma média do valor das leituras, minimizando o efeito de dados errados pontuais. Esse método também pode ser utilizado para fazer uma transição suave entre valores.</p>
 
-			<p>This sketch reads repeatedly from an analog input, calculating a running average and printing it to the computer. This example is useful for smoothing out the values from jumpy or erratic sensors, and also demonstrates the use of arrays to store data.</p>
+			<p>Nos programas onde é necessário fazer a suavização foi utilizada a variável "smo_numReadings". Ela armazena o número de leituras usadas para fazer a média. O número de leituras muda dependendo do sensor. Os valores da tabela abaixo foram obtidos a partir de experimentos com sensores disponíveis no LAGEAR</p> 
+
+			<p>Exemplo no arduino: <a href="https://www.arduino.cc/en/tutorial/smoothing">https://www.arduino.cc/en/tutorial/smoothing</a></p>
 
 			<h2>Calibragem</h2>
-
-			<p><a href="https://www.arduino.cc/en/Tutorial/Calibration">https://www.arduino.cc/en/Tutorial/Calibration</a></p>
 			
-			<p>This example demonstrates one techinque for calibrating sensor input. The board takes sensor readings for five seconds during the startup, and tracks the highest and lowest values it gets. These sensor readings during the first five seconds of the sketch execution define the minimum and maximum of expected values for the readings taken during the loop.</p>
+			<p>Para conectar os sensores aos atuadores é necessário mapear os valores. Todo sensor tem uma extensão de funcionamento definida. Por exemplo, imagine um sensor de temperatura que pode medir valores de -100°C a 100°C. Caso você queira restringir a extensão do sensor para medir a temperatura de um ambiente que varia entre 10°C e 40°C é preciso calibrar o sensor no software. A calibragem pode ser feita manualmente ou automaticamente. O exemplo a seguir é um programa que calibra um sensor automaticamente a partir de uma série de leituras que ele faz antes de iniciar o funcionamento. Durante o período definido ele registra o valor máximo e mínimo lido para restringir os valores subsequentes.</p>
+
+			<p>Nos programas onde é necessário fazer a calibragem usei as variáveis "cal_duration", que armazena a duração em milisegundos do período de calibragem, e "cal_weight", que armazena a porcentagem da extensão medida que será excluída. Por exemplo, no período de calibragem o sensor mediu como temperatura mínima 20°C e máxima de 30°C. Se o cal_weight é igual a 0.1, significa que a extensão vai ser reduzida em 10% no início e 10% no final. A extensão é 30 menos 20 que é igual a 10. Dez por cento de 10 é 1. Assim, a extensão utilizada vai para 21 a 29. É recomendável usar isso em alguns casos onde a leitura do sensor pode ter picos incomuns.</p>
+
+			<p>Exemplo no arduino: <a href="https://www.arduino.cc/en/Tutorial/Calibration">https://www.arduino.cc/en/Tutorial/Calibration</a></p>
 		</div>
 
 		<table class="table" id="software">
@@ -1252,7 +1249,7 @@
 </section>
 
 <footer id="main-footer">
-	<h2>Interação remota espacializada</h2>
+	<h2>Sistemas computacionais para arquitetura</h2>
 	<p>Estevam Quintino</p>
 	<p>2017</p>
 	<p>Escola de Arquitetura</p>

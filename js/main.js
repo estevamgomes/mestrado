@@ -62,31 +62,6 @@ $(document).ready(function(){
 	});
 
 
-	//////////////////////
-	//// SERVO SLIDER ////
-	//////////////////////
-
-	$('#servo-animation-counter').html('0°');
-	$('#servo-slider-counter').html('0');
-
-    $('#servo-slider').slider({
-		value: 0,
-		min: 0,
-		max: 1023,
-		step: 1,
-		slide: function( event, ui ) {
-
-			var step = Math.round(Math.map(ui.value, 0, 1023, 19, 1));
-			var newYPos = step == 19 ? -120 : step * (-120);
-			$('#servo-animation .servo-horn').css('backgroundPosition', '0 ' + newYPos + 'px');
-
-			step = Math.round(Math.map(ui.value, 0, 1023, 1, 19));
-			$('#servo-animation-counter').html(((step - 1) * 10) + '°');
-			$('#servo-slider-counter').html(ui.value);
-		}
-  	});
-
-
 	////////////////////////////
 	//// VIDEO PROGRESS BAR ////
 	////////////////////////////
