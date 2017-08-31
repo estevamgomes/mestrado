@@ -4,17 +4,19 @@
 ///////////////
 
 var color = {
+	background: "#f4f4f4",
 	preto: 		"#000000",
 	cinzaescuro:"#999999",
 	cinza: 		"#cccccc",
-	cinzamedio:	"#deddd9",
-	cinzaclaro:	"#f5f4f0",
+	cinzamedio:	"#dddddd",
+	cinzaclaro:	"#f5f5f5",
 	branco: 	"#ffffff",
 	vermelho: 	"#EB3964",
 	azul: 		"#645ED7", 
 	azulclaro:	"#7D76FF", 
 	amarelo: 	"#ffde00",
 	roxo: 		"#7f3fa5", 
+	laranja:  	"#FFD673",
 	rosaclaro:  "#f490c7",
 	rosa: 		"#e51a80",
 	verdeclaro: "#bef4e9",
@@ -27,11 +29,11 @@ var color = {
 //// Folha de estilo ////
 /////////////////////////
 
-var styleScheme = {
+var defaultStyleScheme = {
 	// cor do fundo do canvas
 	main: {
-		background: color.cinzaclaro,
-		overshadow: color.cinzaclaro,
+		background: color.background,
+		overshadow: color.background,
 		framerateFont: "1rem 'Overpass Mono', monospace",
 		framerateText: color.preto,
 		// tela de carregamento
@@ -42,7 +44,7 @@ var styleScheme = {
 	// conexoes
 	connection: {
 		default: {
-			wire: color.vermelho,
+			wire: color.cinza,
 			wireType: "diagonalRect", // estilo do fio = ["bezier", "ortho", "orthoB", "orthoC", "diagonal", "diagonalRect", "line"];
 			size: 2,
 			caps: "butt", // butt, round, square,
@@ -53,13 +55,12 @@ var styleScheme = {
 			dash: true
 		},
 		active: {
-			wire: color.preto,
+			wire: color.azul,
 			size: 3,
 			caps: "round"
 		},
 		hover: {
 			wire: color.azul,
-			size: 3
 		}
 	},
 
@@ -78,9 +79,10 @@ var styleScheme = {
 	// cor do componente
 	component: {
 		default: {
-			background: color.branco,
-			border: color.preto,
-			borderWidth: 2,
+			background: color.azulclaro,
+			backgroundB: color.verde,
+			border: color.background,
+			borderWidth: 1,
 			label: color.branco,
 			labelText: color.preto,
 			terminal: color.branco,
@@ -89,10 +91,24 @@ var styleScheme = {
 			shadow: color.cinzaescuro,
 			cursor: "pointer",
 			// cursor: "url(img/grab.png), pointer",
-			labelFont: "bold 1rem 'Overpass Mono', monospace",
+			labelFont: "bold 1.1rem 'Overpass Mono', monospace",
 			range: color.azul,
 			rangeAlpha: 0
 		},
+		//
+		sensor: {
+			background: color.azul,
+			backgroundB: color.rosaclaro,
+			// label: color.azul,
+			// labelText: color.branco,
+		},
+		atuador: {
+			background: color.rosaclaro,
+			backgroundB: color.laranja,
+			// label: color.rosa,
+			// labelText: color.branco,
+		},
+		// states
 		grabbing: {
 			border: color.azulclaro,
 			labelText: color.azulclaro,
@@ -103,16 +119,21 @@ var styleScheme = {
 			labelText: color.azulclaro
 		},
 		hover: {
-			border: color.azul,
-			terminal: color.vermelho,
+			border: color.azulclaro,
+			terminal: color.preto,
+			terminalBorder: color.branco,
 			rangeAlpha: .3
 		},
 		remove: {
 			border: color.vermelho,
+			background: color.vermelho,
+			backgroundB: color.vermelho,
 			labelText: color.vermelho
 		},
+		// for custom components color
 		custom: {
 			led: color.vermelho,
+			wave: color.azulclaro,
 			border: color.preto,
 			background: color.branco,
 			handle: color.preto
@@ -121,7 +142,7 @@ var styleScheme = {
 
 	// cor da área de trabalho
 	workarea: {
-		background: color.cinzaclaro,
+		background: color.background,
 		selectionArea: color.azulclaro,
 	},
 
@@ -170,11 +191,11 @@ var styleScheme = {
 
 var predefinedComponent = [
 	{
-		categoryName: "control",
+		categoryName: "controle",
 		categoryLabel: "|o|",
 		components: [
 		{
-			type: "reversedomain",
+			nameId: "reversedomain",
 			menuLabel: "rev",
 			label: "REV DOM",
 			description: "Retorna o domínio invertido",
@@ -186,7 +207,7 @@ var predefinedComponent = [
 				this.output[0].value = [this.input[0].value[1], this.input[0].value[0]];
 			}
 		}, {
-			type: "min",
+			nameId: "min",
 			menuLabel: "min",
 			label: "MIN",
 			description: "Retorna o menor valor",
@@ -198,7 +219,7 @@ var predefinedComponent = [
 				this.output[0].value = Math.min(this.input[0].value, this.input[1].value);
 			}
 		}, {
-			type: "max",
+			nameId: "max",
 			menuLabel: "max",
 			label: "MAX",
 			description: "Retorna o maior valor",
@@ -210,7 +231,7 @@ var predefinedComponent = [
 				this.output[0].value = Math.max(this.input[0].value, this.input[1].value);
 			}
 		}, {
-			type: "domain",
+			nameId: "domain",
 			menuLabel: "domain",
 			label: "[A,B]",
 			description: "Cria um domain a partir de dois valores",
@@ -225,7 +246,7 @@ var predefinedComponent = [
 				];
 			}
 		}, {
-			type: "homeostat",
+			nameId: "homeostat",
 			menuLabel: "ashby",
 			label: "ASHBY",
 			description: "Homeostato do Ashby",
@@ -369,7 +390,7 @@ var predefinedComponent = [
 				}
 			}
 		}, {
-			type: "map",
+			nameId: "map",
 			menuLabel: "map",
 			label: "MAP",
 			description: "Mapeia um valor de um domínio para o outro",
@@ -385,7 +406,7 @@ var predefinedComponent = [
 				this.output[0].value = Math.roundTo(Math.map(value, fromDomain[0], fromDomain[1], toDomain[0], toDomain[1]), 2);
 			}
 		}, {
-			type: "division",
+			nameId: "division",
 			menuLabel: "div",
 			label: "A / B",
 			description: "Dividir 'a' por 'b'",
@@ -397,7 +418,7 @@ var predefinedComponent = [
 				this.output[0].value = this.input[0].value / this.input[1].value;
 			}
 		}, {
-			type: "multiply",
+			nameId: "multiply",
 			menuLabel: "mult",
 			label: "A * B",
 			description: "Multiplicar 'a' por 'b'",
@@ -409,7 +430,7 @@ var predefinedComponent = [
 				this.output[0].value = this.input[0].value * this.input[1].value;
 			}
 		}, {
-			type: "add",
+			nameId: "add",
 			label: "A + B",
 			description: "Somar 'a' com 'b'",
 
@@ -420,7 +441,7 @@ var predefinedComponent = [
 				this.output[0].value = this.input[0].value + this.input[1].value;
 			}
 		}, {
-			type: "subtract",
+			nameId: "subtract",
 			label: "A - B",
 			description: "Subtrair 'b' de 'a'",
 			menuLabel: "sub",
@@ -431,7 +452,7 @@ var predefinedComponent = [
 				this.output[0].value = this.input[0].value - this.input[1].value;
 			}
 		}, {
-			type: "round",
+			nameId: "round",
 			label: "ROUND",
 			description: "Arredondar 'a'",
 			menuLabel: "round",
@@ -443,7 +464,7 @@ var predefinedComponent = [
 				this.output[0].value = Math.round(this.input[0].value);
 			}
 		}, {
-			type: "absolute",
+			nameId: "absolute",
 			label: "ABS",
 			description: "Módulo de 'a'",
 			menuLabel: "abs",
@@ -459,7 +480,7 @@ var predefinedComponent = [
 		categoryName: "sensor",
 		categoryLabel: ">|",
 		components: [{
-			type: "int",
+			nameId: "int",
 			label: "TYPE HERE",
 			description: "Campo para adicionar um número",
 			menuLabel: "int",
@@ -504,7 +525,7 @@ var predefinedComponent = [
 				this.output[0].value = isNaN(newValue) ? 0 : newValue;
 			}
 		}, {
-			type: "clock",
+			nameId: "clock",
 			label: "CLOCK",
 			description: "Contador de tempo",
 			menuLabel: "clock",
@@ -552,7 +573,7 @@ var predefinedComponent = [
 					.lineTo(Math.cos(angle) * arrowRadius, Math.sin(angle) * arrowRadius);		
 			}
 		}, {
-			type: "oscillator",
+			nameId: "oscillator",
 			label: "OSC SINE",
 			description: "Oscilador: gera uma onda senoidal",
 			menuLabel: "sine",
@@ -592,19 +613,19 @@ var predefinedComponent = [
 				var angle = Math.map(this.output[0].value, this.domain[0], this.domain[1], 0, 2 * Math.PI);
 
 				this.clockBorder.graphics.clear()
-					.beginFill(currentStyle.labelText)
+					.beginFill(this.styleScheme.custom.handle)
 					.moveTo(0, 0)
 					.drawCircle(0, 0, this.clockRadius);
 
 				var arrowRadius = this.clockRadius * 0.7;
 				this.clockArrow.graphics.clear()
-					.beginStroke(currentStyle.label)
+					.beginStroke(this.styleScheme.custom.background)
 					.setStrokeStyle(2)
 					.moveTo(0, 0)
 					.lineTo(Math.cos(angle) * arrowRadius, Math.sin(angle) * arrowRadius);		
 			}
 		}, {
-			type: "slider",
+			nameId: "slider",
 			label: "SLIDER",
 			description: "",
 			menuLabel: "slider",
@@ -686,7 +707,7 @@ var predefinedComponent = [
 				}
 			}
 		}, {	
-			type: "sonar",
+			nameId: "sonar",
 			label: "SONAR",
 			description: "",
 			menuLabel: "sonar",
@@ -698,8 +719,14 @@ var predefinedComponent = [
 				/// tamanho
 				this.spriteWidth  = 60;
 				this.spriteHeight = 60;
-				this.sensorRange  = this.cellSize * 10;
+				this.sensorRange  = this.cellSize * 12;
 				this.domain 	  = [0, 300];
+
+				// ondas
+				this.waveContainer = new createjs.Container();
+				this.waveInverval  = 20;
+				this.lastWave 	   = this.waveInverval;
+				this.rangeAngle	   = Math.PI / 3;
 
 				// sprite
 				this.spriteSheet = new createjs.SpriteSheet({
@@ -730,37 +757,112 @@ var predefinedComponent = [
 
 				this.sensorRangeG = new createjs.Shape();
 
+				this.sensorArea = new createjs.Shape();
+
 				// adiciona o sprite
-				this.addChildAt(this.sensorRangeG, this.componentBase, 0); 
+				this.addChildAt(this.waveContainer, this.sensorRangeG, this.componentBase, 0); 
 			},
 			customUpdateUI: function(currentStyle) {
-				this.sensorRangeG.set({
+				var spriteCenter = {
 					x: this.center.x,
-					y: this.center.y - this.height / 2 - this.spriteHeight / 2,
+					y: this.center.y - this.height / 2 - this.spriteHeight / 2
+				};
+
+				var startAngle = - this.rangeAngle / 2;
+				var endAngle   = + this.rangeAngle / 2;
+
+				// raio de alcance
+				this.sensorRangeG.set({
+					x: spriteCenter.x,
+					y: spriteCenter.y,
 					alpha: currentStyle.rangeAlpha
 				}).graphics.clear()
 					.beginStroke(currentStyle.range)
 					.setStrokeStyle(1)
 					// .setStrokeDash([5,5])
-					.drawCircle(0, 0, this.sensorRange);
+					.moveTo(0, 0)
+					.arc(0, 0, this.sensorRange, startAngle, endAngle)
+					.lineTo(0,0);
+
+				this.sensorArea.set({
+					x: spriteCenter.x,
+					y: spriteCenter.y,
+				}).graphics.clear()
+					.beginFill(currentStyle.range)
+					.moveTo(0, 0)
+					.arc(0, 0, this.sensorRange, startAngle, endAngle)
+					.lineTo(0,0);
+			},
+			getMouseDist: function() {
+				var spriteCenter = {
+					x: this.center.x,
+					y: this.center.y - this.height / 2 - this.spriteHeight / 2
+				};
+				var mpos = {
+					x: this.workarea.mouseX - this.x - spriteCenter.x,
+					y: this.workarea.mouseY - this.y - spriteCenter.y
+				};				
+				if(this.sensorArea.hitTest(mpos.x, mpos.y)) {
+					var spriteCenterAbs = Math.addVector(this.componentBase, {
+						x: this.spriteWidth / 2,
+						y: this.spriteHeight / 2
+					});
+					var absPos = Math.addVector(spriteCenterAbs, this);
+					var mouseDist = Math.dist({ x: this.workarea.mouseX, y: this.workarea.mouseY }, absPos);
+					mouseDist = Math.constrain(mouseDist, 0, this.sensorRange);
+				} else {
+					var mouseDist = this.sensorRange;
+				}
+				return mouseDist;
 			},
 			run: function() {
-				var spriteCenter = Math.addVector(this.componentBase, {
-					x: this.spriteWidth / 2,
-					y: this.spriteHeight / 2
-				});
-				var absPos = Math.addVector(spriteCenter, this);
-				var mouseDist = Math.dist({ x: this.workarea.mouseX, y: this.workarea.mouseY }, absPos);
-				mouseDist = Math.constrain(mouseDist, 0, this.sensorRange);
+				var spriteCenter = {
+					x: this.center.x,
+					y: this.center.y - this.height / 2 - this.spriteHeight / 2
+				};
+				
+				var mouseDist = this.getMouseDist();
 				this.output[0].value = Math.roundTo(Math.map(mouseDist, 0, this.sensorRange, this.domain[0], this.domain[1]), 2);
 				this.output[1].value = this.domain;
+				this.label = this.output[0].value;
+
+				// onda
+				this.lastWave++;
+				if(this.lastWave > this.waveInverval) {
+					this.lastWave = 0;
+					this.waveContainer.addChild(new SonarWave({
+						x: spriteCenter.x,
+						y: spriteCenter.y,
+						styleScheme: this.styleScheme.custom,
+						maxRadius: this.sensorRange,
+						rangeAngle: this.rangeAngle
+					}));
+
+					/*
+					// adiiona uma onda saindo do mouse
+					if(this.getMouseDist() < this.sensorRange) {
+						this.waveContainer.addChild(new SonarWave({
+							x: this.workarea.mouseX - this.x,
+							y: this.workarea.mouseY - this.y,
+							styleScheme: this.styleScheme.custom,
+							maxRadius: this.sensorRange,
+							direction: -180
+						}));
+					}
+					*/
+				}
+
+				for (var i = this.waveContainer.numChildren - 1; i >= 0; i--) {
+					var child = this.waveContainer.getChildAt(i);
+					child.tick();
+				};
 			}
 		}]
 	}, {
 		categoryName: "atuador",
 		categoryLabel: "|>",
 		components: [{	
-			type: "servo",
+			nameId: "servo",
 			label: "SERVO",
 			description: "",
 			menuLabel: "servo",
@@ -835,7 +937,7 @@ var predefinedComponent = [
 				this.output[0].value = this.domain;
 			}
 		}, {	
-			type: "led",
+			nameId: "led",
 			label: "LED",
 			description: "",
 			menuLabel: "led",
@@ -924,7 +1026,7 @@ var predefinedComponent = [
 				this.output[0].value = this.domain;
 			}
 		}, {	
-			type: "car",
+			nameId: "car",
 			label: "CAR",
 			description: "",
 			menuLabel: "car",
@@ -984,6 +1086,8 @@ var predefinedComponent = [
 var componentDefinitions = {};
 var menuDraft = [];
 
+// constroi um novo objeto com os componentes para ser usado na criação deles
+// e um array para criação do menu
 for (var i = predefinedComponent.length - 1; i >= 0; i--) {
 	var compArray = predefinedComponent[i];
 	var menuLenght = menuDraft.push({
@@ -994,10 +1098,11 @@ for (var i = predefinedComponent.length - 1; i >= 0; i--) {
 
 	for (var j = compArray.components.length - 1; j >= 0; j--) {
 		var comp = compArray.components[j];
-		componentDefinitions[comp.type] = comp;
+		// adiciona a categoria ao objeto do componente e salva na array
+		componentDefinitions[comp.nameId] = Object.assign({}, comp, {category: compArray.categoryName});
 		menuDraft[menuIndex].subMenu.push({
-			label: comp.menuLabel || comp.type,
-			componentName: comp.type
+			label: comp.menuLabel || comp.nameId,
+			componentName: comp.nameId
 		});
 	};
 };

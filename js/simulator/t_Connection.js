@@ -185,10 +185,10 @@
 
 		// cria um shape para armazenar o fio que representa a conexão
 		this.wire = new createjs.Shape();
-		this.hit = new createjs.Shape();
+		this.hit  = new createjs.Shape();
 
 		this.hitArea = this.hit;
-		this.cursor = "pointer";
+		this.cursor  = "pointer";
 
 		this.addChild(this.wire);
 		this.updateUI();

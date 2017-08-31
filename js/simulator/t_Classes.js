@@ -714,7 +714,7 @@
 		if(!obj.hasChildren) {
 			var root = obj.getRoot();
 			obj.componentContainer.addComponent({
-				type: obj.componentName,
+				nameId: obj.componentName,
 				x: root.x,
 				y: root.y
 			});
@@ -826,4 +826,60 @@
 	};
 
 	window.MenuButton = createjs.promote(MenuButton, "Container");
+}(window));
+
+
+
+/* 
+ * classe: SonarWave
+ * descrição: 
+ */
+(function (window) {
+
+ 	// contrutor da classe SonarWave
+ 	function SonarWave(config) {
+		this.Container_constructor();
+
+		this.styleScheme  = config.styleScheme;
+		this.maxRadius 	  = config.maxRadius;
+		this.radius 	  = 0;
+		this.speed		  = config.speed || 1;
+		this.direction	  = config.direction || 0;
+		this.rangeAngle	  = config.rangeAngle || Math.PI;
+		this.startAlpha   = 0.15;
+
+		this.x = config.x;
+		this.y = config.y;
+
+		this.wave = new createjs.Shape();
+		this.addChild(this.wave);
+
+		this.updateUI();
+ 	}
+	var p = createjs.extend(SonarWave, createjs.Container);
+
+	p.updateUI = function() {
+		this.radius += this.speed;
+
+		if(this.radius >= this.maxRadius) this.parent.removeChild(this);
+		if(this.radius > this.maxRadius * 0.8) {
+			this.wave.alpha = this.startAlpha * (this.maxRadius - this.radius) / (this.maxRadius * 0.2);
+		} else {
+			this.wave.alpha = this.startAlpha;
+		}
+
+		// desenha a onda
+		var startAngle = Math.radians(this.direction) - this.rangeAngle / 2;
+		var endAngle   = Math.radians(this.direction) + this.rangeAngle / 2;
+		this.wave.graphics.clear()
+			.beginStroke(this.styleScheme.wave)
+			.setStrokeStyle(8)
+			.arc(0, 0, this.radius, startAngle, endAngle);
+	};
+
+	p.tick = function() {
+		this.updateUI();
+	};
+
+	window.SonarWave = createjs.promote(SonarWave, "Container");
 }(window));

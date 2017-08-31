@@ -20,10 +20,10 @@
 		var config = Object.assign({}, this.defaultConfig, customConfig);
 
 		// verifica se o tipo de componente existe na lista de componentes predefinidos
-		if(this.componentDefinitions[config.type]) {
+		if(this.componentDefinitions[config.nameId]) {
 			// caso o componente exista ele soma as configurações e gera o componente
 			this.addChild(new Component(Object.assign({},
-				config, this.componentDefinitions[config.type])))
+				config, this.componentDefinitions[config.nameId])))
 				.constrainPos();
 		}
 	};
@@ -34,7 +34,7 @@
 			var obj = this.getChildAt(i)
 			components.push({
 				"name": obj.name,
-				"type": obj.type,
+				"nameId": obj.nameId,
 				"x": obj.x + obj.width / 2,
 				"y": obj.y + obj.height / 2,
 				"input": [],
@@ -153,7 +153,7 @@
 
 		this.run = function() {};	// ação do objeto
 		this.label = "NO LABEL"; 	// etiqueta
-		this.name = config.type + this.id; // nome
+		this.name = config.nameId + this.id; // nome
 		this.editableTextField = false;    // se tem um campo de texto editável
 
 		this.inputSize = 0;
@@ -162,7 +162,7 @@
 		Object.assign(this, config); // junta as configurações do objeto com as configurações enviadas
 
 		this.cellSize 	= this.workarea.cellSize; // tamanho do grid
-		this.state = "default"; // estado atual do componente: default || hover || grabbing
+		this.state 		= "default"; // estado atual do componente: default || hover || grabbing
 		this.grabStart 	= {x: this.x, y: this.y}; // posição em que começou a arrastar
 
 		// quando clica sobre o componente essa variável armazena a diferença
@@ -203,6 +203,10 @@
 		this.background = new createjs.Shape(); // fundo
 		this.labelBg 	= new createjs.Shape(); // fundo do label
 		this.labelText  = new createjs.Text();	// cria campo de texto para o nome do componente
+
+		// sombra no background para o highlight
+		this.background.shadow  = new createjs.Shadow();
+		Object.assign(this.background.shadow, { offsetX: 0, offsetY: 0, blur: 6 });
 
 		// adiciona os elementos
 		this.addChild(this.background, this.labelBg, this.border, this.labelText);
@@ -270,7 +274,13 @@
 	p.updateUI = function() {
 		var currentStyle = Object.assign({}, this.styleScheme.default);
 
-		if(this.styleScheme[this.state]) {
+		// muda a cor de acordo com a categoria do componente (ex: sensor, atuador, default)
+		if(this.styleScheme[this.category]) {
+			Object.assign(currentStyle, this.styleScheme[this.category]);
+		}
+
+		// muda a cor de acordo com o estado do componente
+		if(this.styleScheme[this.state] && this.state !== "default") {
 			Object.assign(currentStyle, this.styleScheme[this.state]);
 		}
 
@@ -285,9 +295,14 @@
 
 		// desenha o fundo
 		this.background.graphics.clear()
-			.beginFill(currentStyle.background)
+			// .beginFill(currentStyle.background)
+			.beginLinearGradientFill([currentStyle.background, currentStyle.backgroundB], [1, 0], 0, 0, 0, this.height)
 			.drawRoundRect(0, 0, this.width, this.height, this.cellSize);
-		// this.background.shadow = new createjs.Shadow(currentStyle.shadow, 1, 1, 2);
+		if(this.state !== "default") {
+			Object.assign(this.background.shadow, { color: currentStyle.border });
+		} else {
+			Object.assign(this.background.shadow, { color: false });
+		}
 
 		// desenha o fundo do label
 		this.labelBg.graphics.clear()
@@ -512,16 +527,16 @@
 		this.debugText = new createjs.Text();	// texto indicando o valor do terminal
 		this.debugText.alpha = 0;
 
-		this.output = new createjs.Shape();		// desenha o terminal
+		this.terminalIcon = new createjs.Shape();		// desenha o terminal
 
 		// cria uma área de interação que vai além da área desenhada
 		var hit = new createjs.Shape();
 		hit.graphics.clear()
 			.beginFill("#ffffff")
 			.drawRect(-this.cellSize, -this.cellSize, this.cellSize * 2, this.cellSize * 2);
-		this.output.hitArea = hit;
+		this.terminalIcon.hitArea = hit;
 		
-		this.addChild(this.output, this.debugText);
+		this.addChild(this.terminalIcon, this.debugText);
 
 		this.cursor = "pointer";
 
@@ -542,7 +557,7 @@
 			Object.assign(styleScheme, this.styleScheme[this.state]);
 		}
 
-		this.output.graphics.clear()
+		this.terminalIcon.graphics.clear()
 			.beginStroke(styleScheme.terminalBorder)
 			.beginFill(styleScheme.terminal)
 			.setStrokeStyle(2)

@@ -78,9 +78,10 @@
 			var simObj = this.simObj;
 			var menuObj = this;
 			var exampleLink = menudiv.querySelectorAll(".exampleButton");
+			var scenesPath = this.scenesPath;
 			Array.prototype.forEach.call(exampleLink, function(el, i){
 				el.addEventListener("click", function(evt) {
-					var path = this.scenesPath,
+					var path = scenesPath,
 						ext	 = ".trm";
 
 					trama.ajax({
